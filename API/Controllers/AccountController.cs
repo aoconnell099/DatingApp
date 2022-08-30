@@ -1,4 +1,5 @@
-﻿using API.Data;
+﻿using System.Linq;
+using API.Data;
 using API.Entities;
 using API.DTOs;
 using System.Threading.Tasks;
@@ -48,7 +49,9 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            var user = await _context.Users
+            .Include(p => p.Photos) // Need to eagerly load the photos here to access them on login to include in the navbar
+            .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
 
             if (user == null) return Unauthorized("Invalid username");
 
@@ -64,7 +67,8 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
             };
         }
 
