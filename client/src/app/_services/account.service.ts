@@ -37,11 +37,17 @@ export class AccountService {
   }
 
   setCurrentUser(user : User) {
+    // console.log("localStorage before setItem");
+    // console.log(localStorage);
     localStorage.setItem('user', JSON.stringify(user));
+    // console.log("localStorage after setItem");
+    // console.log(localStorage);
     this.currentUserSource.next(user);
   }
 
   logout() {
+    // console.log("localStorage");
+    // console.log(localStorage);
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
   }
