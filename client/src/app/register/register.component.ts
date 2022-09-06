@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
       city: ['', Validators.required],
       country: ['', Validators.required],
       password: ['', [Validators.required,
-        Validators.minLength(4), Validators.maxLength(8)]],
+        Validators.minLength(4), Validators.maxLength(16)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     });
     this.registerForm.controls.password.valueChanges.subscribe(() => {
@@ -42,7 +42,7 @@ export class RegisterComponent implements OnInit {
   }
 
   matchValues(matchTo: string): ValidatorFn {
-    return (control: AbstractControl) => { /* Get access to the control the you attach the validator to. 
+    return (control: AbstractControl) => { /* Get access to the control that you attach the validator to. 
                                               We're attaching to the confirmPassword control, and comparing 
                                               it to whatever is being passed to the matchTo. In this case we're 
                                               passing in the password that we want to compare this value to. 

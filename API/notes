@@ -1,3 +1,32 @@
 /*
 copnsole.logs in members.service, account.service, and memberlist.component
+
+
+inside of register -- AccountController
+=====================
+using var hmac = new HMACSHA512();
+
+user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+user.PasswordSalt = hmac.Key;
+
+
+inside of login -- AccountController
+===============
+using var hmac = new HMACSHA512(user.PasswordSalt);
+
+var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+
+for (int i = 0; i < computedHash.Length; i++)
+{
+    if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
+}
+
+
+inside of Seed for each user
+===============================
+using var hmac = new HMACSHA512();
+
+user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("asd"));
+user.PasswordSalt = hmac.Key;
 */
+

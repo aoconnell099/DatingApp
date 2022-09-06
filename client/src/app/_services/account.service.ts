@@ -36,7 +36,10 @@ export class AccountService {
     )
   }
 
-  setCurrentUser(user : User) {
+  setCurrentUser(user: User) {
+    user.roles = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     // console.log("localStorage before setItem");
     // console.log(localStorage);
     localStorage.setItem('user', JSON.stringify(user));
@@ -50,5 +53,10 @@ export class AccountService {
     // console.log(localStorage);
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  getDecodedToken(token) {
+    return JSON.parse(atob(token.split('.')[1])); // Token is split into "header.payload.signature" 
+                                                  // so the 2nd object in the array is the payload which is what we need 
   }
 }

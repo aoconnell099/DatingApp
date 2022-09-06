@@ -10,6 +10,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
 import { TimeagoModule } from 'ngx-timeago';
 import { MomentModule } from 'ngx-moment';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -28,6 +29,7 @@ import { MomentModule } from 'ngx-moment';
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
     MomentModule.forRoot(),
+    ModalModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -38,7 +40,8 @@ import { MomentModule } from 'ngx-moment';
     BsDatepickerModule,
     PaginationModule,
     ButtonsModule,
-    MomentModule
+    MomentModule,
+    ModalModule
   ]
 })
 export class SharedModule { }
