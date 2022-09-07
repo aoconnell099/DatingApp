@@ -49,7 +49,10 @@ namespace API.Controllers
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            return await _unitOfWork.UserRepository.GetMemberAsync(username);
+            var currentUsername = User.GetUsername();
+            return await _unitOfWork.UserRepository.GetMemberAsync(username,
+                isCurrentUser: currentUsername == username
+            );
         }
 
         [HttpPut] // Used to update a resource on a server
@@ -81,10 +84,12 @@ namespace API.Controllers
                 PublicId = result.PublicId
             };
 
-            if (user.Photos.Count == 0) // Check to see if the user has any photos in their collection. If not then set it to the main photo
-            {
-                photo.IsMain = true;
-            }
+            // Commented out for now. Checks if its their first photo and sets it to main if true.
+            // Current logig for photo mod requires approval before setting it as the main photo
+            // if (user.Photos.Count == 0) // Check to see if the user has any photos in their collection. If not then set it to the main photo
+            // {
+            //     photo.IsMain = true;
+            // }
 
             user.Photos.Add(photo);
 
@@ -120,7 +125,9 @@ namespace API.Controllers
         {
             var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
 
-            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            //var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+
+            var photo = await _unitOfWork.PhotoRepository.GetPhotoById(photoId);
 
             if (photo == null) return NotFound();
 
