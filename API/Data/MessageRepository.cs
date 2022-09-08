@@ -109,7 +109,7 @@ namespace API.Data.Migrations
             {
                 foreach (var message in unreadMessages)
                 {
-                    message.DateRead = DateTime.Now; // Removed Utc
+                    message.DateRead = DateTime.UtcNow; 
                 }
 
                 //await _context.SaveChangesAsync();

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
 import { Message } from 'src/app/_models/message';
@@ -18,7 +19,7 @@ import { PresenceService } from 'src/app/_services/presence.service';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
-  member: Member;
+  @Input() member: Member;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
   activeTab: TabDirective;
@@ -26,8 +27,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   user: User;
 
   constructor(public presence: PresenceService, private route: ActivatedRoute, 
-    private messageService: MessageService, private accountService: AccountService,
-    private router: Router) { 
+    private messageService: MessageService, private memberService: MembersService, 
+    private accountService: AccountService, private router: Router, private toastr: ToastrService) { 
       this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
@@ -86,6 +87,13 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     else {
       this.messageService.stopHubConnection();
     }
+  }
+
+  addLike(member: Member) {
+    console.log("like pressed");
+    this.memberService.addLike(member.username).subscribe(() => {
+      this.toastr.success('You have liked ' + member.knownAs);
+    })
   }
 
   ngOnDestroy(): void {

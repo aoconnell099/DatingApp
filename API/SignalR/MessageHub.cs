@@ -84,7 +84,7 @@ namespace API.SignalR
 
             if (group.Connections.Any(x => x.Username == recipient.UserName)) // Set the date read to Now if the recipient is in the message group
             {
-                message.DateRead = DateTime.Now; // Removed UtcNow
+                message.DateRead = DateTime.UtcNow;
             }
             else
             {   // Check if the recipient is online but not in the message group
