@@ -85,6 +85,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       this.messageService.createHubConnection(this.user, this.member.username);
     }
     else {
+      console.log('Inmemberdetail stop hub connection');
       this.messageService.stopHubConnection();
     }
   }
@@ -97,6 +98,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('Inmemberdetaildestroy stop hub connection');
     this.messageService.stopHubConnection();
   }
 
