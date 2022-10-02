@@ -85,20 +85,20 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       this.messageService.createHubConnection(this.user, this.member.username);
     }
     else {
-      console.log('Inmemberdetail stop hub connection');
+      //console.log('Inmemberdetail stop hub connection');
       this.messageService.stopHubConnection();
     }
   }
 
   addLike(member: Member) {
-    console.log("like pressed");
+    //console.log("like pressed");
     this.memberService.addLike(member.username).subscribe(() => {
       this.toastr.success('You have liked ' + member.knownAs);
     })
   }
 
   ngOnDestroy(): void {
-    console.log('Inmemberdetaildestroy stop hub connection');
+    //console.log('Inmemberdetaildestroy stop hub connection');
     this.messageService.stopHubConnection();
   }
 

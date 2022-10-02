@@ -19,7 +19,7 @@ export class PhotoManagementComponent implements OnInit {
   getPhotosForApproval() {
     this.adminService.getPhotosForApproval().subscribe(photos => {
       this.photos = photos;
-      console.log(this.photos);
+      //console.log(this.photos);
     })
   }
 

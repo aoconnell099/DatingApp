@@ -20,8 +20,8 @@ export class RolesModalComponent implements OnInit {
   }
 
   updateRoles() {
-    console.log("roleModalComponent roles:");
-    console.log(this.roles);
+    //console.log("roleModalComponent roles:");
+    //console.log(this.roles);
     this.updateSelectedRoles.emit(this.roles);
     this.bsModalRef.hide();
   }

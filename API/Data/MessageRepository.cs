@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
+using API.Extensions;
 
 namespace API.Data.Migrations
 {
@@ -90,6 +92,7 @@ namespace API.Data.Migrations
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, 
             string recipientUsername)
         {
+            using StreamWriter file = new("./Data/unread.txt", append: true);
             var messages = await _context.Messages
                 //.Include(u => u.Sender).ThenInclude(p => p.Photos) // Eagerly load photos to display user photo in the thread
                 //.Include(u => u.Recipient).ThenInclude(p => p.Photos)
@@ -98,22 +101,28 @@ namespace API.Data.Migrations
                         || m.Recipient.UserName == recipientUsername
                         && m.Sender.UserName == currentUsername && m.SenderDeleted == false
                 )
+                .MarkUnreadAsRead(currentUsername) // Use the extension method here to prevent EF change tracking not tracking the changes set in the unread messages. Previous method set the unread status after the projection
                 .OrderBy(m => m.MessageSent)
                 .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            var unreadMessages = messages.Where(m => m.DateRead == null 
-                && m.RecipientUsername == currentUsername).ToList();
+            // var unreadMessages = messages.Where(m => m.DateRead == null 
+            //     && m.RecipientUsername == currentUsername).ToList();
 
-            if (unreadMessages.Any())
-            {
-                foreach (var message in unreadMessages)
-                {
-                    message.DateRead = DateTime.UtcNow; 
-                }
+            // unreadMessages.ForEach(async m => {
+            //     await file.WriteLineAsync("All unread messages\n================\n" + "Current Username: " + currentUsername + "\n" + "Sender Username: " + m.SenderUsername + " -- Recipient Username: " + m.RecipientUsername + "\n ==================================================");
+            // });
 
-                //await _context.SaveChangesAsync();
-            }
+            // if (unreadMessages.Any())
+            // {
+            //     foreach (var message in unreadMessages)
+            //     {
+            //         message.DateRead = DateTime.UtcNow;
+            //         await file.WriteLineAsync("Inside of for each message in unread\n===================\n" + "Current Username: " + currentUsername + "\n" + "Sender Username: " + message.SenderUsername + " -- Recipient Username: " + message.RecipientUsername + " -- New dateRead :" + message.DateRead + "\n ==================================================");
+            //     }
+
+            //     //await _context.SaveChangesAsync();
+            // }
 
             return messages;
         }

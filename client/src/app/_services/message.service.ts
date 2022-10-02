@@ -47,11 +47,20 @@ export class MessageService {
     })
 
     this.hubConnection.on('UpdatedGroup', (group: Group) => {
+      console.log("UpdatedGroup");
+      console.log("Group usernames \n");
+      group.connections.forEach(e => {
+        console.log(e.username + "\n");
+      });
+      console.log("otherusername: " + otherUsername)
       if (group.connections.some(x => x.username === otherUsername)) {
         this.messageThread$.pipe(take(1)).subscribe(messages => {
           messages.forEach(message => {
+            var isDateRead = (message.dateRead == null) ? false : true;
+            console.log(isDateRead);
             if (!message.dateRead) {
               message.dateRead = new Date(Date.now());
+              console.log(message.dateRead);
             }
           })
           this.messageThreadSource.next([...messages]);
