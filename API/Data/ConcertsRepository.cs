@@ -83,6 +83,7 @@ namespace API.Data
             {
                 Id = concert.Id,
                 EventId = concert.EventId,
+                ArtistName = concert.ArtistName,
                 EventName = concert.EventName,
                 EventDate = concert.EventDate,
                 City = concert.City,

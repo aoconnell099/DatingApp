@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using API.DTOs;
 using API.Entities;
+using API.TicketMaster;
 
 namespace API.Extensions
 {
@@ -30,8 +31,9 @@ namespace API.Extensions
                 foreach (var concert in concerts)
                 {
                     concert.EventDate = concert.DateTypes.Dates.EventDate.Date;
-                    concert.City = concert.Embedded.Venues[0].CityInfo.City;
-                    concert.Venue = concert.Embedded.Venues[0].Venue;
+                    concert.City = concert.Embedded.Venues.FirstOrDefault().CityInfo.City;
+                    concert.Venue = concert.Embedded.Venues.FirstOrDefault().Venue;
+                    concert.ArtistName = concert.Embedded.ArtistInfo.FirstOrDefault().ArtistName;
                 }
             }
             return concerts;
