@@ -40,8 +40,10 @@ namespace API
         {
             services.AddApplicationServices(_config);
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddCors();
             services.AddIdentityServices(_config);
+            services.AddHttpClient(); // Register the IHttpClientFactory
             services.AddSignalR();
             // Probably unnecessary..leave for now
             services.AddSwaggerGen(c =>

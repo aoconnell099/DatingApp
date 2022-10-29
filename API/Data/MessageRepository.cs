@@ -85,7 +85,7 @@ namespace API.Data.Migrations
                     messageParams.Username && u.RecipientDeleted == false && u.DateRead == null) // Default case of unread messages
             };
 
-            return await PagedList<MessageDto>.CreateAync(query, messageParams.PageNumber, messageParams.PageSize);
+            return await PagedList<MessageDto>.CreateAsync(query, messageParams.PageNumber, messageParams.PageSize);
 
         }
 

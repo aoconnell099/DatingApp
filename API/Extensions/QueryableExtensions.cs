@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using API.DTOs;
 using API.Entities;
 
 namespace API.Extensions
@@ -20,6 +21,20 @@ namespace API.Extensions
             }
  
             return query;
+        }
+
+        public static IQueryable<Events> ExtractConcertData(this IQueryable<Events> concerts)
+        {
+            if (concerts.Any())
+            {
+                foreach (var concert in concerts)
+                {
+                    concert.EventDate = concert.DateTypes.Dates.EventDate.Date;
+                    concert.City = concert.Embedded.Venues[0].CityInfo.City;
+                    concert.Venue = concert.Embedded.Venues[0].Venue;
+                }
+            }
+            return concerts;
         }
 
     }

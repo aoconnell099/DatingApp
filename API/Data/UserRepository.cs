@@ -9,6 +9,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SQLitePCL;
 
 namespace API.Data
@@ -55,7 +56,7 @@ namespace API.Data
                 _ => query.OrderByDescending(u => u.LastActive) // Underscore is used to denote the default switch case
             };
 
-            return await PagedList<MemberDto>.CreateAync(query.ProjectTo<MemberDto>(_mapper
+            return await PagedList<MemberDto>.CreateAsync(query.ProjectTo<MemberDto>(_mapper
                 .ConfigurationProvider).AsNoTracking(), 
                     userParams.PageNumber, userParams.PageSize);
         }

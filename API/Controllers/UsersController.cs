@@ -145,6 +145,5 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete the photo");
         }
-
     }
 }

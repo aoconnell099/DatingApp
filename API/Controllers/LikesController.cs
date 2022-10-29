@@ -20,7 +20,7 @@ namespace API.Controllers
         public LikesController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
+        } 
         
         [HttpPost("{username}")]
         public async Task<ActionResult> AddLike(string username)

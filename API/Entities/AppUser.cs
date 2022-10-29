@@ -20,6 +20,7 @@ namespace API.Entities
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessageReceived  { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
+        public ICollection<Concert> Concerts { get; set; }
 
     }
 }

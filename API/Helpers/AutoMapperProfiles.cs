@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
+//using static API.Helpers.TicketMasterResponseClasses;
 
 namespace API.Helpers
 {
@@ -30,6 +32,15 @@ namespace API.Helpers
                     src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(dest => dest.RecipientPhotoUrl, opt => opt.MapFrom(src => 
                     src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+            CreateMap<Concert, ConcertDto>();
+
+            
+            // CreateMap<DateTypes, StartDates>();
+            // CreateMap<StartDates, ConcertDto>();
+            // CreateMap<Embedded, VenueInfo>();
+            // CreateMap<VenueInfo, ConcertDto>();
+            // CreateMap<CityInfo, ConcertDto>();
 
             //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
