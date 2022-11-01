@@ -71,6 +71,7 @@ namespace API.Controllers
             {
                 var newConcert = new Concert
                 {
+                    //Id = concertDto.Id,
                     EventId = concertDto.EventId,
                     ArtistName = concertDto.ArtistName,
                     EventName = concertDto.EventName,
@@ -79,6 +80,12 @@ namespace API.Controllers
                     Venue = concertDto.Venue,
                     UserConcert = new List<UserConcert>()
                 };
+                // Add the Concert to the db before creating the 
+                // UserConcert so there is an Id assigned for a primary 
+                // key to join with the users table
+                // TODO: Find a better implementation to avoid an extra api call
+                _unitOfWork.ConcertsRepository.AddConcert(newConcert);
+
                 var newUserConcert = new UserConcert
                 {
                     UserId = user.Id,
@@ -90,8 +97,9 @@ namespace API.Controllers
                 if (user.UserConcert == null) user.UserConcert = new List<UserConcert>();
                 // Add the concert to the user's list of concerts
                 user.UserConcert.Add(newUserConcert);
+                // Get the new;y added Concert from the db to ensure that's what's modified instead of the Concert created above
+                newConcert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
                 newConcert.UserConcert.Add(newUserConcert);
-                _unitOfWork.ConcertsRepository.AddConcert(newConcert);
 
                 if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(newConcert));
             }
