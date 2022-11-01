@@ -43,6 +43,19 @@ namespace API.Data
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
+            builder.Entity<UserConcert>()
+                .HasKey(x => new { x.UserId, x.ConcertId });
+            
+            builder.Entity<UserConcert>()
+                .HasOne(u => u.User)
+                .WithMany(uc => uc.UserConcert)
+                .HasForeignKey(uc => uc.UserId);
+            
+            builder.Entity<UserConcert>()
+                .HasOne(c => c.Concert)
+                .WithMany(uc => uc.UserConcert)
+                .HasForeignKey(uc => uc.ConcertId);
+
             builder.Entity<UserLike>()
                 .HasKey(k => new {k.SourceUserId, k.LikedUserId});
 

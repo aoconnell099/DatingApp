@@ -10,6 +10,7 @@ using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
+using API.TicketMaster;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -37,25 +38,71 @@ namespace API.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        // [HttpPost("add-concert")]
-        // public async Task<ActionResult<ConcertDto>> AddConcert([FromQuery]ConcertParams concertParams, ConcertDto concertDto) //prob change to a dto
-        // {
-        //     concertParams.UserId = User.GetUserId();
-        //     var userConcerts = await _unitOfWork.ConcertsRepository.GetUserConcerts(concertParams);
-        //     var concerts = await _unitOfWork.ConcertsRepository.GetConcertsAsync
-
-        //     if (userConcerts.Contains(concertDto)) return BadRequest("You have already liked that concert.");
-
-        //     if ()
-        //     //if (await user.Concerts.Contains(concert.EventId))
-                
-        //     return BadRequest("Problem adding the concert");
-        // }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> SearchConcerts([FromQuery]TicketMasterParams ticketMasterParams)
+        [HttpPost("add-concert")]
+        public async Task<ActionResult<ConcertDto>> AddConcert(ConcertDto concertDto)
         {
-            var keyword = ticketMasterParams.Keyword.Replace(' ', '+');
+            var userConcert = await _unitOfWork.ConcertsRepository.GetUserConcertById(User.GetUserId(), concertDto.Id);
+
+            // UserConcert exists in this concert's collection of UserConcert corresponding with the user id.
+            if (userConcert != null) return BadRequest("You already like this concert.");
+            
+            var concert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetUserId());
+            
+            // Concert is in the db but has not been liked by the user yet
+            if (concert != null && userConcert == null)
+            {
+                var newUserConcert = new UserConcert
+                {
+                    UserId = user.Id,
+                    User = user,
+                    ConcertId = concert.Id,
+                    Concert = concert
+                };
+                // Add the UserConcert to the user and concert's list of UserConcert
+                user.UserConcert.Add(newUserConcert);
+                concert.UserConcert.Add(newUserConcert);
+
+                if (await _unitOfWork.Complete()) return Ok();
+            }
+                       
+            // Concert is not in the db yet.
+            if (concert == null)
+            {
+                var newConcert = new Concert
+                {
+                    EventId = concertDto.EventId,
+                    ArtistName = concertDto.ArtistName,
+                    EventName = concertDto.EventName,
+                    EventDate = concertDto.EventDate,
+                    City = concertDto.City,
+                    Venue = concertDto.Venue,
+                    UserConcert = new List<UserConcert>()
+                };
+                var newUserConcert = new UserConcert
+                {
+                    UserId = user.Id,
+                    User = user,
+                    ConcertId = newConcert.Id,
+                    Concert = newConcert
+                };
+
+                if (user.UserConcert == null) user.UserConcert = new List<UserConcert>();
+                // Add the concert to the user's list of concerts
+                user.UserConcert.Add(newUserConcert);
+                newConcert.UserConcert.Add(newUserConcert);
+                _unitOfWork.ConcertsRepository.AddConcert(newConcert);
+
+                if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(newConcert));
+            }
+                
+            return BadRequest("Problem adding the concert");
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<ConcertDto>>> SearchConcerts([FromQuery]TicketMasterParams ticketMasterParams) 
+        {
+            var keyword = ticketMasterParams.Keyword.Replace(' ', '+'); // keyword = keyword.Replace(' ', '+');
             var uri = new Uri(_config.Value.RootUrl + "keyword=" + keyword
                                                 + "&classificationName=" + ticketMasterParams.ClassificationName 
                                                 + "&apikey=" + _config.Value.ApiKey);
@@ -74,7 +121,7 @@ namespace API.Controllers
 
             var concerts = serializer.Deserialize<RootObject>(jsonReader);
             
-            if (concerts == null) return null;
+            if (concerts == null) return BadRequest("There was a problem searching for concerts");
 
             var concertsToReturn = concerts.MainEmbedded
                 .Events.AsQueryable()
@@ -84,21 +131,10 @@ namespace API.Controllers
 
             //var concertsToReturn = _mapper.Map<ConcertDto>(concerts);
 
-            return Ok(concertsToReturn); 
+            return Ok(concertsToReturn);
         }
 
-        [HttpGet("user-concerts")]
-        public async Task<ActionResult<IEnumerable<ConcertDto>>> GetUserConcerts([FromQuery]ConcertParams concertParams)
-        {
-            //userid, concertid, OrderBy
-            concertParams.UserId = User.GetUserId();
-            var concerts = await _unitOfWork.ConcertsRepository.GetUserConcerts(concertParams);
 
-            Response.AddPaginationHeader(concerts.CurrentPage, concerts.PageSize, 
-                concerts.TotalCount, concerts.TotalPages);
-
-            return Ok(concerts);
-        }
 
     }
 }

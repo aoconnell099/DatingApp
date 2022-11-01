@@ -65,7 +65,7 @@ namespace API
             app.UseCors(policy => policy.AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
-                .WithOrigins("https://localhost:4200")); //UseCors must be between UseRouting and UseEndpoints. Must also be called before UseAuthorization
+                .WithOrigins("https://localhost:4200", "https://app.ticketmaster.com/discovery/v2/")); //UseCors must be between UseRouting and UseEndpoints. Must also be called before UseAuthorization
 
             app.UseAuthentication();
             app.UseAuthorization();

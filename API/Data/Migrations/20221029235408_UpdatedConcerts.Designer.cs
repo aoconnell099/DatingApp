@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221029235408_UpdatedConcerts")]
+    partial class UpdatedConcerts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,6 +173,9 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ArtistName")
                         .HasColumnType("text");
 
@@ -190,6 +195,8 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Concerts");
                 });
@@ -294,21 +301,6 @@ namespace API.Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Photos");
-                });
-
-            modelBuilder.Entity("API.Entities.UserConcert", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ConcertId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserId", "ConcertId");
-
-                    b.HasIndex("ConcertId");
-
-                    b.ToTable("UserConcert");
                 });
 
             modelBuilder.Entity("API.Entities.UserLike", b =>
@@ -433,6 +425,13 @@ namespace API.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.Concert", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", null)
+                        .WithMany("Concerts")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("API.Entities.Connection", b =>
                 {
                     b.HasOne("API.Entities.Group", null)
@@ -468,25 +467,6 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("API.Entities.UserConcert", b =>
-                {
-                    b.HasOne("API.Entities.Concert", "Concert")
-                        .WithMany("UserConcert")
-                        .HasForeignKey("ConcertId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.AppUser", "User")
-                        .WithMany("UserConcert")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Concert");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("API.Entities.UserLike", b =>
@@ -551,6 +531,8 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
+                    b.Navigation("Concerts");
+
                     b.Navigation("LikedByUsers");
 
                     b.Navigation("LikedUsers");
@@ -561,14 +543,7 @@ namespace API.Data.Migrations
 
                     b.Navigation("Photos");
 
-                    b.Navigation("UserConcert");
-
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("API.Entities.Concert", b =>
-                {
-                    b.Navigation("UserConcert");
                 });
 
             modelBuilder.Entity("API.Entities.Group", b =>

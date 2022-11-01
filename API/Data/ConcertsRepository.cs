@@ -35,11 +35,10 @@ namespace API.Data
             _context.Concerts.Remove(concert);
         }
 
-        public async Task<ConcertDto> GetConcertAsync(string eventId)
+        public async Task<Concert> GetConcertByIdAsync(string eventId)
         {
             return await _context.Concerts
                 .Where(x => x.EventId == eventId)
-                .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
                 .AsQueryable().FirstOrDefaultAsync();
         }
 
@@ -64,32 +63,54 @@ namespace API.Data
         {
             // First grab a list of all of the concerts from the concert repo and map them to a dto
             var concerts = _context.Concerts 
-                .OrderByDescending(c => c.Id)
-                .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
+                .OrderBy(c => c.Id)
+                //.ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
                 .AsQueryable();
 
-            // Then get the user requesting their list of concerts, and select their list and project them to dto's
-            var userConcerts = _context.Users 
-                .Include(c => c.Concerts)
-                .Where(x => x.Id == concertParams.UserId)
-                .SelectMany(c => c.Concerts)
+            // Join the User's userConcert list with the list of concerts and map the table to a ConcertDto to return as a paged list
+            var userConcerts = _context.Users.
+                Select(uc => uc.UserConcert
+                    .Join(concerts,
+                    uc => uc.ConcertId,
+                    c => c.Id,
+                    (uc, c) => new ConcertDto
+                {
+                    Id = c.Id,
+                    EventId = c.EventId,
+                    ArtistName = c.ArtistName,
+                    EventName = c.EventName,
+                    EventDate = c.EventDate,
+                    City = c.City,
+                    Venue = c.Venue
+                }))
                 .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider);
-            
-            // Join the two tables based on the matching Id numbers (different from the event id, which is provided by ticketmaster)
-            var query = 
-                from concert in concerts
-                join userConcert in userConcerts on concert.Id equals userConcert.Id
-                select new ConcertDto
-            {
-                Id = concert.Id,
-                EventId = concert.EventId,
-                EventName = concert.EventName,
-                EventDate = concert.EventDate,
-                City = concert.City,
-                Venue = concert.Venue
-            };
 
-            return await PagedList<ConcertDto>.CreateAsync(query, concertParams.PageNumber, concertParams.PageSize);
+            return await PagedList<ConcertDto>.CreateAsync(userConcerts, concertParams.PageNumber, concertParams.PageSize);
+        }
+
+        public async Task<ICollection<UserConcert>> GetConcertUserConcerts(string eventId)
+        {
+            return await _context.Concerts
+                .Where(c => c.EventId == eventId)
+                .Select(c => c.UserConcert)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<UserConcert> GetUserConcertById(int userId, int concertId)
+        {
+            /*
+                First grab the table of concerts and select the UserConcert column.
+                You need to use the where filter within the select clause to stay in scope
+                and grab the first element in the table if it exists. Should be only one
+                element in the table if it exists.
+            */
+            return await _context.Concerts
+                .Select(uc => 
+                    uc.UserConcert
+                    //.Select(uc => uc)
+                    .Where(c => c.UserId == userId && c.ConcertId == concertId)
+                    .FirstOrDefault()
+                    ).FirstOrDefaultAsync();
         }
 
     }

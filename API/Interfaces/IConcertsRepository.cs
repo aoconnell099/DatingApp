@@ -14,11 +14,12 @@ namespace API.Interfaces
 
         void RemoveConcert(Concert concert);
 
-        Task<ConcertDto> GetConcertAsync(string eventId);
+        Task<Concert> GetConcertByIdAsync(string eventId);
 
         Task<PagedList<ConcertDto>> GetConcertsAsync(ConcertParams concertParams);
 
         Task<PagedList<ConcertDto>> GetUserConcerts(ConcertParams concertParams);
-        
+
+        Task<UserConcert> GetUserConcertById(int userId, int concertId);
     }
 }

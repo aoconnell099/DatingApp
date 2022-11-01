@@ -30,5 +30,105 @@ user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("asd"));
 user.PasswordSalt = hmac.Key;
 
 template reference variable #var
+
+
+{
+    "gender": "male",
+    "username": "tim",
+    "knownAs": "tim",
+    "dateOfBirth": "1985-01-23",
+    "city": "London",
+    "country": "UK",
+    "password": "Inkink123!"
+}
+
+{
+        "id": 0,
+        "eventId": "vvG18Z9FT4qKtq",
+        "artistName": "Rainbow Kitten Surprise",
+        "eventName": "Rainbow Kitten Surprise",
+        "eventDate": "2022-12-04T00:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    }
+
+
+
+
+
+
+
+
+
+*/
+
+/*
+From ConcertsController
+        // Concert is in the db and the user has a list of UserConcert
+        if (concert != null && user.UserConcert != null)
+        {
+            // Possible change to repo method GetUserConcert..Concerts.Where(concertId == eventId).Select(UserConcert).Where(uc.concertId == User.UserConcert.concertId)
+            // ========================================================================================================
+            // Check each of the user's UserConcert and return if the concert already exists in their list
+            foreach (UserConcert userConcert in user.UserConcert)
+            {
+                if (userConcert.ConcertId == concert.Id) return BadRequest("You already like this concert");
+            }
+        }
+
+
+        [HttpGet("user-concerts")]
+        public async Task<ActionResult<IEnumerable<ConcertDto>>> GetUserConcert([FromQuery]ConcertParams concertParams)
+        {
+            //userid, concertid, OrderBy
+            concertParams.UserId = User.GetUserId();
+            var concerts = await _unitOfWork.ConcertsRepository.GetUserConcert(concertParams);
+
+            Response.AddPaginationHeader(concerts.CurrentPage, concerts.PageSize, 
+                concerts.TotalCount, concerts.TotalPages);
+
+            return Ok(concerts);
+        }
+
+ConcertRepo
+
+public async Task<PagedList<ConcertDto>> GetUserConcert(ConcertParams concertParams)
+        {
+            // First grab a list of all of the concerts from the concert repo and map them to a dto
+            var concerts = _context.Concerts 
+                .OrderBy(c => c.Id)
+                .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
+
+            // Then get the user requesting their list of concerts, and select their list and project them to dto's
+            var UserConcert = _context.Users 
+                .Include(c => c.Concerts)
+                .Where(x => x.Id == concertParams.UserId)
+                .SelectMany(c => c.Concerts)
+                .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider);
+            
+            // Join the two tables based on the matching Id numbers (different from the event id, which is provided by ticketmaster)
+            var query = 
+                from concert in concerts
+                join userConcert in UserConcert on concert.Id equals userConcert.Id
+                select new ConcertDto
+            {
+                Id = concert.Id,
+                EventId = concert.EventId,
+                ArtistName = concert.ArtistName,
+                EventName = concert.EventName,
+                EventDate = concert.EventDate,
+                City = concert.City,
+                Venue = concert.Venue
+            };
+
+            return await PagedList<ConcertDto>.CreateAsync(query, concertParams.PageNumber, concertParams.PageSize);
+        }
+
+Task<PagedList<ConcertDto>> GetUserConcert(ConcertParams concertParams);
+
+
+
+SELECT * FROM albums JOIN artists ON albums.artist_id = artists.id;
 */
 

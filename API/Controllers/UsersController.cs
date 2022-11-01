@@ -84,13 +84,6 @@ namespace API.Controllers
                 PublicId = result.PublicId
             };
 
-            // Commented out for now. Checks if its their first photo and sets it to main if true.
-            // Current logig for photo mod requires approval before setting it as the main photo
-            // if (user.Photos.Count == 0) // Check to see if the user has any photos in their collection. If not then set it to the main photo
-            // {
-            //     photo.IsMain = true;
-            // }
-
             user.Photos.Add(photo);
 
             if (await _unitOfWork.Complete()) // Return the photo and map it to a dto to be saved in the db

@@ -10,6 +10,7 @@ namespace API.DTOs
     {
         public int Id { get; set; } // Potentially unnecessary -- current thinking is to use a provided id from ticketmaster to compare against for matching
         public string EventId { get; set; }
+        public string ArtistName { get; set; }
         public string EventName { get; set; } 
         public DateTime EventDate { get; set; }
         public string City { get; set; }
