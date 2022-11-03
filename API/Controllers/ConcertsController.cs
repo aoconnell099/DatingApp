@@ -38,17 +38,38 @@ namespace API.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ConcertDto>>> GetConcertsForUser([FromQuery] 
+            ConcertParams concertParams)
+        {
+            concertParams.UserId = User.GetUserId();
+            var concerts = await _unitOfWork.ConcertsRepository.GetConcertsForUser(concertParams);
+
+            Response.AddPaginationHeader(concerts.CurrentPage, concerts.PageSize, 
+                concerts.TotalCount, concerts.TotalPages);
+
+            return concerts;
+        }
+
         [HttpPost("add-concert")]
         public async Task<ActionResult<ConcertDto>> AddConcert(ConcertDto concertDto)
         {
-            var userConcert = await _unitOfWork.ConcertsRepository.GetUserConcertById(User.GetUserId(), concertDto.Id);
+            // If the concert already exists in the db, then use that concertId
+            // If it doesn't exist, then the Id will be created further down when it's added to the db
+            // so pass in the concertDto.Id (0).
+            var concert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
+            var concertId = concert == null ? concertDto.Id : concert.Id; 
+            var userConcert = await _unitOfWork.ConcertsRepository.GetUserConcertById(User.GetUserId(), concertId);
 
             // UserConcert exists in this concert's collection of UserConcert corresponding with the user id.
             if (userConcert != null) return BadRequest("You already like this concert.");
-            
-            var concert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
+
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(User.GetUserId());
             
+            // If the user's UserConcert list doesn't exist, then this is their first liked concert,
+            // so make a new List to avoid null reference exceptions
+            if (user.UserConcert == null) user.UserConcert = new List<UserConcert>();
+
             // Concert is in the db but has not been liked by the user yet
             if (concert != null && userConcert == null)
             {
@@ -63,7 +84,7 @@ namespace API.Controllers
                 user.UserConcert.Add(newUserConcert);
                 concert.UserConcert.Add(newUserConcert);
 
-                if (await _unitOfWork.Complete()) return Ok();
+                if (await _unitOfWork.Complete()) return Ok("Successfully added concert");
             }
                        
             // Concert is not in the db yet.
@@ -85,23 +106,25 @@ namespace API.Controllers
                 // key to join with the users table
                 // TODO: Find a better implementation to avoid an extra api call
                 _unitOfWork.ConcertsRepository.AddConcert(newConcert);
-
+                await _unitOfWork.Complete();
+                var newlyAddedConcert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
+                //await _unitOfWork.Complete();
                 var newUserConcert = new UserConcert
                 {
                     UserId = user.Id,
                     User = user,
-                    ConcertId = newConcert.Id,
-                    Concert = newConcert
+                    ConcertId = newlyAddedConcert.Id,
+                    Concert = newlyAddedConcert
                 };
 
-                if (user.UserConcert == null) user.UserConcert = new List<UserConcert>();
+                
                 // Add the concert to the user's list of concerts
                 user.UserConcert.Add(newUserConcert);
                 // Get the new;y added Concert from the db to ensure that's what's modified instead of the Concert created above
-                newConcert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
-                newConcert.UserConcert.Add(newUserConcert);
+                
+                newlyAddedConcert.UserConcert.Add(newUserConcert);
 
-                if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(newConcert));
+                if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(newlyAddedConcert));
             }
                 
             return BadRequest("Problem adding the concert");
@@ -129,15 +152,13 @@ namespace API.Controllers
 
             var concerts = serializer.Deserialize<RootObject>(jsonReader);
             
-            if (concerts == null) return BadRequest("There was a problem searching for concerts");
+            if (concerts == null || concerts.MainEmbedded == null || concerts.MainEmbedded.Events == null) return BadRequest("There was a problem searching for concerts");
 
             var concertsToReturn = concerts.MainEmbedded
                 .Events.AsQueryable()
                 .ExtractConcertData()
                 .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
                 .AsEnumerable();
-
-            //var concertsToReturn = _mapper.Map<ConcertDto>(concerts);
 
             return Ok(concertsToReturn);
         }

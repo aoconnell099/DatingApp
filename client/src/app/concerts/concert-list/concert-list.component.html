@@ -1,0 +1,9 @@
+<p>Concert List</p>
+
+<div class="container mt-3">
+    <div class="row mt-3">
+        <div class="col-2" *ngFor="let concert of concerts">
+            <p [member]="member">{{concert.artistName}}</p>
+        </div>
+    </div>
+</div>

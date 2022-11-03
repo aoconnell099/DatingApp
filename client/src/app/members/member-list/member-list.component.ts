@@ -22,8 +22,6 @@ export class MemberListComponent implements OnInit {
 
   constructor(private memberService: MembersService) { 
     this.userParams = this.memberService.getUserParams();
-    // console.log("user params in member-list memberlist constructor");
-    // console.log(this.userParams);
   }
 
   ngOnInit(): void {
@@ -31,11 +29,7 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    // console.log("user params in member-list loadMembers() before setUserParams");
-    // console.log(this.userParams);
     this.memberService.setUserParams(this.userParams);
-    // console.log("user params in member-list loadMembers() after SetUserParams");
-    // console.log(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;

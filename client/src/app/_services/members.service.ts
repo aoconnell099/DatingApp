@@ -29,11 +29,7 @@ export class MembersService {
   constructor(private http: HttpClient, private accountService: AccountService) { // Make sure not to inject the MembersService into the AccountService to avoid circular referencing
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
       this.user = user;
-      // console.log("user in memberservice constructor");
-      // console.log(this.user);
       this.userParams = new UserParams(user);
-      // console.log("user params in memberservice constructor");
-      // console.log(this.userParams);
     })
    }
 
@@ -51,17 +47,10 @@ export class MembersService {
   }
 
   getMembers(userParams : UserParams) {
-    // console.log("this.memberCache");
-    // console.log(this.memberCache);
     var response = this.memberCache.get(Object.values(userParams).join('-'));
-    // console.log("response");
-    // console.log(response);
     if (response) {
-      //console.log("inside if response");
       return of(response);
     }
-
-    //console.log(userParams.gender);
 
     let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 

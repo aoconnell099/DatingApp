@@ -38,13 +38,16 @@ namespace API.Data
         public async Task<Concert> GetConcertByIdAsync(string eventId)
         {
             return await _context.Concerts
+                .Include(uc => uc.UserConcert)
                 .Where(x => x.EventId == eventId)
                 .AsQueryable().FirstOrDefaultAsync();
         }
 
         public async Task<PagedList<ConcertDto>> GetConcertsAsync(ConcertParams concertParams)
         {
-            var query = _context.Concerts.AsQueryable();
+            var query = _context.Concerts
+                .Include(uc => uc.UserConcert)
+                .AsQueryable();
 
             // Use params to alter the returned list -- will need to add later when situation calls
 
@@ -59,17 +62,28 @@ namespace API.Data
                 concertParams.PageNumber, concertParams.PageSize);
         }
 
-        public async Task<PagedList<ConcertDto>> GetUserConcerts(ConcertParams concertParams)
+        public async Task<PagedList<ConcertDto>> GetConcertsForUser(ConcertParams concertParams)
         {
+
             // First grab a list of all of the concerts from the concert repo and map them to a dto
             var concerts = _context.Concerts 
+                .Include(uc => uc.UserConcert)
                 .OrderBy(c => c.Id)
-                //.ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
                 .AsQueryable();
-
-            // Join the User's userConcert list with the list of concerts and map the table to a ConcertDto to return as a paged list
-            var userConcerts = _context.Users.
-                Select(uc => uc.UserConcert
+            /* 
+                Get the user's list of UserConcert and select many to 
+                extract the actual list of UserConcerts to be queried.
+                Then join the table of UserConcerts with the table of 
+                concerts on the UserConcert ConcertId being equal to 
+                the Concert Id. Returns a table of concerts whose Id 
+                is equal to any UserConcert with the same ConcertId 
+                and a UserId equal to the UserId passed in with the params.
+            */
+            var concertsForUser = _context.Users
+                .Include(uc => uc.UserConcert)
+                .Where(u => u.Id == concertParams.UserId) 
+                .Select(uc => uc.UserConcert) 
+                .SelectMany(uc => uc
                     .Join(concerts,
                     uc => uc.ConcertId,
                     c => c.Id,
@@ -82,15 +96,15 @@ namespace API.Data
                     EventDate = c.EventDate,
                     City = c.City,
                     Venue = c.Venue
-                }))
-                .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider);
+                }));
 
-            return await PagedList<ConcertDto>.CreateAsync(userConcerts, concertParams.PageNumber, concertParams.PageSize);
+            return await PagedList<ConcertDto>.CreateAsync(concertsForUser, concertParams.PageNumber, concertParams.PageSize);
         }
 
         public async Task<ICollection<UserConcert>> GetConcertUserConcerts(string eventId)
         {
             return await _context.Concerts
+                .Include(uc => uc.UserConcert)
                 .Where(c => c.EventId == eventId)
                 .Select(c => c.UserConcert)
                 .FirstOrDefaultAsync();
@@ -105,9 +119,10 @@ namespace API.Data
                 element in the table if it exists.
             */
             return await _context.Concerts
+                .Include(uc => uc.UserConcert)
                 .Select(uc => 
                     uc.UserConcert
-                    //.Select(uc => uc)
+                    .Select(uc => uc)
                     .Where(c => c.UserId == userId && c.ConcertId == concertId)
                     .FirstOrDefault()
                     ).FirstOrDefaultAsync();

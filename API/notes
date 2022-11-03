@@ -54,7 +54,15 @@ template reference variable #var
 
 
 
-
+    {
+        "id": 0,
+        "eventId": "G5vZZ98pbrxak",
+        "artistName": "Drake White",
+        "eventName": "Drake White",
+        "eventDate": "2022-11-06T01:00:00Z",
+        "city": "Niagara Falls",
+        "venue": "The Avalon Theatre At Niagara Fallsview Casino Resort"
+    }
 
 
 
@@ -130,5 +138,195 @@ Task<PagedList<ConcertDto>> GetUserConcert(ConcertParams concertParams);
 
 
 SELECT * FROM albums JOIN artists ON albums.artist_id = artists.id;
+
+
+
+{
+        "id": 0,
+        "eventId": "vvG18Z93RO1xYz",
+        "artistName": "Live Nation Club Pass",
+        "eventName": "Live Nation Club Pass: BYLINE BANK ARAGON BALLROOM",
+        "eventDate": "2023-01-01T05:59:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9GDkNNll",
+        "artistName": "MÅNESKIN",
+        "eventName": " MÅNESKIN: THE LOUD KIDS TOUR",
+        "eventDate": "2022-11-18T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9GDbLfd9",
+        "artistName": "El Tri",
+        "eventName": "El Tri",
+        "eventDate": "2022-11-24T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9fgo77dk",
+        "artistName": "Lewis Capaldi",
+        "eventName": "Lewis Capaldi",
+        "eventDate": "2023-04-20T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9fV8v0FV",
+        "artistName": "Maggie Rogers",
+        "eventName": "Maggie Rogers: The Feral Joy Tour",
+        "eventDate": "2023-02-18T01:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z93NLOSvN",
+        "artistName": "Q101 Twisted Xmas",
+        "eventName": "Twisted Xmas with The 1975",
+        "eventDate": "2022-12-10T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9FT4qKtq",
+        "artistName": "Rainbow Kitten Surprise",
+        "eventName": "Rainbow Kitten Surprise",
+        "eventDate": "2022-12-04T01:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9GFKv4c7",
+        "artistName": "Carly Rae Jepsen",
+        "eventName": "Carly Rae Jepsen: The So Nice Tour",
+        "eventDate": "2022-11-06T00:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9fodnftQ",
+        "artistName": "keshi",
+        "eventName": "Keshi: Hell & Back Tour",
+        "eventDate": "2023-03-25T00:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9KgkxVxY",
+        "artistName": "Omar Apollo",
+        "eventName": "Omar Apollo - The Prototype Tour",
+        "eventDate": "2022-12-01T01:45:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9p5k-xxT",
+        "artistName": "Panteon Rococo",
+        "eventName": "Panteon Rococo",
+        "eventDate": "2022-12-11T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z93NqKwHY",
+        "artistName": "Q101 Twisted Xmas",
+        "eventName": "Twisted Xmas with Jack White",
+        "eventDate": "2022-12-09T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z94ftkfgi",
+        "artistName": "Rebelution",
+        "eventName": "Rebelution: Good Vibes Summer Tour 2023",
+        "eventDate": "2023-07-02T01:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9f38H-10",
+        "artistName": "Purple Disco Machine",
+        "eventName": "Purple Disco Machine: Disco Extravaganza",
+        "eventDate": "2023-01-01T03:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9GlGaPv9",
+        "artistName": "bbno$",
+        "eventName": "Yung Gravy & bbno$: Baby Gravy, The Tour",
+        "eventDate": "2022-11-23T02:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9fb7C4jC",
+        "artistName": "J.I.D",
+        "eventName": "J.I.D & Smino - Luv Is 4ever Tour",
+        "eventDate": "2023-03-21T23:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z93NqdeH8",
+        "artistName": "Q101 Twisted Xmas",
+        "eventName": "Twisted Xmas with Portugal. The Man",
+        "eventDate": "2022-12-07T01:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9Cf_tfqz",
+        "artistName": "Amon Amarth",
+        "eventName": "Amon Amarth - The Great Heathen Tour with Special Guests",
+        "eventDate": "2022-11-27T00:30:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9o53WVAg",
+        "artistName": "Zeds Dead",
+        "eventName": "Deadbeats featuring Zeds Dead plus Special Guests",
+        "eventDate": "2022-12-18T03:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    },
+    {
+        "id": 0,
+        "eventId": "vvG18Z9o53w7Ah",
+        "artistName": "Zeds Dead",
+        "eventName": "Deadbeats featuring Zeds Dead plus Special Guests",
+        "eventDate": "2022-12-17T03:00:00Z",
+        "city": "Chicago",
+        "venue": "Byline Bank Aragon Ballroom"
+    }
+
+
+
+
+
+
+
 */
 

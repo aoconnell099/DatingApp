@@ -37,12 +37,6 @@ namespace API.Helpers
             CreateMap<Concert, ConcertDto>();
 
             CreateMap<Events, ConcertDto>();
-            
-            // CreateMap<DateTypes, StartDates>();
-            // CreateMap<StartDates, ConcertDto>();
-            // CreateMap<Embedded, VenueInfo>();
-            // CreateMap<VenueInfo, ConcertDto>();
-            // CreateMap<CityInfo, ConcertDto>();
 
             //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }

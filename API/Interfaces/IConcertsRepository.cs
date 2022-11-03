@@ -18,7 +18,7 @@ namespace API.Interfaces
 
         Task<PagedList<ConcertDto>> GetConcertsAsync(ConcertParams concertParams);
 
-        Task<PagedList<ConcertDto>> GetUserConcerts(ConcertParams concertParams);
+        Task<PagedList<ConcertDto>> GetConcertsForUser(ConcertParams concertParams);
 
         Task<UserConcert> GetUserConcertById(int userId, int concertId);
     }
