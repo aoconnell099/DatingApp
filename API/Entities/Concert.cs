@@ -17,6 +17,6 @@ namespace API.Entities
         public string City { get; set; }
         public string Venue { get; set; }
         [NotMapped]
-        public ICollection<UserConcert> UserConcert { get; set; } // List of Users who have liked the concert
+        public ICollection<UserConcert> UserConcert { get; set; }
     }
 }
