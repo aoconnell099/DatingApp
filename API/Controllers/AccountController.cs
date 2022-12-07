@@ -1,19 +1,14 @@
-﻿using System.Linq;
-using API.Data;
-using API.Entities;
+﻿using API.Entities;
 using API.DTOs;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-	public class AccountController : BaseApiController
+    public class AccountController : BaseApiController
     {
         public ITokenService _tokenService;
         private readonly IMapper _mapper;

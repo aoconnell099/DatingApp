@@ -10,8 +10,9 @@ namespace API.Extensions
         public static int CalculateAge(this DateTime dob)
         {
             var today = DateTime.UtcNow;
+            //var today = DateOnly.FromDateTime(DateTime.UtcNow);
             var age = today.Year - dob.Year;
-            if (dob.Date > today.AddYears(-age)) age--; // Users bday hasn't happened yet
+            if (dob > today.AddYears(-age)) age--; // Users bday hasn't happened yet
             return age;
         }
     }

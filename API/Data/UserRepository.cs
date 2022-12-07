@@ -47,6 +47,8 @@ namespace API.Data
 
             var minDob = DateTime.UtcNow.AddYears(-userParams.MaxAge-1); // How far you want to go back to check user's Dob preference. Eg. max age they want is 30 so minDob would be 30 years before current date
             var maxDob = DateTime.UtcNow.AddYears(-userParams.MinAge);
+            // var minDob = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-userParams.MaxAge-1)); // How far you want to go back to check user's Dob preference. Eg. max age they want is 30 so minDob would be 30 years before current date
+            // var maxDob = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-userParams.MinAge));
 
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
 
