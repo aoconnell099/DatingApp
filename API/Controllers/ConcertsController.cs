@@ -107,6 +107,8 @@ namespace API.Controllers
                 // TODO: Find a better implementation to avoid an extra api call
                 _unitOfWork.ConcertsRepository.AddConcert(newConcert);
                 await _unitOfWork.Complete();
+                // Get the newly added Concert from the db to ensure that's what's modified
+                // when adding the new UserConcert to it instead of modifying the Concert created above
                 var newlyAddedConcert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(concertDto.EventId);
                 //await _unitOfWork.Complete();
                 var newUserConcert = new UserConcert
@@ -120,7 +122,7 @@ namespace API.Controllers
                 
                 // Add the concert to the user's list of concerts
                 user.UserConcert.Add(newUserConcert);
-                // Get the new;y added Concert from the db to ensure that's what's modified instead of the Concert created above
+                
                 
                 newlyAddedConcert.UserConcert.Add(newUserConcert);
 

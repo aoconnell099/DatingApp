@@ -16,7 +16,7 @@ import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 export class MessageService {
   baseUrl = environment.apiUrl;
   hubUrl = environment.hubUrl;
-  private hubConnection: HubConnection;
+  private hubConnection?: HubConnection;
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
@@ -71,7 +71,8 @@ export class MessageService {
 
   stopHubConnection() {
     if (this.hubConnection) {
-      this.messageThreadSource.next([]);
+      this.messageThreadSource.next([]); // Clears messages out when the user moves away from the member messages component
+                                         // Stops old messages from being shown in a new message thread before loading current message thread
       this.hubConnection.stop();
     }
   }

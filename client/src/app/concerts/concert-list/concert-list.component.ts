@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Concert } from '../../_models/concert';
-import { Member } from '../../_models/member';
-import { Pagination } from '../../_models/paginations';
-import { ConcertService } from '../../_services/concert.service';
+import { Component, OnInit } from '@angular/core';
+import { Concert } from 'src/app/_models/concert';
+import { ConcertParams } from 'src/app/_models/concertParams';
+import { Pagination } from 'src/app/_models/paginations';
+import { UserParams } from 'src/app/_models/userParams';
+import { ConcertService } from 'src/app/_services/concert.service';
 
 @Component({
   selector: 'app-concert-list',
@@ -12,26 +13,32 @@ import { ConcertService } from '../../_services/concert.service';
 export class ConcertListComponent implements OnInit {
   concerts: Concert[];
   pagination: Pagination;
-  pageNumber = 1;
-  pageSize = 5;
+  concertParams: ConcertParams;
 
-  constructor(private concertService: ConcertService) { }
+  constructor(private concertService: ConcertService) {
+    this.concertParams = this.concertService.getConcertParams();
+   }
 
   ngOnInit(): void {
-    this.loadUserConcerts();
+    this.loadConcerts();
   }
 
-  loadUserConcerts() {
-    this.concertService.getConcertsForUser(this.pageNumber, this.pageSize).subscribe(response => {
+  loadConcerts() {
+    this.concertService.getConcertsForUser(this.concertParams).subscribe(response => {
       this.concerts = response.result;
-      console.log(this.concerts);
       this.pagination = response.pagination;
     })
   }
 
+  resetFilters() {
+    this.concertParams = this.concertService.resetConcertParams();
+    this.loadConcerts();
+  }
+
   pageChanged(event: any) {
-    this.pageNumber = event.page;
-    this.loadUserConcerts();
+    this.concertParams.pageNumber = event.page;
+    this.concertService.setConcertParams(this.concertParams);
+    this.loadConcerts();
   }
 
 }

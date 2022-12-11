@@ -62,7 +62,7 @@ import { ConcertListComponent } from './concerts/concert-list/concert-list.compo
     RolesModalComponent,
     ConfirmDialogComponent,
     ConcertCardComponent,
-    ConcertListComponent
+    ConcertListComponent,
   ],
   imports: [
     BrowserModule,
