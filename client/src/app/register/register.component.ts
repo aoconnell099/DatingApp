@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, FormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
@@ -11,12 +11,12 @@ import { AccountService } from '../_services/account.service';
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   maxDate: Date;
   validationErrors: string[] = []; // Need to initialize because we check for the length in the component html
 
   constructor(private accountService: AccountService, private toastr: ToastrService,
-     private fb: FormBuilder, private router: Router) { }
+     private fb: UntypedFormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
