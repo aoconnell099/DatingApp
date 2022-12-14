@@ -6,7 +6,7 @@ import { MembersService } from '../_services/members.service';
 @Component({
   selector: 'app-lists',
   templateUrl: './lists.component.html',
-  styleUrls: ['./lists.component.css']
+  styleUrls: ['./lists.component.scss']
 })
 export class ListsComponent implements OnInit {
   members?: Member[]; // Partial makes each property in member optional

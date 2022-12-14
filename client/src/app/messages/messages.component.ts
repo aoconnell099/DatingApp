@@ -7,7 +7,7 @@ import { MessageService } from '../_services/message.service';
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.css']
+  styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit {
   messages?: Message[]; // Previously = []..changed for delete messages

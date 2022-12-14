@@ -5,7 +5,7 @@ import { User } from 'src/app/_models/user';
 @Component({
   selector: 'app-roles-modal',
   templateUrl: './roles-modal.component.html',
-  styleUrls: ['./roles-modal.component.css']
+  styleUrls: ['./roles-modal.component.scss']
 })
 export class RolesModalComponent implements OnInit {
  /*@Input() updateSelectedRoles = new EventEmitter();  For the bsConfig we pass this into its content property so it needs to be an input here, 

@@ -5,7 +5,7 @@ import { AdminService } from 'src/app/_services/admin.service';
 @Component({
   selector: 'app-photo-management',
   templateUrl: './photo-management.component.html',
-  styleUrls: ['./photo-management.component.css']
+  styleUrls: ['./photo-management.component.scss']
 })
 export class PhotoManagementComponent implements OnInit {
   photos: Photo[] = [];

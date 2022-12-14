@@ -8,7 +8,7 @@ import { ConcertService } from 'src/app/_services/concert.service';
 @Component({
   selector: 'app-concert-list',
   templateUrl: './concert-list.component.html',
-  styleUrls: ['./concert-list.component.css']
+  styleUrls: ['./concert-list.component.scss']
 })
 export class ConcertListComponent implements OnInit {
   concerts: Concert[] = [];
