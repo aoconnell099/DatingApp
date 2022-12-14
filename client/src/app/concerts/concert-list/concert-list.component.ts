@@ -11,9 +11,9 @@ import { ConcertService } from 'src/app/_services/concert.service';
   styleUrls: ['./concert-list.component.css']
 })
 export class ConcertListComponent implements OnInit {
-  concerts: Concert[];
-  pagination: Pagination;
-  concertParams: ConcertParams;
+  concerts: Concert[] = [];
+  pagination?: Pagination;
+  concertParams?: ConcertParams;
 
   constructor(private concertService: ConcertService) {
     this.concertParams = this.concertService.getConcertParams();
@@ -24,10 +24,16 @@ export class ConcertListComponent implements OnInit {
   }
 
   loadConcerts() {
-    this.concertService.getConcertsForUser(this.concertParams).subscribe(response => {
-      this.concerts = response.result;
-      this.pagination = response.pagination;
-    })
+    if (this.concertParams) {
+      this.concertService.getConcertsForUser(this.concertParams).subscribe({
+        next: response => {
+          if (response.result && response.pagination) { 
+            this.concerts = response.result;
+            this.pagination = response.pagination;
+          }  
+        }
+      })
+    }
   }
 
   resetFilters() {
@@ -36,9 +42,11 @@ export class ConcertListComponent implements OnInit {
   }
 
   pageChanged(event: any) {
-    this.concertParams.pageNumber = event.page;
-    this.concertService.setConcertParams(this.concertParams);
-    this.loadConcerts();
+    if (this.concertParams && this.concertParams?.pageNumber !== event.page) {
+      this.concertParams.pageNumber = event.page;
+      this.concertService.setConcertParams(this.concertParams);
+      this.loadConcerts();
+    }
   }
 
 }

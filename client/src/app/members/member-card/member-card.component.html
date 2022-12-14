@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card mb-4" *ngIf="member">
     <div class="card-img-wrapper">
         <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top">
         <ul class="list-inline member-icons animate text-center">
@@ -15,7 +15,7 @@
     </div>
     <div class="card-body p-1">
         <h6 class="card-title text-center mb-1">
-            <span [class.is-online]="(presence.onlineUsers$ | async).includes(member.username)">
+            <span [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
                 <i class="fa fa-user me-2"></i>
             </span>
             {{member.knownAs}}, {{member.age}}

@@ -1,21 +1,25 @@
- <div class="row">
+ <div class="row" *ngIf="member">
   <div class="col-2 img-wrapper" *ngFor="let photo of member.photos">
-        <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1"
-            [class.not-approved]="!photo.isApproved">
+        <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1"> <!-- [class.not-approved]="!photo.isApproved" Add class to the img for admin approval functionality-->
+        
+        <!-- Div for admin aprroval functionality
         <div class="text-center img-text" *ngIf="!photo.isApproved">
             <span class="text-danger">Awaiting approval</span>
         </div>
+        -->
+
         <div class="text-center img-text">
+            <!-- || !photo.isApproved" Add after photo.isMain on the disabled option for admin approval functionality-->
             <button 
-                [disabled]="photo.isMain || !photo.isApproved"
+                [disabled]="photo.isMain" 
                 (click)="setMainPhoto(photo)"
                 [ngClass]='photo.isMain ? "btn-success active" : "btn-outline-success"'
                 class="btn btn-sm">
             Main</button>
             <button 
+                class="btn btn-sm btn-danger"
                 [disabled]="photo.isMain"
                 (click)="deletePhoto(photo.id)"
-                class="btn btn-sm btn-danger"
             ><i class="fa fa-trash"></i></button>
         </div>
    </div>
@@ -56,9 +60,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of uploader.queue">
+            <tr *ngFor="let item of uploader?.queue">
                 <td><strong>{{ item?.file?.name }}</strong></td>
-                <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td *ngIf="uploader?.options?.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
             </tr>
             </tbody>
         </table>
@@ -67,19 +71,19 @@
             <div>
                 Queue progress:
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader?.progress + '%' }"></div>
                 </div>
             </div>
             <button type="button" class="btn btn-success btn-s"
-                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    (click)="uploader?.uploadAll()" [disabled]="!uploader?.getNotUploadedItems()?.length">
                 <span class="fa fa-upload"></span> Upload all
             </button>
             <button type="button" class="btn btn-warning btn-s"
-                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    (click)="uploader?.cancelAll()" [disabled]="!uploader?.isUploading">
                 <span class="fa fa-ban"></span> Cancel all
             </button>
             <button type="button" class="btn btn-danger btn-s"
-                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    (click)="uploader?.clearQueue()" [disabled]="!uploader?.queue?.length">
                 <span class="fa fa-trash"></span> Remove all
             </button>
         </div>

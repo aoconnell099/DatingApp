@@ -1,22 +1,24 @@
 <div class="mb-3"> <!-- Confirm password form control -->
+    <!-- [class.is-invalid]="ngControl.touched && ngControl.invalid" -->
     <input 
-        [class.is-invalid]="ngControl.touched && ngControl.invalid"
         type={{type}}
+        [class.is-invalid]="control.touched && control.invalid"
         class="form-control" 
-        [formControl]="ngControl.control" 
+        [formControl]="control" 
         placeholder={{label}}> <!-- Using the $any type cast function on "ngControl.control" will remove the error caused by issues with formControl and AbstractForm. Current fix being used
                                   is to set "strictTemplates" to false in tsconfig.[ngClass]. Sticking with this method for now for simplicity's sake but it may disable 
                                   other features that are not related to this issue. -->
-    <div *ngIf="ngControl.control.errors?.required" 
+    <div *ngIf="control.errors?.['required']" 
         class="invalid-feedback">Please enter a {{label}}</div>
 
-    <div *ngIf="ngControl.control.errors?.minlength" 
-        class="invalid-feedback">{{label}} must be at least {{ngControl.control.errors.minlength['requiredLength']}}</div>
+    <div *ngIf="control.errors?.['minlength']" 
+        class="invalid-feedback">{{label}} must be at least {{control.errors?.['minlength'].requiredLength}} characters</div>
 
-    <div *ngIf="ngControl.control.errors?.maxlength" 
-        class="invalid-feedback">{{label}} must be at most {{ngControl.control.errors.maxlength['requiredLength']}}</div>
+    <div *ngIf="control.errors?.['maxlength']" 
+        class="invalid-feedback">{{label}} must be at most {{control.errors?.['maxlength'].requiredLength}} characters</div>
 
-    <div *ngIf="ngControl.control.errors?.isMatching" 
+    <!-- *ngIf="control.errors?.['isMatching']" -->
+    <div *ngIf="control.errors?.['notMatching']" 
         class="invalid-feedback">Passwords do not match</div>
 
 </div>

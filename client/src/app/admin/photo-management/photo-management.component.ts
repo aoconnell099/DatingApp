@@ -8,7 +8,7 @@ import { AdminService } from 'src/app/_services/admin.service';
   styleUrls: ['./photo-management.component.css']
 })
 export class PhotoManagementComponent implements OnInit {
-  photos: Photo[];
+  photos: Photo[] = [];
 
   constructor(private adminService: AdminService) { }
 
@@ -19,17 +19,16 @@ export class PhotoManagementComponent implements OnInit {
   getPhotosForApproval() {
     this.adminService.getPhotosForApproval().subscribe(photos => {
       this.photos = photos;
-      //console.log(this.photos);
     })
   }
 
-  approvePhoto(photoId) {
+  approvePhoto(photoId: number) {
     this.adminService.approvePhoto(photoId).subscribe(() => {
       this.photos.splice(this.photos.findIndex(p => p.id === photoId), 1);
     })
   }
 
-  rejectPhoto(photoId) {
+  rejectPhoto(photoId: number) {
     this.adminService.rejectPhoto(photoId).subscribe(() => {
       this.photos.splice(this.photos.findIndex(p => p.id === photoId), 1);
     })

@@ -77,7 +77,7 @@ export class MessageService {
     }
   }
 
-  getMessages(pageNumber, pageSize, container) {
+  getMessages(pageNumber: number, pageSize: number, container: string) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
     return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
@@ -88,7 +88,7 @@ export class MessageService {
   }
 
   async sendMessage(username: string, content: string) {
-    return this.hubConnection.invoke('SendMessage', {recipientUsername: username, content})
+    return this.hubConnection?.invoke('SendMessage', {recipientUsername: username, content})
       .catch(error => console.log(error));                                                            /* When creating an object in this way, the name of the property 
                                                                                                          must match the property of the object(in this case Message).
                                                                                                          This is done by specifying the Message object property with the 

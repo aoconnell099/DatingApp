@@ -13,18 +13,22 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./member-edit.component.css']
 })
 export class MemberEditComponent implements OnInit {
-  @ViewChild('editForm') editForm: NgForm;
-  member: Member;
-  user: User;
+  @ViewChild('editForm') editForm?: NgForm;
+  member?: Member;
+  user: User | null = null;
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
-    if (this.editForm.dirty) {
+    if (this.editForm?.dirty) {
       $event.returnValue = true;
     }
   }
 
   constructor(private accountService: AccountService, private memberService: MembersService, 
             private toastr: ToastrService) { 
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        this.user = user
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -32,16 +36,25 @@ export class MemberEditComponent implements OnInit {
   }
 
   loadMember() {
-    this.memberService.getMember(this.user.username).subscribe(member => {
-      this.member = member;
-    })
+    if (!this.user) return;
+    this.memberService.getMember(this.user.username).subscribe({
+      next: member => {
+        this.member = member;
+      }
+    });
   }
 
   updateMember() {
-    this.memberService.updateMember(this.member).subscribe(() => { // No return value so params are left empty
-      this.toastr.success("Profile updated successfully.");
-      this.editForm.reset(this.member);
-    });
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: _ => { // _ is used to denoted an unused param
+        this.toastr.success('Profile updated successfully');
+        this.editForm?.reset(this.member);
+      }
+    })
+    // this.memberService.updateMember(this.member).subscribe(() => { // No return value so params are left empty
+    //   this.toastr.success("Profile updated successfully.");
+    //   this.editForm.reset(this.member);
+    // });
     
   }
 }

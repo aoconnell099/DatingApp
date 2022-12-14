@@ -7,20 +7,22 @@ import { AccountService } from '../_services/account.service';
   selector: '[appHasRole]' // *appHasRole='["Admin"]'
 })
 export class HasRoleDirective implements OnInit{
-  @Input() appHasRole: string[];
-  user: User;
+  @Input() appHasRole: string[] = [];
+  user?: User;
 
   constructor(private viewContainerRef: ViewContainerRef, 
     private templateRef: TemplateRef<any>, 
     private accountService: AccountService) { 
-      this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-        this.user = user;
+      this.accountService.currentUser$.pipe(take(1)).subscribe({
+        next: user => {
+          if (user) this.user = user;
+        }
       })
     }
 
   ngOnInit(): void {
       // Clear view if no roles
-      if (!this.user?.roles || this.user ==null) {
+      if (!this.user?.roles || this.user == null) {
         this.viewContainerRef.clear();
         return;
       }

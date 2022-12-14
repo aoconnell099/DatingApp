@@ -8,22 +8,28 @@ import { User } from 'src/app/_models/user';
   styleUrls: ['./roles-modal.component.css']
 })
 export class RolesModalComponent implements OnInit {
-  @Input() updateSelectedRoles = new EventEmitter(); /* For the bsConfig we pass this into its content property so it needs to be an input here, 
+ /*@Input() updateSelectedRoles = new EventEmitter();  For the bsConfig we pass this into its content property so it needs to be an input here, 
                                                         but we want it to output the roles so we need to use an event emitter.
                                                      */
-  user: User;
-  roles: any[];
+  // user: User;
+  // roles: any[];
+  username = '';
+  availableRoles: any[] = [];
+  selectedRoles: any[] = [];
 
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
   }
 
-  updateRoles() {
-    //console.log("roleModalComponent roles:");
-    //console.log(this.roles);
-    this.updateSelectedRoles.emit(this.roles);
-    this.bsModalRef.hide();
+  updateChecked(checkedValue: string) {
+    const index = this.selectedRoles.indexOf(checkedValue);
+    index !== -1 ? this.selectedRoles.splice(index, 1) : this.selectedRoles.push(checkedValue);
   }
+
+  // updateRoles() {
+  //   this.updateSelectedRoles.emit(this.roles);
+  //   this.bsModalRef.hide();
+  // }
 
 }
