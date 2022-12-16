@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
+//import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs/operators';
@@ -21,8 +21,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
   //@Input() member?: Member;
   member: Member = {} as Member;
-  galleryOptions: NgxGalleryOptions[] = [];
-  galleryImages: NgxGalleryImage[] = [];
+  // galleryOptions: NgxGalleryOptions[] = [];
+  // galleryImages: NgxGalleryImage[] = [];
   activeTab?: TabDirective;
   messages: Message[] = [];
   user?: User;
@@ -52,34 +52,34 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.galleryOptions = [
-      {
-        width: '500px',
-        height: '500px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false 
-      }
-    ]
+    // this.galleryOptions = [
+    //   {
+    //     width: '500px',
+    //     height: '500px',
+    //     imagePercent: 100,
+    //     thumbnailsColumns: 4,
+    //     imageAnimation: NgxGalleryAnimation.Slide,
+    //     preview: false 
+    //   }
+    // ]
 
-    this.galleryImages = this.getImages();
+    //this.galleryImages = this.getImages();
   }
 
-  getImages(): NgxGalleryImage[] {
-    if (!this.member) return [];
+  // getImages(): NgxGalleryImage[] {
+  //   if (!this.member) return [];
 
-    const imageUrls = [];
-    for (const photo of this.member.photos) {
-      imageUrls.push({
-        small: photo?.url,
-        medium: photo?.url,
-        big: photo?.url
-      })
-    }
+  //   const imageUrls = [];
+  //   for (const photo of this.member.photos) {
+  //     imageUrls.push({
+  //       small: photo?.url,
+  //       medium: photo?.url,
+  //       big: photo?.url
+  //     })
+  //   }
 
-    return imageUrls;
-  }
+  //   return imageUrls;
+  // }
 
   loadMessages() {
     if (this.member) {
