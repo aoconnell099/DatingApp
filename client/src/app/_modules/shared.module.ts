@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 //import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { GalleryModule } from 'ng-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -26,6 +27,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     }),
     TabsModule.forRoot(),
     //NgxGalleryModule,
+    GalleryModule,
     FileUploadModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
@@ -38,6 +40,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ToastrModule,
     TabsModule,
     //NgxGalleryModule,
+    GalleryModule,
     FileUploadModule,
     BsDatepickerModule,
     PaginationModule,

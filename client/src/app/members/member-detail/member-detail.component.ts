@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+//import { GalleryComponent } from 'ng-gallery/public-api';
+import { GalleryComponent, GalleryItem, ImageItem } from 'ng-gallery';
 //import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
@@ -19,10 +21,12 @@ import { PresenceService } from 'src/app/_services/presence.service';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
+  @ViewChild(GalleryComponent) gallery?: GalleryComponent;
   //@Input() member?: Member;
   member: Member = {} as Member;
   // galleryOptions: NgxGalleryOptions[] = [];
   // galleryImages: NgxGalleryImage[] = [];
+  galleryImages: ImageItem[] = [];
   activeTab?: TabDirective;
   messages: Message[] = [];
   user?: User;
@@ -63,7 +67,8 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     //   }
     // ]
 
-    //this.galleryImages = this.getImages();
+    this.galleryImages = this.getImages();
+    this.gallery?.load(this.galleryImages);
   }
 
   // getImages(): NgxGalleryImage[] {
@@ -80,6 +85,20 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   //   return imageUrls;
   // }
+
+    getImages(): ImageItem[] {
+    if (!this.member) return [];
+
+    const imageUrls = [];
+    for (const photo of this.member.photos) {
+      imageUrls.push(new ImageItem({
+        src: photo?.url,
+        thumb: photo?.url,
+      }))
+    }
+
+    return imageUrls;
+  }
 
   loadMessages() {
     if (this.member) {

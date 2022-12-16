@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "mdb-angular-ui-kit": "^3.0.1",
     "moment": "^2.29.4",
+    "ng-gallery": "^8.0.0",
     "ng2-file-upload": "^2.0.0-3",
     "ngx-bootstrap": "^9.0.0",
     "ngx-moment": "^6.0.2",
