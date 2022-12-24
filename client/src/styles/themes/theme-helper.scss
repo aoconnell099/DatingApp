@@ -1,0 +1,26 @@
+// Helper method to add background color to a theme.
+// Read more at https://eatmorecarrots.medium.com/changing-the-background-color-in-an-angular-material-theme-90d29f864759
+@function modify-background($theme, $background-color) {
+    // Replace the background in the color object's background palette.
+    $theme-color: map-get($theme, color);
+    $color-background-palette: map-get($theme-color, background);
+    $color-background-palette: map-merge($color-background-palette, (background: $background-color));
+    $color-background-palette: map-merge($color-background-palette, (raised-button: $background-color));
+  
+    // Replace the background in the background palette.
+    $background-palette: map-get($theme, background);
+    $background-palette: map-merge($background-palette, (background: $background-color));
+    $background-palette: map-merge($background-palette, (raised-button: $background-color));
+  
+    // Merge the changes into a new theme.
+    $modified-theme-color: map-merge($theme-color, (background: $color-background-palette));
+    $modified-theme: map-merge($theme, (color: $modified-theme-color));
+    $modified-theme: map-merge($modified-theme, (background: $background-palette));
+  
+    @return $modified-theme;
+  }
+// Add this to styles.scss when theme isn't being applied to certain components correctly
+// Adjust classes to suit the components not being themed correctly
+// .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn, .mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
+//   background-color: $md-lightgray.500;
+// }

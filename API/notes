@@ -1,5 +1,16 @@
 /*
-copnsole.logs in members.service, account.service, and memberlist.component
+Admin Approval
+=====================
+IdentityServiceExtensions contains the authorization policy for photo moderation
+which is currently commented out
+
+AdminController has all of the AuthPolicies commented out above the controller methods
+for approving/rejecting photos etc.
+
+photo-editor component calls the admin service methods to approve photos when added to bypass
+the approval process. Remove the photos array and the two subscription where commented to reenable
+======================
+
 
 
 inside of register -- AccountController

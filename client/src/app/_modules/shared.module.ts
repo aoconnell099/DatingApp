@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 //import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from  'ng-gallery/lightbox';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
@@ -22,12 +30,21 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CommonModule,
     BsDropdownModule.forRoot(),
     BrowserAnimationsModule,
+    
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
     }),
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatListModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
     GalleryModule,
+    LightboxModule,
     FileUploadModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
@@ -41,9 +58,17 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TabsModule,
     //NgxGalleryModule,
     GalleryModule,
+    LightboxModule,
     FileUploadModule,
     BsDatepickerModule,
     PaginationModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatListModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
     ButtonsModule,
     MomentModule,
     ModalModule

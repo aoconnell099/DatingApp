@@ -68,7 +68,7 @@ namespace API.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
         
-        [Authorize(Policy = "ModeratePhotoRole")]
+        //[Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photos-to-moderate")]
         public async Task<ActionResult> GetPhotosForModeration()
         { 
@@ -78,7 +78,7 @@ namespace API.Controllers
             return Ok(photos);
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        //[Authorize(Policy = "ModeratePhotoRole")]
         [HttpPost("approve-photo/{photoId}")]
         public async Task<ActionResult> ApprovePhoto(int photoId)
         {
@@ -99,7 +99,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
+        //[Authorize(Policy = "ModeratePhotoRole")]
         [HttpPost("reject-photo/{photoId}")]
         public async Task<ActionResult> RejectPhoto(int photoId)
         {

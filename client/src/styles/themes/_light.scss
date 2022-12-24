@@ -1,0 +1,53 @@
+@use "sass:map";
+@use 'theme-helper';
+@use "@angular/material" as mat;
+@use "../palettes" as pal;
+@use "../typography/config" as typ;
+
+//@include mat.all-component-themes($light-theme);
+
+$light-primary: mat.define-palette(pal.$md-bluegray);
+$light-accent: mat.define-palette(pal.$md-purplegray);
+$light-warn: mat.define-palette(pal.$md-deepred);
+$light-background-color: map-get(pal.$md-lightgray,500);
+$dark-background-color: map-get(pal.$md-darkgray, 900);
+//$light-typography: map-get(typ.$app-typography, $body-1);
+
+$light-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $light-primary,
+            accent: $light-accent,
+            warn: $light-warn,
+        ),
+        typography: typ.$app-typography,
+    )
+);
+
+$light-theme: theme-helper.modify-background($light-theme, $light-background-color);
+
+// Method of adding a background color to a theme. Found on https://github.com/angular/components/issues/19935#issuecomment-657611078
+// $background: map-get($light-theme, background);
+// $background: map-merge($background, (background: $dark-background-color));
+// $light-theme: map-merge($light-theme, (background: $background));
+
+// @include angular-material-theme($light-theme);
+// @include my-app-theme($light-theme);
+
+// Second method of adding a background color
+// $light-theme: map-merge(
+//     $light-theme,
+//     (
+//       color: map-merge(
+//           map-get($light-theme, color),
+//           (
+//             background: map-merge(
+//                 $mat-light-theme-background,
+//                 (
+//                   background: $md-lightgray
+//                 )
+//             )
+//           )
+//       )
+//     )
+// );

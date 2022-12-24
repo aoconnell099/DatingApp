@@ -30,6 +30,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   activeTab?: TabDirective;
   messages: Message[] = [];
   user?: User;
+  showGallery: boolean = true;
 
   constructor(public presence: PresenceService, private route: ActivatedRoute, 
     private messageService: MessageService, private memberService: MembersService, 
@@ -69,6 +70,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
     this.galleryImages = this.getImages();
     this.gallery?.load(this.galleryImages);
+    this.showGallery = this.galleryImages.length == 0 ? false: true;
   }
 
   // getImages(): NgxGalleryImage[] {

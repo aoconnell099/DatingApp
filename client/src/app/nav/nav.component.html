@@ -1,26 +1,26 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+<!-- <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <div class="container">
         <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <ng-container *ngIf="accountService.currentUser$ | async">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/members' routerLinkActive='active'>Matches</a>
+                    <a class="nav-button" routerLink='/members' routerLinkActive='active'>Matches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/concerts' routerLinkActive='active'>Concerts</a>
+                    <a class="nav-button" routerLink='/concerts' routerLinkActive='active'>Concerts</a>
                 </li>               
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Lists</a>
+                    <a class="nav-button" routerLink='/lists' routerLinkActive='active'>Lists</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Messages</a>
+                    <a class="nav-button" routerLink='/messages' routerLinkActive='active'>Messages</a>
                 </li>
                 <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
-                    <a class="nav-link" routerLink='/admin' routerLinkActive='active'>Admin</a>
+                    <a class="nav-button" routerLink='/admin' routerLinkActive='active'>Admin</a>
                 </li>
             </ng-container>
             <li class="nav-item">
-                <a class="nav-link" routerLink='/errors' routerLinkActive='active'>Errors</a>
+                <a class="nav-button" routerLink='/errors' routerLinkActive='active'>Errors</a>
             </li>
         </ul>
 
@@ -51,4 +51,138 @@
             <button class="btn btn-success" type="submit">Login</button>
         </form>
     </div>
-</nav>
+</nav> -->
+
+
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
+        <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-title">
+            <button mat-icon-button (click)="sidenav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+        </div>
+        <!-- <span class="menu-spacer"></span> -->
+        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"  class="nav-row" [class.small-nav-row]="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
+        
+            <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
+        
+        <ng-container *ngIf="accountService.currentUser$ | async">
+            <!-- Navbar container for Medium (960px-1280px) and Large (1280px-1920px) sized screens-->
+            <div *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="nav-items" >
+                <a mat-button id="matches" routerLink='/members' routerLinkActive="nav-button">Matches</a>
+                
+                <a mat-button id="concerts" routerLink='/concerts' routerLinkActive="nav-button">Concerts</a>
+                
+                <a mat-button id="lists" routerLink='/lists' routerLinkActive="nav-button">Lists</a>
+
+                <a mat-button id="messages" routerLink='/messages' routerLinkActive='nav-button'>Messages</a>
+
+                <a mat-button *appHasRole='["Admin", "Moderator"]' id="admin" routerLink='/admin' routerLinkActive='nav-button'>Admin</a>
+                
+                <a mat-button *appHasRole='["Admin", "Moderator"]' id="errors" routerLink='/errors' routerLinkActive='nav-button'>Errors</a>
+               
+            </div>
+
+            <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-items" >
+
+                <a mat-icon-button routerLink='/members' routerLinkActive='nav-button'>
+                    <mat-icon svgIcon="stage-lights-star-1"></mat-icon>
+                </a>
+                <a mat-icon-button routerLink='/concerts' routerLinkActive='nav-button'>
+                    <mat-icon svgIcon="full-stage"></mat-icon>
+                </a>
+                <a mat-icon-button routerLink='/lists' routerLinkActive="nav-button">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                </a>
+                <a mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>
+                    <mat-icon> message</mat-icon>
+                </a>
+                <button mat-button *appHasRole='["Admin", "Moderator"]' >
+                    <a routerLink='/admin' routerLinkActive='active'>Admin</a>
+                </button>
+                <button mat-button *appHasRole='["Admin", "Moderator"]' >
+                    <a routerLink='/errors' routerLinkActive='active'>Errors</a>
+                </button>
+
+            </div>
+ 
+        </ng-container>
+        
+        <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Edit Profile</span>
+                </button>
+                <button mat-menu-item disabled>
+                    <mat-icon>voicemail</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+            
+            <a mat-button-icon [matMenuTriggerFor]="menu">
+                <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                <a *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>
+                <a *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="user-arrow dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle></a>
+                <div class="dropdown-menu mt-2" *dropdownMenu>
+                    <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" (click)="logout()" >Logout</a>
+                </div>            
+            </a>
+
+            <!-- <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+            <a *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>
+            <a *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="user-arrow dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle></a>
+            <div class="dropdown-menu mt-2" *dropdownMenu>
+                <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logout()" >Logout</a>
+            </div> -->
+        </div>
+
+
+
+        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
+            <input 
+                name="username"
+                [(ngModel)]="model.username"
+                class="form-control me-2" 
+                type="text" 
+                placeholder="Username">
+            <input 
+                name="password"
+                [(ngModel)]="model.password"
+                class="form-control me-2" 
+                type="password" 
+                placeholder="Password">
+            <button class="btn btn-success" type="submit">Login</button>
+        </form>
+        </div>
+    </mat-toolbar-row>    
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav>
+        <mat-nav-list>
+
+            <a mat-list-item [routerLink]="'/members'">Matches</a>
+            <a mat-list-item [routerLink]="'/concerts'">Concerts</a>
+            <a mat-list-item [routerLink]="'/lists'">Lists</a>
+            <a mat-list-item [routerLink]="'/messages'">Messages</a>
+            <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/admin'">Admin</a>
+            <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/errors'">Errors</a>
+            <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Close</a>
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div style="height: 88vh;">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

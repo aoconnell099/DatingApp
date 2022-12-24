@@ -1,3 +1,14 @@
+@use "sass:map";
+@use '@angular/material' as mat;
+@use "../../styles/themes/light" as light-theme;
+
+//@include mat.all-component-themes(light-theme.$light-theme);
+//@include mat.all-component-typographies(typography.$app-typography);
+// $color-config:    mat.get-color-config(light-theme.$light-theme);
+// $primary-palette: map.get($color-config, 'primary');
+// $accent-palette:  map.get($color-config, 'accent');
+// $warn-palette:    map.get($color-config, 'warn');
+
 .dropdown-toggle, .dropdown-item {
     cursor: pointer;
 }
@@ -7,3 +18,23 @@ img {
     border: 2px solid white;
     display: inline;
 }
+
+// .nav-title {
+// display: flex;
+// justify-content: flex-start;
+// align-items: center;
+// }
+// .nav-items {
+// display: flex;
+// flex: 1 1 auto; 
+// flex-direction: row;
+// justify-content: flex-end;
+// }
+// .nav-items > * {
+// color: mat.get-color-from-palette($primary-palette, '500-contrast') !important;
+// @include mat.elevation-transition();
+// @include mat.elevation(2);
+// }
+// .nav-button {
+//     @include mat.elevation(8);
+// }
