@@ -55,7 +55,7 @@
 
 
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row id="nav-toolbar-row">
         <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
         <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-title">
             <button mat-icon-button (click)="sidenav.toggle()">
@@ -63,7 +63,7 @@
             </button>
         </div>
         <!-- <span class="menu-spacer"></span> -->
-        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"  class="nav-row" [class.small-nav-row]="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
+        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"   [class.small-nav-row]="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
         
             <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
         
@@ -93,10 +93,10 @@
                     <mat-icon svgIcon="full-stage"></mat-icon>
                 </a>
                 <a mat-icon-button routerLink='/lists' routerLinkActive="nav-button">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <i id="heart-icon" class="fa fa-heart" aria-hidden="true"></i>
                 </a>
-                <a mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>
-                    <mat-icon> message</mat-icon>
+                <a mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>        
+                    <mat-icon id="message-icon" svgIcon="message-chat-1"></mat-icon>
                 </a>
                 <button mat-button *appHasRole='["Admin", "Moderator"]' >
                     <a routerLink='/admin' routerLinkActive='active'>Admin</a>
@@ -110,31 +110,33 @@
         </ng-container>
         
         <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            <div id="userPhoto">
+                <div *ngIf="currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large">
+                    <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                </div>
+                <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
+                    <!-- <button  [matMenuTriggerFor]="menu"mat-icon-button aria-label="Example icon-button with a menu"> -->
+                        <!-- <mat-icon>more_vert</mat-icon> -->
+                        <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                    
+                    <!-- </button> -->
+                </div>
+                
+                
+                
+            </div>
+                <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
             
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    <mat-icon>dialpad</mat-icon>
-                    <span>Edit Profile</span>
-                </button>
-                <button mat-menu-item disabled>
-                    <mat-icon>voicemail</mat-icon>
-                    <span>Logout</span>
-                </button>
-            </mat-menu>
-            
-            <a mat-button-icon [matMenuTriggerFor]="menu">
-                <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
-                <a *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>
-                <a *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="user-arrow dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle></a>
-                <div class="dropdown-menu mt-2" *dropdownMenu>
-                    <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" (click)="logout()" >Logout</a>
-                </div>            
-            </a>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>dialpad</mat-icon>
+                        <span>Edit Profile</span>
+                    </button>
+                    <button mat-menu-item disabled>
+                        <mat-icon>voicemail</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </mat-menu>
 
             <!-- <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
             <a *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>

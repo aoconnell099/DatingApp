@@ -9,7 +9,8 @@ private path: string = "../../assets/icons";
   public matIconRegistry: MatIconRegistry ) {
   this.matIconRegistry
   .addSvgIcon("home", this.setPath(`${this.path}/full-stage.svg`))
-  .addSvgIcon("add", this.setPath(`${this.path}/stage-lights-star-1.svg`));
+  .addSvgIcon("add", this.setPath(`${this.path}/stage-lights-star-1.svg`))
+  .addSvgIcon("message", this.setPath(`${this.path}/message-chat-1.svg`));
  }
  private setPath(url: string): SafeResourceUrl { 
   return this.domSanitizer.bypassSecurityTrustResourceUrl(url); 
