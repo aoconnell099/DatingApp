@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
@@ -36,6 +37,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     }),
     MatButtonModule,
     MatButtonToggleModule,
+    MatSlideToggleModule,
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
@@ -64,6 +66,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PaginationModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatSlideToggleModule,
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,

@@ -11,6 +11,7 @@ $light-accent: mat.define-palette(pal.$md-purplegray);
 $light-warn: mat.define-palette(pal.$md-deepred);
 $light-background-color: map-get(pal.$md-lightgray,500);
 $dark-background-color: map-get(pal.$md-darkgray, 900);
+$light-background-image: "../assets/background-image.svg";
 //$light-typography: map-get(typ.$app-typography, $body-1);
 
 $light-theme: mat.define-light-theme(
@@ -24,7 +25,8 @@ $light-theme: mat.define-light-theme(
     )
 );
 
-$light-theme: theme-helper.modify-background($light-theme, $light-background-color);
+// $light-theme: theme-helper.modify-background($light-theme, $light-background-color);
+$light-theme: theme-helper.modify-background($light-theme, $light-background-image);
 
 // Method of adding a background color to a theme. Found on https://github.com/angular/components/issues/19935#issuecomment-657611078
 // $background: map-get($light-theme, background);

@@ -5,6 +5,7 @@ import { Observable, distinctUntilChanged, takeUntil, tap } from 'rxjs';
 import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-nav',
@@ -12,6 +13,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+  backgroundToggle = true;
+  background = 'Gray'
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
   isActive = false;
@@ -80,7 +83,6 @@ export class NavComponent implements OnInit {
   }
 
   toggleElevation(event: any) {
-    console.log(event);
     // Check if the button is not elevated
     if (event.target.classList.contains('mat-elevation-z2')) {
       event.target.classList.add('mat-elevation-z8');
@@ -90,6 +92,15 @@ export class NavComponent implements OnInit {
       event.target.classList.add('mat-elevation-z2');
       event.target.classList.remove('mat-elevation-z8');
     }
-    console.log(event);
   }
+
+  toggleBackground(event: MatSlideToggleChange) {
+    console.log(event);
+    this.backgroundToggle = !this.backgroundToggle;
+    this.background = this.backgroundToggle ? 'Gray' : 'Wave';
+  }
+  // toggleBackground() {
+  //   this.backgroundToggle = !this.backgroundToggle;
+  //   this.background = this.backgroundToggle ? 'Gray' : 'Wave';
+  // }
 }
