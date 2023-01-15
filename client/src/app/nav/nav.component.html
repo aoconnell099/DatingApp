@@ -1,59 +1,3 @@
-<!-- <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-    <div class="container">
-        <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <ng-container *ngIf="accountService.currentUser$ | async">
-                <li class="nav-item">
-                    <a class="nav-button" routerLink='/members' routerLinkActive='active'>Matches</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-button" routerLink='/concerts' routerLinkActive='active'>Concerts</a>
-                </li>               
-                <li class="nav-item">
-                    <a class="nav-button" routerLink='/lists' routerLinkActive='active'>Lists</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-button" routerLink='/messages' routerLinkActive='active'>Messages</a>
-                </li>
-                <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
-                    <a class="nav-button" routerLink='/admin' routerLinkActive='active'>Admin</a>
-                </li>
-            </ng-container>
-            <li class="nav-item">
-                <a class="nav-button" routerLink='/errors' routerLinkActive='active'>Errors</a>
-            </li>
-        </ul>
-
-        <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-            <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
-            <a class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>
-            <div class="dropdown-menu mt-2" *dropdownMenu>
-                <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="logout()" >Logout</a>
-            </div>
-        </div>
-
-
-        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-            <input 
-                name="username"
-                [(ngModel)]="model.username"
-                class="form-control me-2" 
-                type="text" 
-                placeholder="Username">
-            <input 
-                name="password"
-                [(ngModel)]="model.password"
-                class="form-control me-2" 
-                type="password" 
-                placeholder="Password">
-            <button class="btn btn-success" type="submit">Login</button>
-        </form>
-    </div>
-</nav> -->
-
-
 <mat-toolbar color="primary">
     <mat-toolbar-row id="nav-toolbar-row">
         <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
@@ -63,7 +7,7 @@
             </button>
         </div>
         <!-- <span class="menu-spacer"></span> -->
-        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"   [class.small-nav-row]="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
+        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"> 
         
             <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
         
@@ -133,11 +77,11 @@
                     <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
                 
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button routerlink="/member/edit" mat-menu-item>
                             <mat-icon>dialpad</mat-icon>
                             <span>Edit Profile</span>
                         </button>
-                        <button mat-menu-item disabled>
+                        <button (click)="logout()" mat-menu-item>
                             <mat-icon>voicemail</mat-icon>
                             <span>Logout</span>
                         </button>

@@ -89,12 +89,13 @@ $warn-palette:    map.get($color-config, 'warn');
   align-items: center;
 }
 #userImg {
-  width: 100% !important;
-  max-width: 100% !important;  
+  //width: 100% !important;
+ //max-width: 100% !important;  
   height: auto !important;  
   border-radius: 50%;
   @include mat.elevation-transition();
   @include mat.elevation(1);
+  align-self: center;
 }
 #userImg:hover {
   @include mat.elevation(6);

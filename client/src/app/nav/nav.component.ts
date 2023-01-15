@@ -57,6 +57,7 @@ export class NavComponent implements OnInit {
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
+    //this.logout();
   }
 
   private breakpointChanged() {
