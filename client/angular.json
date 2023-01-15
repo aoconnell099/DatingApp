@@ -30,7 +30,8 @@
               "./node_modules/ngx-toastr/toastr.css",
               "src/styles.scss",
               "src/styles/themes/_light.scss",
-              "src/assets/scss/modules/_icon.scss"
+              "src/assets/scss/modules/_icon.scss",
+              "src/styles/typography/_custom-fonts.scss"
             ],
             "scripts": []
           },

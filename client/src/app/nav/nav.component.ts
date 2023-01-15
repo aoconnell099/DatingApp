@@ -6,6 +6,7 @@ import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-nav',
@@ -13,6 +14,11 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+  backgrounds = new FormControl('');
+  backgroundList: string[] = ['Original', 'Wave'];
+  font = 'Work Sans'
+  fonts = new FormControl('');
+  fontList: string[] = ['A Gentle Kiss', 'Kells', 'Lieselotte', 'Meath', 'Remachine'];
   backgroundToggle = true;
   background = 'Gray'
   Breakpoints = Breakpoints;

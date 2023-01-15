@@ -1,120 +1,202 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row id="nav-toolbar-row">
         <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
-        <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-title">
+        <!-- <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-title">
             <button mat-icon-button (click)="sidenav.toggle()">
               <mat-icon>menu</mat-icon>
             </button>
-        </div>
+        </div> -->
         <!-- <span class="menu-spacer"></span> -->
-        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"> 
-        
-            <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Dating App</a>
-        
-        <ng-container *ngIf="accountService.currentUser$ | async">
-            <!-- Navbar container for Medium (960px-1280px) and Large (1280px-1920px) sized screens-->
-            <div *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="nav-items" >
-                <a mat-button class="nav-button-display" id="matches" routerLink='/members' routerLinkActive="nav-button">Matches</a>
-                
-                <a mat-button class="nav-button-display" id="concerts" routerLink='/concerts' routerLinkActive="nav-button">Concerts</a>
-                
-                <a mat-button class="nav-button-display" id="lists" routerLink='/lists' routerLinkActive="nav-button">Lists</a>
-
-                <a mat-button class="nav-button-display" id="messages" routerLink='/messages' routerLinkActive='nav-button'>Messages</a>
-
-                <a mat-button *appHasRole='["Admin", "Moderator"]' class="nav-button-display" id="admin" routerLink='/admin' routerLinkActive='nav-button'>Admin</a>
-                
-                <a mat-button *appHasRole='["Admin", "Moderator"]' class="nav-button-display" id="errors" routerLink='/errors' routerLinkActive='nav-button'>Errors</a>
-               
-            </div>
-
-            <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-items" >
-
-                <a class="elevate-icon" mat-icon-button routerLink='/members' routerLinkActive='nav-button'>
-                    <mat-icon class="icon-display" id="stage-icon" svgIcon="stage-lights-star-1"></mat-icon>
-                </a>
-                <a class="elevate-icon" mat-icon-button routerLink='/concerts' routerLinkActive='nav-button'>
-                    <mat-icon class="icon-display" id="concert-icon" svgIcon="full-stage"></mat-icon>
-                </a>
-                <a class="elevate-icon" mat-icon-button routerLink='/lists' routerLinkActive="nav-button">
-                    <i id="heart-icon" class="fa fa-heart" aria-hidden="true"></i>
-                </a>
-                <a class="elevate-icon" mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>        
-                    <!-- <mat-icon id="message-icon">message</mat-icon> -->
-                    <img class="icon-display" id="message-icon" src="../../assets/icons/message-chat-1.png">
-                </a>
-                <button mat-button *appHasRole='["Admin", "Moderator"]' >
-                    <a routerLink='/admin' routerLinkActive='active'>Admin</a>
+        <div [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
+            
+            <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-title">
+                <button mat-icon-button (click)="sidenav.toggle()">
+                  <mat-icon>menu</mat-icon>
                 </button>
-                <button mat-button *appHasRole='["Admin", "Moderator"]' >
-                    <a routerLink='/errors' routerLinkActive='active'>Errors</a>
-                </button>
-
             </div>
- 
-        </ng-container>
-        <div class="user-icon-container">
-            <mat-slide-toggle 
-                (change)="toggleBackground($event)">
-            </mat-slide-toggle><!-- [(ngModel)]="backgroundToggle" -->
+            
+            <div *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"> 
+            <a class="navbar-brand" routerLink='/' routerLinkActive='active' 
+                [ngClass]="{
+                    'a-gentle-kiss': font === 'A Gentle Kiss',
+                    'kells': font === 'Kells'
+                }"
+                >Dating App</a>
+            </div>
+        
+            <ng-container *ngIf="accountService.currentUser$ | async">
+                <!-- Navbar container for Medium (960px-1280px) and Large (1280px-1920px) sized screens-->
+                <div *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="nav-items" >
+                    <a mat-button class="nav-button-display" id="matches" routerLink='/members' routerLinkActive="nav-button">Matches</a>
+                    
+                    <a mat-button class="nav-button-display" id="concerts" routerLink='/concerts' routerLinkActive="nav-button">Concerts</a>
+                    
+                    <a mat-button class="nav-button-display" id="lists" routerLink='/lists' routerLinkActive="nav-button">Lists</a>
 
-            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-                <div id="userPhoto">
-                    <div *ngIf="currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large">
-                        <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
-                    </div>
-                    <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
-                        <!-- <button  [matMenuTriggerFor]="menu"mat-icon-button aria-label="Example icon-button with a menu"> -->
-                            <!-- <mat-icon>more_vert</mat-icon> -->
-                            <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
-                        
-                        <!-- </button> -->
-                    </div>
+                    <a mat-button class="nav-button-display" id="messages" routerLink='/messages' routerLinkActive='nav-button'>Messages</a>
+
+                    <a mat-button *appHasRole='["Admin", "Moderator"]' class="nav-button-display" id="admin" routerLink='/admin' routerLinkActive='nav-button'>Admin</a>
                     
-                    
-                    
+                    <a mat-button *appHasRole='["Admin", "Moderator"]' class="nav-button-display" id="errors" routerLink='/errors' routerLinkActive='nav-button'>Errors</a>
+                
                 </div>
-                    <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
-                
-                    <mat-menu #menu="matMenu">
-                        <button routerlink="/member/edit" mat-menu-item>
-                            <mat-icon>dialpad</mat-icon>
-                            <span>Edit Profile</span>
-                        </button>
-                        <button (click)="logout()" mat-menu-item>
-                            <mat-icon>voicemail</mat-icon>
-                            <span>Logout</span>
-                        </button>
-                    </mat-menu>
 
-                <!-- <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
-                <a *ngIf="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a>
-                <a *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="user-arrow dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle></a>
-                <div class="dropdown-menu mt-2" *dropdownMenu>
-                    <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" (click)="logout()" >Logout</a>
-                </div> -->
+                <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-items" >
+
+                    <a class="elevate-icon" mat-icon-button routerLink='/members' routerLinkActive='nav-button'>
+                        <mat-icon class="icon-display" id="stage-icon" svgIcon="stage-lights-star-1"></mat-icon>
+                    </a>
+                    <a class="elevate-icon" mat-icon-button routerLink='/concerts' routerLinkActive='nav-button'>
+                        <mat-icon class="icon-display" id="concert-icon" svgIcon="full-stage"></mat-icon>
+                    </a>
+                    <a class="elevate-icon" mat-icon-button routerLink='/lists' routerLinkActive="nav-button">
+                        <i id="heart-icon" class="fa fa-heart" aria-hidden="true"></i>
+                    </a>
+                    <a class="elevate-icon" mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>        
+                        <!-- <mat-icon id="message-icon">message</mat-icon> -->
+                        <img class="icon-display" id="message-icon" src="../../assets/icons/message-chat-1.png">
+                    </a>
+                    <button mat-button *appHasRole='["Admin", "Moderator"]' >
+                        <a routerLink='/admin' routerLinkActive='active'>Admin</a>
+                    </button>
+                    <button mat-button *appHasRole='["Admin", "Moderator"]' >
+                        <a routerLink='/errors' routerLinkActive='active'>Errors</a>
+                    </button>
+
+                </div>
+    
+            </ng-container>
+            
+            <div class="user-icon-container">
+                <mat-slide-toggle 
+                    (change)="toggleBackground($event)">
+                </mat-slide-toggle><!-- [(ngModel)]="backgroundToggle" -->
+
+                <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
+                    <input 
+                        name="username"
+                        [(ngModel)]="model.username"
+                        class="form-control me-2" 
+                        type="text" 
+                        placeholder="Username">
+                    <input 
+                        name="password"
+                        [(ngModel)]="model.password"
+                        class="form-control me-2" 
+                        type="password" 
+                        placeholder="Password">
+                    <button class="btn btn-success" type="submit">Login</button>
+                </form>
+
+                <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+                    <div id="userPhoto">
+                        <div *ngIf="currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large">
+                            <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                        </div>
+                        <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
+                            <!-- <button  [matMenuTriggerFor]="menu"mat-icon-button aria-label="Example icon-button with a menu"> -->
+                                <!-- <mat-icon>more_vert</mat-icon> -->
+                                <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                            
+                            <!-- </button> -->
+                        </div>
+                        
+                        
+                        
+                    </div>
+                        <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
+                    
+                        <mat-menu #menu="matMenu">
+                            <!-- Member edit link -->
+                            <a routerlink="/member/edit" mat-menu-item>Edit Profile</a>
+
+                            <!-- Nested theme editor -->
+                            <button mat-menu-item [matMenuTriggerFor]="themeEditor">Edit Theme</button>
+
+                            <!-- Logout button -->
+                            <button (click)="logout()" mat-menu-item>
+                                <mat-icon>voicemail</mat-icon>
+                                <span>Logout</span>
+                            </button>
+                        </mat-menu>
+
+                        <mat-menu #themeEditor="matMenu">
+                            <button mat-menu-item [matMenuTriggerFor]="backgroundEditor">Backgrounds</button>
+                            <!-- <button mat-menu-item [matMenuTriggerFor]="fontEditor">Fonts</button> -->
+                        </mat-menu>
+
+                        <mat-menu #backgroundEditor="matMenu" (click)="$event.stopPropagation()">
+                            <button (click)="$event.stopPropagation()" mat-menu-item>Birds</button>
+                            <mat-form-field mat-menu-iem appearance="fill">
+                                <!-- <mat-label>backgrounds</mat-label> -->
+                                <mat-select [formControl]="backgrounds" multiple>
+                                  <mat-select-trigger>
+                                    {{backgrounds.value?.[0] || ''}}
+                                    <span *ngIf="(backgrounds.value?.length || 0) > 1" class="example-additional-selection">
+                                      (+{{(backgrounds.value?.length || 0) - 1}} {{backgrounds.value?.length === 2 ? 'other' : 'others'}})
+                                    </span>
+                                  </mat-select-trigger>
+                                  <mat-option *ngFor="let background of backgroundList" [value]="background">{{background}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </mat-menu>
+
+                        <!-- <(click)="$event.stopPropagation()"> -->
+                        <!-- <mat-menu #fontEditor="matMenu">  
+                            <mat-form-field appearance="fill">
+                                <mat-label>Select an option</mat-label>
+                                <mat-select [(value)]="font">
+                                  <mat-option>None</mat-option>
+                                  <mat-option value="Work Sans">Work Sans</mat-option>
+                                  <mat-option value="A Gentle Kiss">A Gentle Kiss</mat-option>
+                                  <mat-option value="Kells">Kells</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            <button mat-menu-item>{{font}}</button>
+                        </mat-menu> -->
+
+                        <!-- <mat-form-field appearance="fill">
+                            <mat-label>backgrounds</mat-label>
+                            <mat-select [formControl]="backgrounds" multiple>
+                              <mat-select-trigger>
+                                {{backgrounds.value?.[0] || ''}}
+                                <span *ngIf="(backgrounds.value?.length || 0) > 1" class="example-additional-selection">
+                                  (+{{(backgrounds.value?.length || 0) - 1}} {{backgrounds.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                              </mat-select-trigger>
+                              <mat-option *ngFor="let background of backgroundList" [value]="background">{{background}}</mat-option>
+                            </mat-select>
+                          </mat-form-field> -->
+
+                        <!-- <div class="dropdown-divider"></div> -->
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select [(value)]="font">
+                      <mat-option>None</mat-option>
+                      <mat-option value="Work Sans">Work Sans</mat-option>
+                      <mat-option value="A Gentle Kiss">A Gentle Kiss</mat-option>
+                      <mat-option value="Kells">Kells</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <button mat-menu-item>{{font}}</button>
             </div>
-        </div>
 
-
-
-        <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
-            <input 
-                name="username"
-                [(ngModel)]="model.username"
-                class="form-control me-2" 
-                type="text" 
-                placeholder="Username">
-            <input 
-                name="password"
-                [(ngModel)]="model.password"
-                class="form-control me-2" 
-                type="password" 
-                placeholder="Password">
-            <button class="btn btn-success" type="submit">Login</button>
-        </form>
+            <!-- <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
+                <input 
+                    name="username"
+                    [(ngModel)]="model.username"
+                    class="form-control me-2" 
+                    type="text" 
+                    placeholder="Username">
+                <input 
+                    name="password"
+                    [(ngModel)]="model.password"
+                    class="form-control me-2" 
+                    type="password" 
+                    placeholder="Password">
+                <button class="btn btn-success" type="submit">Login</button>
+            </form> -->
         </div>
     </mat-toolbar-row>    
 </mat-toolbar>
@@ -132,7 +214,7 @@
 
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content [ngClass]="{
+    <mat-sidenav-content style="height: 94vh;" [ngClass]="{
         'mat-sidenav-content-gray': background === 'Gray',
         'mat-sidenav-content-wave': background === 'Wave'
     }"> <!-- class="[ngClass]={

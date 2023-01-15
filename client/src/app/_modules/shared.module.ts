@@ -6,8 +6,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
@@ -42,7 +44,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
+    MatSelectModule,
     MatIconModule,
+    MatInputModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
     GalleryModule,
@@ -71,7 +75,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
+    MatSelectModule,
     MatIconModule,
+    MatInputModule,
     ButtonsModule,
     MomentModule,
     ModalModule
