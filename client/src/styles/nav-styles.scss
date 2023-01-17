@@ -122,10 +122,73 @@
     display: flex;
   }
 
-  .a-gentle-kiss {
-    font-family: "A Gentle Kiss";
+  .fade-in-text {
+    transition: opacity 300ms ease-in 200ms;
+    opacity: 1 !important;
   }
-
+  // .fade-in-text {
+  //   animation: fadeIn 0.5s !important;
+  // }
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  // .invis {
+  //   opacity: 0;
+  // }
+  .transparent {
+    transition: opacity 300ms ease-in 200ms;
+    opacity: 0 !important;
+  }
+  .roboto {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+  }
+  .a-gentle-touch {
+    font-family: "A Gentle Touch";
+  }
   .kells {
     font-family: "Kells";
+  }
+  .lieselotte {
+    font-family: "Lieselotte";
+    font-weight: 500;
+  }
+  .meath {
+    font-family: "Meath";
+  }
+  .remachine {
+    font-family: "Remachine";
+  }
+  .brand-24px {
+    font-size: 24px !important;
+  }
+  .brand-32px {
+    font-size: 32px !important;
+  }
+  .brand-42px {
+    font-size: 42px !important;
+  }
+  .brand-48px {
+    font-size: 48px !important;
+  }
+  .brand-64px {
+    font-size: 64px !important;
+  }
+  #name-photo-container {
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    align-items: center;
+  }
+
+  .menu-form-wrapper .mat-menu-content:not(:empty) {
+    padding: 0;
+  }
+  
+  // layout for the form
+  .menu-form-wrapper .menu-form {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
   }

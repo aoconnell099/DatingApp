@@ -48,9 +48,18 @@ $warn-palette:    map.get($color-config, 'warn');
 @import "./styles/nav-styles.scss";
 
 body {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
+.mat-mdc-menu-content {
+  line-height: normal !important;
+}
+.mat-mdc-menu-item {
+  line-height: normal !important;
+}
+.mdc-list-item__primary-text {
+  line-height: normal !important;
+}
 /*
 .tab-panel {
     border: 1px solid #ddd;

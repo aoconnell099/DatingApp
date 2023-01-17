@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, distinctUntilChanged, takeUntil, tap } from 'rxjs';
@@ -7,6 +7,9 @@ import { AccountService } from '../_services/account.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { FormControl } from '@angular/forms';
+import { MatSelectionListChange, SelectionList } from '@angular/material/list';
+import { MatRadioChange } from '@angular/material/radio';
+//import { animate, transition } from '@angular/material/animations';
 
 @Component({
   selector: 'app-nav',
@@ -14,60 +17,66 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  backgrounds = new FormControl('');
-  backgroundList: string[] = ['Original', 'Wave'];
-  font = 'Work Sans'
-  fonts = new FormControl('');
-  fontList: string[] = ['A Gentle Kiss', 'Kells', 'Lieselotte', 'Meath', 'Remachine'];
+  // backgrounds = new FormControl('');
+  // fonts = new FormControl('');
   backgroundToggle = true;
-  background = 'Gray'
+
+  background = 'Original';
+  backgroundList: string[] = ['Original', 'Wave'];
+  currentBackground ='';
+  currentFont = '';
+  font = 'Roboto';
+  fontList: string[] = ['Roboto', 'A Gentle Touch', 'Kells', 'Lieselotte', 'Meath', 'Remachine'];
+  title = 'Dating App';
+  currentTitle = '';
+  titleList = ['Dating App', 'Fiddler', 'Amhrán'];
+
+  toggleFade = false;
+  
+  logoChar = '';
+
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
   isActive = false;
+  hide = true;
+
   readonly breakpoint$ = this.breakpointObserver
-    .observe([Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
+    .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
     .pipe(
       tap(value => console.log(value)),
       distinctUntilChanged()
     );
   model: any = {};
 
-  // displayNameMap = new Map([
-  //   [Breakpoints.XSmall, 'XSmall'],
-  //   [Breakpoints.Small, 'Small'],
-  //   [Breakpoints.Medium, 'Medium'],
-  //   [Breakpoints.Large, 'Large'],
-  //   [Breakpoints.XLarge, 'XLarge'],
-  // ]);
-
   constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService, private breakpointObserver: BreakpointObserver) { 
-    // breakpointObserver
-    //   .observe([
-    //     Breakpoints.XSmall,
-    //     Breakpoints.Small,
-    //     Breakpoints.Medium,
-    //     Breakpoints.Large,
-    //     Breakpoints.XLarge,
-    //   ])
-    //   .pipe()
-    //   .subscribe(result => {
-    //     for (const query of Object.keys(result.breakpoints)) {
-    //       if (result.breakpoints[query]) {
-    //         // Put page change logic here
-    //       }
-    //     }
-    //   });
+  
   }
 
   ngOnInit(): void {
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
-    //this.logout();
+    this.initVars();
+  }
+
+  ngAfterContentInit(): void {
+    this.onFontChange();
+  }
+  
+  private initVars() {
+    this.currentFont = document.getElementById("nav-title")  != null ? document.getElementById("nav-title")!.style.fontFamily : this.font;
+    this.currentBackground = this.background;
+    this.currentTitle = this.title;
+    this.logoChar = this.title.charAt(0);
+  }
+  private delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   private breakpointChanged() {
-    if(this.breakpointObserver.isMatched(Breakpoints.Large)) {
+    if(this.breakpointObserver.isMatched(Breakpoints.XLarge)) {
+      this.currentBreakpoint = Breakpoints.XLarge;
+    } else if(this.breakpointObserver.isMatched(Breakpoints.Large)) {
       this.currentBreakpoint = Breakpoints.Large;
     } else if(this.breakpointObserver.isMatched(Breakpoints.Medium)) {
       this.currentBreakpoint = Breakpoints.Medium;
@@ -79,6 +88,8 @@ export class NavComponent implements OnInit {
   }
 
   login() {
+    console.log(this.model.username);
+    console.log(this.model.password);
     this.accountService.login(this.model).subscribe(response => {
       this.router.navigateByUrl('/members');
     });
@@ -102,12 +113,110 @@ export class NavComponent implements OnInit {
   }
 
   toggleBackground(event: MatSlideToggleChange) {
-    console.log(event);
     this.backgroundToggle = !this.backgroundToggle;
     this.background = this.backgroundToggle ? 'Gray' : 'Wave';
   }
-  // toggleBackground() {
-  //   this.backgroundToggle = !this.backgroundToggle;
-  //   this.background = this.backgroundToggle ? 'Gray' : 'Wave';
+
+  onBackgroundChange(event: MatSelectionListChange, value: any) {
+    console.log(event);
+    this.background = value[0].value != null ? value[0].value : 'Original';
+    this.currentBackground = this.background;
+  }
+
+  onTitleChange(event: MatSelectionListChange, value: any) {
+    console.log(event);
+    this.title = event.options[0].value != null ? event.options[0].value : 'Dating App';
+    this.currentTitle = this.title;
+    this.logoChar = this.title.charAt(0);
+  }
+
+  // onFontChange((event?: MatSelectionListChange) => {
+  //   var currTit = this.title;
+  //   this.title = '';
+  //   this.toggleFade = !this.toggleFade;
+  //   await this.delay(500);
+  //   this.title = currTit;
+  //   this.toggleFade = !this.toggleFade;
+
+  //   this.font = event?.options[0].value != null ? event.options[0].value : 'Roboto';
+  //   console.log(this.font);
+  //   this.currentFont = this.font;
+  //   console.log(this.currentFont})
   // }
+  async onFontChange(event?: MatSelectionListChange) {
+    var currTit = this.title;
+    this.title = '';
+    this.toggleFade = !this.toggleFade;
+    await this.delay(500);
+    this.title = currTit;
+    this.toggleFade = !this.toggleFade;
+
+    this.font = event?.options[0].value != null ? event.options[0].value : 'Roboto';
+    console.log(this.font);
+    this.currentFont = this.font;
+    console.log(this.currentFont);
+  }
+  // const onFontChange = async (event?: MatSelectionListChange) => {
+  //   var currTit = this.title;
+  //   this.title = '';
+  //   this.toggleFade = !this.toggleFade;
+  //   await this.delay(500);
+  //   this.title = currTit;
+  //   this.toggleFade = !this.toggleFade;
+
+  //   this.font = event?.options[0].value != null ? event.options[0].value : 'Roboto';
+  //   console.log(this.font);
+  //   this.currentFont = this.font;
+  //   console.log(this.currentFont);
+  // };
+
+  // newFontChange(() => {
+  //   onFontChange();
+  // });
 }
+
+    // switch (this.currentFont) {
+    //   case "Roboto":
+    //     console.log("Roboto");
+    //     break;
+    //   case "A Gentle Touch":
+    //     console.log("A Gentle Touch");
+    //     break;
+    //   case "Kells":
+    //     console.log("Kells");
+    //     break;
+    //   case "Lieselotte":
+    //     console.log("Lieselotte");
+    //     break;
+    //   case "Meath":
+    //     console.log("Meath");
+    //     break;
+    //   case "Remachine":
+    //     console.log("Remachine");
+    //     break;
+    // }
+
+    // breakpointObserver
+    //   .observe([
+    //     Breakpoints.XSmall,
+    //     Breakpoints.Small,
+    //     Breakpoints.Medium,
+    //     Breakpoints.Large,
+    //     Breakpoints.XLarge,
+    //   ])
+    //   .pipe()
+    //   .subscribe(result => {
+    //     for (const query of Object.keys(result.breakpoints)) {
+    //       if (result.breakpoints[query]) {
+    //         // Put page change logic here
+    //       }
+    //     }
+    //   });
+    
+  // displayNameMap = new Map([
+  //   [Breakpoints.XSmall, 'XSmall'],
+  //   [Breakpoints.Small, 'Small'],
+  //   [Breakpoints.Medium, 'Medium'],
+  //   [Breakpoints.Large, 'Large'],
+  //   [Breakpoints.XLarge, 'XLarge'],
+  // ]);
