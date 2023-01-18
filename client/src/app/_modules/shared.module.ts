@@ -8,9 +8,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
@@ -48,7 +50,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatSelectModule,
     MatIconModule,
     MatInputModule,
+    MatDialogModule,
     MatRadioModule,
+    MatExpansionModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
     GalleryModule,
@@ -80,7 +84,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatSelectModule,
     MatIconModule,
     MatRadioModule,
+    MatExpansionModule,
     MatInputModule,
+    MatDialogModule,
     ButtonsModule,
     MomentModule,
     ModalModule

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, distinctUntilChanged, takeUntil, tap } from 'rxjs';
@@ -9,6 +9,10 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { FormControl } from '@angular/forms';
 import { MatSelectionListChange, SelectionList } from '@angular/material/list';
 import { MatRadioChange } from '@angular/material/radio';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginDialogComponent } from '../modals/login-dialog/login-dialog.component';
+import { ConfirmLogoutComponent } from '../modals/confirm-logout/confirm-logout.component';
 //import { animate, transition } from '@angular/material/animations';
 
 @Component({
@@ -17,8 +21,9 @@ import { MatRadioChange } from '@angular/material/radio';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  // backgrounds = new FormControl('');
-  // fonts = new FormControl('');
+  @ViewChild('loginMenu') loginMenu!: MatMenu;
+  @ViewChild('loginTrigger') loginTrigger!: MatMenuTrigger;
+  @ViewChild('userImgTrigger') menuTrigger!: MatMenuTrigger;
   backgroundToggle = true;
 
   background = 'Original';
@@ -43,14 +48,13 @@ export class NavComponent implements OnInit {
   readonly breakpoint$ = this.breakpointObserver
     .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
     .pipe(
-      tap(value => console.log(value)),
+      tap(), //value => console.log(value)
       distinctUntilChanged()
     );
   model: any = {};
 
-  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService, private breakpointObserver: BreakpointObserver) { 
-  
-  }
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService, 
+    private breakpointObserver: BreakpointObserver, public loginDialog: MatDialog, public confirmLogoutDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.breakpoint$.subscribe(() =>
@@ -61,6 +65,33 @@ export class NavComponent implements OnInit {
 
   ngAfterContentInit(): void {
     this.onFontChange();
+  }
+
+  openLoginDialog(): void {
+    const dialogRef = this.loginDialog.open(LoginDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      // console.log(result);
+    });
+  }
+
+  openLogoutConfirmDialog(): void {
+    const dialogRef = this.confirmLogoutDialog.open(ConfirmLogoutComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(`Dialog result: ${result}`);
+      // console.log(result);
+    });
+  }
+
+  closeOnLogin() {
+    //console.log(this.loginTrigger);
+    this.loginTrigger.closeMenu();
+  }
+  private async closeMenu() {
+    //console.log(this.menuTrigger);
+    this.menuTrigger.closeMenu();
   }
   
   private initVars() {
@@ -88,8 +119,8 @@ export class NavComponent implements OnInit {
   }
 
   login() {
-    console.log(this.model.username);
-    console.log(this.model.password);
+    // console.log(this.model.username);
+    // console.log(this.model.password);
     this.accountService.login(this.model).subscribe(response => {
       this.router.navigateByUrl('/members');
     });
@@ -118,13 +149,13 @@ export class NavComponent implements OnInit {
   }
 
   onBackgroundChange(event: MatSelectionListChange, value: any) {
-    console.log(event);
+    //console.log(event);
     this.background = value[0].value != null ? value[0].value : 'Original';
     this.currentBackground = this.background;
   }
 
   onTitleChange(event: MatSelectionListChange, value: any) {
-    console.log(event);
+    //console.log(event);
     this.title = event.options[0].value != null ? event.options[0].value : 'Dating App';
     this.currentTitle = this.title;
     this.logoChar = this.title.charAt(0);
@@ -152,9 +183,9 @@ export class NavComponent implements OnInit {
     this.toggleFade = !this.toggleFade;
 
     this.font = event?.options[0].value != null ? event.options[0].value : 'Roboto';
-    console.log(this.font);
+    //console.log(this.font);
     this.currentFont = this.font;
-    console.log(this.currentFont);
+    //console.log(this.currentFont);
   }
   // const onFontChange = async (event?: MatSelectionListChange) => {
   //   var currTit = this.title;

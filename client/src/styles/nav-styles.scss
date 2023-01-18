@@ -105,8 +105,8 @@
   }
   .mat-sidenav-content-gray {
     transition: background 300ms ease-in 200ms;
-    background: url(../assets/backgrounds/background-image.webp);
-    // background: url(../src/assets/backgrounds/gray-background.svg);
+    // background: url(../assets/backgrounds/background-image.webp);
+    background: url(../assets/backgrounds/gray-background.svg);
     width: 100%;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -180,6 +180,16 @@
     display: flex;
     align-content: center;
     align-items: center;
+  }
+  #user-image-container {
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  #drop-arrow {
+    position: absolute;
   }
 
   .menu-form-wrapper .mat-menu-content:not(:empty) {

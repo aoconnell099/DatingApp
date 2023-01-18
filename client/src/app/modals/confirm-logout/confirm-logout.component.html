@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+<h1>Are you sure you want to log out?</h1>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="logout()">Logout</button>
+</div>
+
+<!-- <button class="btn btn-success" type="submit">Login</button> -->

@@ -35,6 +35,8 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { ConcertCardComponent } from './concerts/concert-card/concert-card.component';
 import { ConcertListComponent } from './concerts/concert-list/concert-list.component';
+import { LoginDialogComponent } from './modals/login-dialog/login-dialog.component';
+import { ConfirmLogoutComponent } from './modals/confirm-logout/confirm-logout.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { ConcertListComponent } from './concerts/concert-list/concert-list.compo
     ConfirmDialogComponent,
     ConcertCardComponent,
     ConcertListComponent,
+    LoginDialogComponent,
+    ConfirmLogoutComponent,
   ],
   imports: [
     BrowserModule,

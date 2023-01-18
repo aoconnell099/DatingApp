@@ -2,25 +2,8 @@
     <mat-toolbar-row id="nav-toolbar-row">
         <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
         <!-- <span class="menu-spacer"></span> -->
-        <div [class.nav-row]="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall"> 
-            
+        <div [class.nav-row]="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">         
             <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="nav-title">
-                <!-- <button mat-icon-button (click)="sidenav.toggle()">
-                  <span class="elevate-icon" [ngClass]="{
-                    'transparent': toggleFade,
-                    'fade-in-text': !toggleFade,
-                    'a-gentle-touch': font === 'A Gentle Touch',
-                    'kells': font === 'Kells',
-                    'lieselotte': font === 'Lieselotte',
-                    'meath': font === 'Meath',
-                    'remachine': font === 'Remachine',
-                    'roboto': font === 'Roboto',
-                    'brand-32px': font === 'Roboto',
-                    'brand-42px': font === 'A Gentle Touch' || font === 'Kells' || font === 'Meath',
-                    'brand-48px': font === 'Remachine',
-                    'brand-64px': font === 'Lieselotte'
-                }">{{logoChar}}</span>
-                </button> -->
                 <button mat-fab extended (click)="sidenav.toggle()" color="primary">
                 <span [ngClass]="{
                     'transparent': toggleFade,
@@ -136,117 +119,98 @@
                         </form>
                     </div>
                     <div dropdown class="dropdown" *ngIf="(currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall)">
-                        <button mat-button [matMenuTriggerFor]="loginDropdown" id="login-dropdown">
+                        <button  mat-button (click)="openLoginDialog()" id="login-dropdown">
                             Login
                         </button>
-                        <mat-menu #loginDropdown="matMenu" [hasBackdrop]="false">
-                            <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-                                <form #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
-                                    <mat-form-field appearance="fill">
-                                        <mat-label>Enter your username</mat-label>
-                                        <input matInput 
-                                            type="text" 
-                                            name="username"
-                                            [(ngModel)]="model.username">
-                                    </mat-form-field>
-                                    <mat-form-field appearance="fill">
-                                    <mat-label>Enter your password</mat-label>
-                                        <input matInput 
-                                            [type]="hide ? 'password' : 'text'" 
-                                            name="password"
-                                            [(ngModel)]="model.password">
-                                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                                        </button>
-                                    </mat-form-field>
-                                <button class="btn btn-success" type="submit">Login</button>
-                                </form>
-                            </div>
-                        </mat-menu>
                     </div>
                 </div>
-                <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-                    <div id="userPhoto">
-                        <div [matMenuTriggerFor]="menu" id="name-photo-container" *ngIf="currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge">
+                <!-- <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown> -->
+                    <div [matMenuTriggerFor]="menu" *ngIf="(accountService.currentUser$ | async) as user" id="userPhoto">
+                        <div id="name-photo-container" *ngIf="currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge">
                             <h1 style="padding-right: 8px">{{user.knownAs}}</h1>
                             <img id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                            <mat-icon><span class="material-icons">arrow_drop_down</span></mat-icon>
                         </div>
-                        <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
-                                <img  [matMenuTriggerFor]="menu" id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                        <div id="user-image-container" *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">
+                            <img id="userImg" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+                            <mat-icon id="drop-arrow"><span class="material-icons">arrow_drop_down</span></mat-icon>
                         </div>
                     </div>
-                        <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
-                        
-                        
-                        <mat-menu #menu="matMenu">
-                            <!-- Member edit link -->
-                            <a routerlink="/member/edit" mat-menu-item>Edit Profile</a>
+                    
+                    <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
+                    
+                    <mat-menu #menu="matMenu">
+                        <!-- Member edit link -->
+                        <a mat-menu-item routerLink="/member/edit" routerLinkActive='nav-items'>Edit Profile</a>
 
-                            <!-- Nested theme editor -->
-                            <button mat-menu-item [matMenuTriggerFor]="themeEditor">Edit Theme</button>
+                        <!-- Nested theme editor -->
+                        <button mat-menu-item [matMenuTriggerFor]="themeEditor">Edit Theme</button>
 
-                            <!-- Logout button -->
-                            <button (click)="logout()" mat-menu-item>
-                                <span>Logout</span>
-                            </button>
-                        </mat-menu>
+                        <!-- Logout button -->
+                        <button mat-menu-item (click)="openLogoutConfirmDialog();">
+                            <span>Logout</span>
+                        </button>
+                        <!-- <button mat-menu-item (click)="logout();">
+                            <span>Logout</span>
+                        </button> -->
+                    </mat-menu>
 
-                        <mat-menu #themeEditor="matMenu">
-                            <button mat-menu-item [matMenuTriggerFor]="backgroundEditor">Backgrounds</button>
-                            <button mat-menu-item [matMenuTriggerFor]="fontEditor">Fonts</button>
-                            <button mat-menu-item [matMenuTriggerFor]="titleEditor">Titles</button>
-                        </mat-menu>
+                    <mat-menu #themeEditor="matMenu">
+                        <button mat-menu-item [matMenuTriggerFor]="backgroundEditor">Backgrounds</button>
+                        <button mat-menu-item [matMenuTriggerFor]="fontEditor">Fonts</button>
+                        <button mat-menu-item [matMenuTriggerFor]="titleEditor">Titles</button>
+                    </mat-menu>
 
-                        <mat-menu #backgroundEditor="matMenu" (click)="$event.stopPropagation()">
-                            <mat-selection-list #backgrounds
-                                (selectionChange)="onBackgroundChange($event, backgrounds.selectedOptions.selected)"
-                                (click)="$event.stopPropagation()" 
-                                [multiple]="false">
-                                <mat-list-option *ngFor="let background of backgroundList" [value]="background" [selected]="background === currentBackground">
-                                  {{background}}
-                                </mat-list-option>
-                              </mat-selection-list>
-                        </mat-menu>
-
-                        <!-- Radio button version of the font selection -->
-                        <!-- <label id="example-radio-group-label">Pick font for the title</label> -->
-                        <!-- <mat-menu #fontEditor="matMenu">
-                            <mat-radio-group
-                                (change)="onFontChange($event)"
-                                (click)="$event.stopPropagation()"
-                                aria-labelledby="example-radio-group-label"
-                                class="example-radio-group"
-                                [(ngModel)]="font">
-                                <mat-radio-button class="example-radio-button" *ngFor="let font of fontList" [value]="font">
-                                    {{font}}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </mat-menu> -->
-
-                        <!-- Selection list version of the font selection -->
-                        <mat-menu #fontEditor="matMenu">
-                            <mat-selection-list #fonts
-                                (selectionChange)="onFontChange($event)"
-                                (click)="$event.stopPropagation()" 
-                                [multiple]="false">
-                                <mat-list-option *ngFor="let font of fontList" [value]="font" [selected]="font === currentFont" >
-                                  {{font}}
-                                </mat-list-option>
+                    <mat-menu #backgroundEditor="matMenu" (click)="$event.stopPropagation()">
+                        <mat-selection-list #backgrounds
+                            (selectionChange)="onBackgroundChange($event, backgrounds.selectedOptions.selected)"
+                            (click)="$event.stopPropagation()" 
+                            [multiple]="false">
+                            <mat-list-option *ngFor="let background of backgroundList" [value]="background" [selected]="background === currentBackground">
+                                {{background}}
+                            </mat-list-option>
                             </mat-selection-list>
-                        </mat-menu>
+                    </mat-menu>
 
-                        <mat-menu #titleEditor="matMenu" (click)="$event.stopPropagation()">
-                            <mat-selection-list #titles
-                                (selectionChange)="onTitleChange($event, backgrounds.selectedOptions.selected)"
-                                (click)="$event.stopPropagation()" 
-                                [multiple]="false">
-                                <mat-list-option *ngFor="let title of titleList" [value]="title" [selected]="title === currentTitle" >
-                                  {{title}}
-                                </mat-list-option>
-                            </mat-selection-list>
-                        </mat-menu>
+                    <!-- Radio button version of the font selection -->
+                    <!-- <label id="example-radio-group-label">Pick font for the title</label> -->
+                    <!-- <mat-menu #fontEditor="matMenu">
+                        <mat-radio-group
+                            (change)="onFontChange($event)"
+                            (click)="$event.stopPropagation()"
+                            aria-labelledby="example-radio-group-label"
+                            class="example-radio-group"
+                            [(ngModel)]="font">
+                            <mat-radio-button class="example-radio-button" *ngFor="let font of fontList" [value]="font">
+                                {{font}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </mat-menu> -->
+
+                    <!-- Selection list version of the font selection -->
+                    <mat-menu #fontEditor="matMenu">
+                        <mat-selection-list #fonts
+                            (selectionChange)="onFontChange($event)"
+                            (click)="$event.stopPropagation()" 
+                            [multiple]="false">
+                            <mat-list-option *ngFor="let font of fontList" [value]="font" [selected]="font === currentFont" >
+                                {{font}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </mat-menu>
+
+                    <mat-menu #titleEditor="matMenu" (click)="$event.stopPropagation()">
+                        <mat-selection-list #titles
+                            (selectionChange)="onTitleChange($event, backgrounds.selectedOptions.selected)"
+                            (click)="$event.stopPropagation()" 
+                            [multiple]="false">
+                            <mat-list-option *ngFor="let title of titleList" [value]="title" [selected]="title === currentTitle" >
+                                {{title}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </mat-menu>
                         <!-- <div class="dropdown-divider"></div> -->
-                </div>
+                <!-- </div> -->
             </div>
 
             <!-- <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="nav-items" (ngSubmit)="login()" autocomplete="off">
@@ -282,17 +246,10 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content style="height: 94vh;" 
-    [ngClass]="{
-        'mat-sidenav-content-gray': background === 'Original',
-        'mat-sidenav-content-wave': background === 'Wave'
-    }"> 
-
-    <!-- 'mat-sidenav-content-gray': background === 'Original',
-        'mat-sidenav-content-wave': background === 'Wave' -->
-    
-    <!-- class="[ngClass]={
-        'mat-sidenav-content-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall;
-    }" -->
+        [ngClass]="{
+            'mat-sidenav-content-gray': background === 'Original',
+            'mat-sidenav-content-wave': background === 'Wave'
+        }">
         <div style="height: 88vh;">
             <router-outlet></router-outlet>
         </div>
