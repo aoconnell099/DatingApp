@@ -235,6 +235,7 @@
     <mat-sidenav #sidenav>
         <mat-nav-list>
 
+            <a mat-list-item [routerLink]="'/'">Home</a>
             <a mat-list-item [routerLink]="'/members'">Matches</a>
             <a mat-list-item [routerLink]="'/concerts'">Concerts</a>
             <a mat-list-item [routerLink]="'/lists'">Lists</a>
@@ -245,10 +246,13 @@
 
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content style="height: 94vh;" 
+    <mat-sidenav-content class="mat-sidenav-content" style="height: 94vh;" 
         [ngClass]="{
-            'mat-sidenav-content-gray': background === 'Original',
-            'mat-sidenav-content-wave': background === 'Wave'
+            'original': background === 'Original',
+            'wave': background === 'Wave',
+            'stained': background === 'Stained',
+            'drowning-girl': background === 'Drowning Girl',
+            'beeple': background === 'Beeple'
         }">
         <div style="height: 88vh;">
             <router-outlet></router-outlet>

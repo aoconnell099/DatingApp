@@ -1,4 +1,4 @@
-<div class="card mb-4" *ngIf="member">
+<!-- <div class="card mb-4" *ngIf="member">
     <div class="card-img-wrapper">
         <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}" class="card-img-top">
         <ul class="list-inline member-icons animate text-center">
@@ -22,4 +22,58 @@
         </h6>
         <p class="card-text text-muted text-center">{{member.city}}</p>
     </div>
-</div>
+</div> -->
+
+<mat-card class="user-card" *ngIf="member">
+    <div>
+    <!-- <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header> -->
+    <!-- <div class="card-img-wrapper">
+        <img mat-card-image src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}">
+    </div> -->
+    
+    <mat-card-content class="card-content">
+        <div class="card-img-wrapper">
+            <img mat-card-image class="card-img" src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}">
+        
+            <mat-list class="card-icon-container member-icons animate" role="list">
+                <mat-list-item role="listitem">
+                    <button mat-button routerLink='/members/{{member.username}}' class="btn btn-primary">
+                        <i class="fa fa-user"></i>
+                    </button>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                    <button mat-button (click)="addLike(member)" class="btn btn-primary">
+                        <i class="fa fa-heart"></i>
+                    </button>
+                </mat-list-item>
+                <mat-list-item role="listitem">
+                    <button
+                        mat-button 
+                        routerLink='/members/{{member.username}}' 
+                        [queryParams]='{tab: 3}'
+                        class="btn btn-primary">
+                    <i class="fa fa-envelope"></i></button>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <!-- </div> -->
+    </mat-card-content>
+    <!-- <mat-card-actions>
+    </mat-card-actions> -->
+    <div class="card-footer">
+    <mat-card-footer style="padding: 10px;">
+        <h6 class="card-title text-center mb-1">
+            <span [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
+                <i class="fa fa-user me-2"></i>
+            </span>
+            {{member.knownAs}}, {{member.age}}
+        </h6>
+        <p class="card-text city-text text-center">{{member.city}}</p>
+    </mat-card-footer>
+    </div>
+    </div>
+</mat-card>

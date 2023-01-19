@@ -1,0 +1,27 @@
+.member-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.member {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.mat-grid-tile-content {
+    display: block !important;
+    margin: 8% !important;
+}
+.filter-form > div {
+    margin-top: 10px;
+}
+.filter-form > button {
+    margin-top: 10px;
+    margin-right: 5px;
+}

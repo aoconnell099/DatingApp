@@ -118,6 +118,62 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
+  .mat-sidenav-content {
+    transition: background 300ms ease-in 200ms !important;
+    width: 100% !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important;
+  }
+  // .original {
+  //   transition: background 300ms ease-in 200ms;
+  //   background: url(../assets/backgrounds/gray-background.svg);
+  //   width: 100%;
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  // }
+  // .wave {
+  //   transition: background 300ms ease-in 200ms;
+  //   background: url(../assets/backgrounds/wave-background.svg);
+  //   width: 100%;
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  // }
+  // .stained {
+  //   transition: background 300ms ease-in 200ms;
+  //   background: url(../assets/backgrounds/stained.svg);
+  //   width: 100%;
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  // }
+  // .drowning-girl {
+  //   transition: background 300ms ease-in 200ms;
+  //   background: url(../assets/backgrounds/drowning-girl.svg);
+  //   width: 100%;
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  // }
+  // .beeple {
+  //   transition: background 300ms ease-in 200ms;
+  //   background: url(../assets/backgrounds/beeple.svg);
+  //   width: 100%;
+  //   background-repeat: no-repeat;
+  //   background-size: 100% 100%;
+  // }
+  .original {
+    background: url(../assets/backgrounds/gray-background.svg);
+  }
+  .wave {
+    background: url(../assets/backgrounds/wave-background.svg);
+  }
+  .stained {
+    background: url(../assets/backgrounds/stained.svg);
+  }
+  .drowning-girl {
+    background: url(../assets/backgrounds/drowning-girl.svg);
+  }
+  .beeple {
+    background: url(../assets/backgrounds/beeple.svg);
+  }
   .user-icon-container {
     display: flex;
   }

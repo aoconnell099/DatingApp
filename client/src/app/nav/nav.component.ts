@@ -27,7 +27,7 @@ export class NavComponent implements OnInit {
   backgroundToggle = true;
 
   background = 'Original';
-  backgroundList: string[] = ['Original', 'Wave'];
+  backgroundList: string[] = ['Original', 'Wave', 'Stained', 'Drowning Girl', 'Beeple'];
   currentBackground ='';
   currentFont = '';
   font = 'Roboto';

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -8,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -42,8 +44,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     }),
     MatButtonModule,
     MatButtonToggleModule,
+    MatCardModule,
     MatSlideToggleModule,
     MatListModule,
+    MatGridListModule,
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
@@ -76,8 +80,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     PaginationModule,
     MatButtonModule,
     MatButtonToggleModule,
+    MatCardModule, 
     MatSlideToggleModule,
     MatListModule,
+    MatGridListModule,
     MatSidenavModule,
     MatToolbarModule,
     MatMenuModule,
