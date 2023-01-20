@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
@@ -9,11 +9,13 @@ import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 //import { MatGridList } from '@angular/material/grid-list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss']
+  styleUrls: ['./member-list.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MemberListComponent implements OnInit {
   members: Member[] =[];
@@ -21,10 +23,13 @@ export class MemberListComponent implements OnInit {
   userParams?: UserParams;
   //user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
+  
   numberOfCols?: number;
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
   rowHeightRatio = "1:1.5";
+
+  selected = 'lastActive';
 
   readonly breakpoint$ = this.breakpointObserver
   .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
@@ -96,4 +101,20 @@ export class MemberListComponent implements OnInit {
     }
   }
 
+  toggleSelected(value: string) {
+    this.selected = this.selected != value ? value : this.selected;
+    console.log(this.selected);
+    if (this.userParams != null) {
+      this.userParams.orderBy = this.selected;
+    }
+    //this.userParams.orderBy = this.userParams.orderBy != null ? this.selected : '';
+  }
+
+  onFilterBtnChange(event: any) {
+    console.log(event.currentTarget.getAttribute('value'));
+    if (this.userParams != null) {
+      this.userParams.orderBy = event.source._value != null ? event.source._value[0] : '';
+    }
+    
+  }
 }

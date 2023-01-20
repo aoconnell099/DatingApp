@@ -25,27 +25,70 @@
             </select>
         </div>
 
-        <button class="btn btn-primary ms-1" type="submit">Apply Filters</button>
-        <button (click)="resetFilters()" class="btn btn-info ms-1" type="submit">Reset Filters</button>
+        <button mat-raised-button color="accent" type="submit">Apply Filters</button>
+        <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1" type="submit">Reset Filters</button>
 
         <div class="col">
             <div class="btn-group float-end">
-                <button 
+                <button mat-flat-button color="accent"
                         type="button"
                         class="btn btn-primary" 
-                        name='orderBy' 
-                        (click)="loadMembers()"
-                        btnRadio='lastActive'
-                        [(ngModel)]="userParams.orderBy">Last Active</button>
+                        [class.selected]="selected === 'lastActive'"
+                        value='lastActive'
+                        (click)="toggleSelected('lastActive'); loadMembers();"
+                        >Last Active</button>
                 
                 <button 
+                    mat-flat-button color="accent"
                     type="button"
                     class="btn btn-primary" 
-                    name='orderBy' 
-                    (click)="loadMembers()"
-                    btnRadio='created'
-                    [(ngModel)]="userParams.orderBy">Newest Members</button>
+                    [class.selected]="selected === 'created'"
+                    value='created'
+                    (click)="toggleSelected('created'); loadMembers();"
+                    
+                    >Newest Members</button>
             </div>
+            <!-- 
+                    name='orderBy' btnRadio='created'
+                [(ngModel)]="userParams.orderBy"
+                <mat-selection-list #filterBtns 
+                class="filter-buttons" 
+                (selectionChange)="onFilterBtnChange($event)"
+                [multiple]="false">
+
+                <mat-list-option 
+                    [selected] = "userParams.orderBy === 'lastActive'"
+                    value="lastActive"
+                    (click)="loadMembers()"
+                >
+                  Last Active
+                </mat-list-option>
+                <mat-list-option 
+                    [selected] = "userParams.orderBy === 'created'"
+                    value="created"
+                    (click)="loadMembers()"
+                >
+                    Newest Members
+                </mat-list-option>
+              </mat-selection-list> -->
+            <!-- <mat-radio-group class="btn-group float-end" aria-label="Select an option">
+                <mat-radio-button 
+                        value="lastActive"
+                        class="btn btn-primary" 
+                        mat-flat-button color="accent"
+                        type="button"
+                        name='orderBy' 
+                        (click)="loadMembers()"
+                        [(ngModel)]="userParams.orderBy">Last Active</mat-radio-button>
+                <mat-radio-button 
+                    value="created"
+                    class="btn btn-primary" 
+                    mat-flat-button color="accent"
+                    type="button"
+                    name='created' 
+                    (click)="loadMembers()"
+                    [(ngModel)]="userParams.orderBy">Newest Members</mat-radio-button>
+              </mat-radio-group> -->
         </div>
     </form>
 </div>
@@ -61,7 +104,7 @@
     <div *ngFor="let member of members">
         <mat-grid-tile>
             <div class="mat-grid-tile-content">
-                <app-member-card [member]="member"></app-member-card>
+                <app-member-card [currentBreakpoint]="currentBreakpoint" [member]="member"></app-member-card>
             </div>
         </mat-grid-tile>
     </div>

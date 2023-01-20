@@ -1,3 +1,21 @@
+@mixin filter-button-background($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+
+    // .card-footer {
+    //     background-color: map-get($accent, lighter) !important;
+    // }
+    mat-list-option[aria-selected="true"] {
+        background-color: map-get($accent, darker) !important;
+      }
+    .filter-buttons {
+        background-color: map-get($accent, 500) !important;
+    }
+  }
+
+  app-member-list .mat-pseudo-checkbox{
+    display: none !important;
+}
 .member-list {
     display: flex;
     flex-direction: row;
@@ -25,3 +43,10 @@
     margin-top: 10px;
     margin-right: 5px;
 }
+.selected {
+    filter: brightness(75%);
+}
+
+.filter-buttons .mat-pseudo-checkbox {
+    display: none !important;
+  }

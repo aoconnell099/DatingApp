@@ -4,7 +4,7 @@
         <!-- <span class="menu-spacer"></span> -->
         <div [class.nav-row]="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">         
             <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="nav-title">
-                <button mat-fab extended (click)="sidenav.toggle()" color="primary">
+                <button mat-fab (click)="sidenav.toggle()" color="accent">
                 <span [ngClass]="{
                     'transparent': toggleFade,
                     'fade-in-text': !toggleFade,

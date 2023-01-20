@@ -10,6 +10,11 @@
 // Including the core mixin multiple times will result in duplicate CSS in your application.
 @include mat.core();
 
+//@import './styles/themes/light';
+
+@import './app/members/member-card/member-card.component.scss';
+@import './app/members/member-list/member-list.component.scss';
+
 // Include the core theme and any additional component themes. Eg. @include mat.button-theme(light.$light-theme);
 @include mat.core-theme(light-theme.$light-theme);
 
@@ -20,6 +25,24 @@ $color-config:    mat.get-color-config(light-theme.$light-theme);
 $primary-palette: map.get($color-config, 'primary');
 $accent-palette:  map.get($color-config, 'accent');
 $warn-palette:    map.get($color-config, 'warn');
+
+
+//$accent-color: mat-color($accent-palette, 300);
+
+@mixin custom-components-theme($theme) {
+  @include card-color($theme);
+  @include filter-button-background($theme);
+}
+@include custom-components-theme(light-theme.$light-theme);
+
+// @include card-color(light-theme.$light-theme);
+//   @include filter-button-background($theme);
+
+// .light-theme {
+//   //@include angular-material-theme(light-theme.$light-theme);
+
+//   @include custom-components-theme(light-theme.$light-theme);
+// }
 
 // Use this method to apply specific themes and typographies to individual components instead of loading all like above.
 // If you define the typography for the theme while defining it, you don't to include mat.'component'-typography
