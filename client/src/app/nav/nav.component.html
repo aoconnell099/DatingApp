@@ -115,11 +115,11 @@
                             class="form-control me-2" 
                             type="password" 
                             placeholder="Password">
-                        <button class="btn btn-success" type="submit">Login</button>
+                        <button mat-raised-button color="accent" class="btn btn-success" type="submit">Login</button>
                         </form>
                     </div>
                     <div dropdown class="dropdown" *ngIf="(currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall)">
-                        <button  mat-button (click)="openLoginDialog()" id="login-dropdown">
+                        <button mat-raised-button color="accent" (click)="openLoginDialog()" id="login-dropdown">
                             Login
                         </button>
                     </div>
@@ -232,8 +232,9 @@
     </mat-toolbar-row>    
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav #sidenav>
-        <mat-nav-list>
+    <mat-sidenav #sidenav (close)="onSidenavClose()">
+        
+        <mat-nav-list (click)="sidenav.toggle()">
 
             <a mat-list-item [routerLink]="'/'">Home</a>
             <a mat-list-item [routerLink]="'/members'">Matches</a>
@@ -242,11 +243,11 @@
             <a mat-list-item [routerLink]="'/messages'">Messages</a>
             <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/admin'">Admin</a>
             <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/errors'">Errors</a>
-            <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Close</a>
+            <a mat-list-item  mat-list-item>Close</a>
 
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="mat-sidenav-content" style="height: 94vh;" 
+    <mat-sidenav-content class="mat-sidenav-content" [class.sidenav-content-height-landscape]="mobileBreakpoint === landscapeBreakpoint" style="height: 94vh;" 
         [ngClass]="{
             'original': background === 'Original',
             'wave': background === 'Wave',

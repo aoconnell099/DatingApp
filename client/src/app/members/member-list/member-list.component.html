@@ -32,7 +32,6 @@
             <div class="btn-group float-end">
                 <button mat-flat-button color="accent"
                         type="button"
-                        class="btn btn-primary" 
                         [class.selected]="selected === 'lastActive'"
                         value='lastActive'
                         (click)="toggleSelected('lastActive'); loadMembers();"
@@ -40,8 +39,7 @@
                 
                 <button 
                     mat-flat-button color="accent"
-                    type="button"
-                    class="btn btn-primary" 
+                    type="button" 
                     [class.selected]="selected === 'created'"
                     value='created'
                     (click)="toggleSelected('created'); loadMembers();"
@@ -111,7 +109,13 @@
 </mat-grid-list>
 <!-- </div> -->
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<div class="d-flex justify-content-center" 
+    [ngClass]="{
+        'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium,
+        'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
+        
+    }"
+         *ngIf="pagination">
     <pagination 
         [boundaryLinks]="true" 
         [totalItems]="pagination.totalItems"

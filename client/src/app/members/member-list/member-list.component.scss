@@ -50,3 +50,15 @@
 .filter-buttons .mat-pseudo-checkbox {
     display: none !important;
   }
+.filter-button {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+.mobile-pagination-pad-portrait {
+    margin-bottom: 40px;
+    padding-bottom: 80px;
+}
+.mobile-pagination-pad-landscape {
+    margin-bottom: 80px;
+    padding-bottom: 40px;
+}

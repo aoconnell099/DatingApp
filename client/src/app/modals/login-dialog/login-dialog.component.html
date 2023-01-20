@@ -1,29 +1,30 @@
-<div mat-dialog-content>
-    <form class="nav-items login-form" autocomplete="off"> <!-- (ngSubmit)="login()" -->
-        <mat-form-field appearance="fill">
-            <mat-label>Enter your username</mat-label>
-            <input matInput 
-                type="text" 
-                name="username"
-                [(ngModel)]="model.username">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-        <mat-label>Enter your password</mat-label>
-            <input matInput 
-                [type]="hide ? 'password' : 'text'" 
-                name="password"
-                [(ngModel)]="model.password">
-            <button style="color: black;" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-        </mat-form-field>
-        <!-- <button mat-button type="submit">Login</button> -->
-    </form>
+<div class="login-form-container">
+    <div mat-dialog-content>
+        <form class="nav-items login-form" autocomplete="off"> <!-- (ngSubmit)="login()" -->
+            <mat-form-field class="my-form-field" appearance="fill">
+                <mat-label>Enter your username</mat-label>
+                <input matInput 
+                    type="text" 
+                    name="username"
+                    [(ngModel)]="model.username">
+            </mat-form-field>
+            <mat-form-field class="my-form-field" appearance="fill">
+            <mat-label>Enter your password</mat-label>
+                <input matInput 
+                    [type]="hide ? 'password' : 'text'" 
+                    name="password"
+                    [(ngModel)]="model.password">
+                <button style="color: black;" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <!-- <button mat-button type="submit">Login</button> -->
+        </form>
+    </div>
+    <div mat-dialog-actions>
+        <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+        <button mat-flat-button color="warn" mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="accent" [mat-dialog-close]="true" (click)="login()">Login</button>
+    </div>
 </div>
-<div mat-dialog-actions>
-    <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" (click)="login()">Login</button>
-</div>
-
 <!-- <button class="btn btn-success" type="submit">Login</button> -->

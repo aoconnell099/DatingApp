@@ -27,12 +27,14 @@ export class MemberListComponent implements OnInit {
   numberOfCols?: number;
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
+  mobileBreakpoint = '';
+  landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 400px)'
   rowHeightRatio = "1:1.5";
 
   selected = 'lastActive';
 
   readonly breakpoint$ = this.breakpointObserver
-  .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
+  .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape, this.landscapeBreakpoint])
   .pipe(
     tap(), //value => console.log(value)
     distinctUntilChanged()
@@ -60,6 +62,23 @@ export class MemberListComponent implements OnInit {
       this.currentBreakpoint = Breakpoints.Small;
     } else if(this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
       this.currentBreakpoint = Breakpoints.XSmall;
+    }  
+    
+    // if(this.breakpointObserver.isMatched(Breakpoints.HandsetPortrait)) {
+    //   this.currentBreakpoint = Breakpoints.HandsetPortrait;
+    //   console.log('portrait');
+    // } else if(this.breakpointObserver.isMatched(Breakpoints.HandsetLandscape)) {
+    //   this.currentBreakpoint = Breakpoints.HandsetLandscape;
+    //   console.log('landscape');
+    // } 
+
+    if (this.breakpointObserver.isMatched(this.landscapeBreakpoint)) {
+      this.mobileBreakpoint = this.landscapeBreakpoint;
+      console.log('my landscape');
+    }
+    else {
+      this.mobileBreakpoint = '';
+      console.log('no landscape');
     }
     
     if(this.currentBreakpoint === Breakpoints.XLarge || this.currentBreakpoint === Breakpoints.Large) {

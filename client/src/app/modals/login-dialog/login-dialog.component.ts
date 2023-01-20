@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
-  styleUrls: ['./login-dialog.component.scss']
+  styleUrls: ['./login-dialog.component.scss'],
+  encapsulation : ViewEncapsulation.None,
 })
 export class LoginDialogComponent implements OnInit {
   hide = true;

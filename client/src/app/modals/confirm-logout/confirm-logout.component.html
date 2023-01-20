@@ -1,9 +1,9 @@
 <div mat-dialog-content>
-<h1>Are you sure you want to log out?</h1>
+<h3>Are you sure you want to log out?</h3>
 </div>
 <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="logout()">Logout</button>
+    <button mat-flat-button color="accent" [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true" cdkFocusInitial (click)="logout()">Logout</button>
 </div>
 
 <!-- <button class="btn btn-success" type="submit">Login</button> -->

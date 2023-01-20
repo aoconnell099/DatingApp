@@ -13,6 +13,7 @@ import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../modals/login-dialog/login-dialog.component';
 import { ConfirmLogoutComponent } from '../modals/confirm-logout/confirm-logout.component';
+import { MatSidenav } from '@angular/material/sidenav';
 //import { animate, transition } from '@angular/material/animations';
 
 @Component({
@@ -24,6 +25,7 @@ export class NavComponent implements OnInit {
   @ViewChild('loginMenu') loginMenu!: MatMenu;
   @ViewChild('loginTrigger') loginTrigger!: MatMenuTrigger;
   @ViewChild('userImgTrigger') menuTrigger!: MatMenuTrigger;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   backgroundToggle = true;
 
   background = 'Original';
@@ -42,11 +44,13 @@ export class NavComponent implements OnInit {
 
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
+  mobileBreakpoint = '';
+  landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 400px)'
   isActive = false;
   hide = true;
 
   readonly breakpoint$ = this.breakpointObserver
-    .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall])
+    .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, this.landscapeBreakpoint])
     .pipe(
       tap(), //value => console.log(value)
       distinctUntilChanged()
@@ -116,6 +120,14 @@ export class NavComponent implements OnInit {
     } else if(this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
       this.currentBreakpoint = Breakpoints.XSmall;
     }
+
+    if (this.breakpointObserver.isMatched(this.landscapeBreakpoint)) {
+      this.mobileBreakpoint = this.landscapeBreakpoint;
+    }
+    else {
+      this.mobileBreakpoint = '';
+    }
+    console.log(this.mobileBreakpoint);
   }
 
   login() {
@@ -141,6 +153,10 @@ export class NavComponent implements OnInit {
       event.target.classList.add('mat-elevation-z2');
       event.target.classList.remove('mat-elevation-z8');
     }
+  }
+
+  onSidenavClose() {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
   }
 
   toggleBackground(event: MatSlideToggleChange) {

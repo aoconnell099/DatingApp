@@ -2,3 +2,22 @@
     display: flex;
     flex-direction: column;
 }
+.login-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgray;
+}
+
+.login-form .my-form-field {
+    margin-bottom: 1.25em;
+}
+.my-form-field .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}
+// .my-form-field {
+//     margin-bottom: -1.25em;
+// }
+// .mat-mdc-form-field-subscript-wrapper {
+//     display: none !important;
+// }
