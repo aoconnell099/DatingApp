@@ -7,8 +7,8 @@ namespace API.Helpers
 {
     public class TicketMasterParams : PaginationParams
     {
-        public string ClassificationName {get; set; } = "music";
-        public string Keyword { get; set; }
+        public string ClassificationName { get; set; } = "music";
+        public string Keyword { get; set; } = "";
         
     }
 }

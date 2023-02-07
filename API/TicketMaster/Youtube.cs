@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace API.TicketMaster
 {
-    public class ArtistImages
+    public class Youtube
     {
         [JsonProperty("url")]
-        public string ImageUrl { get; set; }
+        public string YoutubeUrl { get; set; }
     }
 }

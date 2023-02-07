@@ -25,5 +25,16 @@ namespace API.TicketMaster
             public DateTime EventDate { get; set; }
             public string City { get; set; }
             public string Venue { get; set; }
+
+            [JsonProperty("url")]
+            public string ConcertUrl { get; set; }
+            public string VenueUrl { get; set; }
+            public string YoutubeUrl { get; set; }
+            public string TwitterUrl { get; set; }
+            public string SpotifyUrl { get; set; }
+            public string FbUrl { get; set; }
+            public string InstagramUrl { get; set; }
+            public string HomepageUrl { get; set; }
+            public string ImageUrl { get; set; }
         }
 }

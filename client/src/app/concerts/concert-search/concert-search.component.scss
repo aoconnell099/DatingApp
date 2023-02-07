@@ -1,5 +1,12 @@
 .search-list {
     background-color: lightgray;
+    //cursor: pointer;
+}
+// .search-list > *{
+//     cursor: pointer;
+// }
+.is-hover {
+    filter: brightness(0.7);
 }
 .search-list-item {
     align-items: center;
@@ -10,7 +17,15 @@
     align-items: center;
     padding-top: 0.5rem; 
     padding-bottom: 0.5rem;
+    //cursor: pointer;
 } 
+.list-item-container > * {
+    cursor: pointer !important;
+}
+.list-item-container:hover {
+    background-color: gray;
+    //cursor: pointer;
+}
 // .concert-info {
 //     flex: 
 // }

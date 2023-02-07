@@ -37,6 +37,10 @@ import { ConcertCardComponent } from './concerts/concert-card/concert-card.compo
 import { ConcertListComponent } from './concerts/concert-list/concert-list.component';
 import { LoginDialogComponent } from './modals/login-dialog/login-dialog.component';
 import { ConfirmLogoutComponent } from './modals/confirm-logout/confirm-logout.component';
+import { TimeAgoPipe } from './_pipes/time-ago.pipe';
+import { ConcertSearchComponent } from './concerts/concert-search/concert-search.component';
+import { ConcertHomeComponent } from './concerts/concert-home/concert-home.component';
+import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +71,10 @@ import { ConfirmLogoutComponent } from './modals/confirm-logout/confirm-logout.c
     ConcertListComponent,
     LoginDialogComponent,
     ConfirmLogoutComponent,
+    TimeAgoPipe,
+    ConcertSearchComponent,
+    ConcertHomeComponent,
+    ConcertDialogComponent,
   ],
   imports: [
     BrowserModule,

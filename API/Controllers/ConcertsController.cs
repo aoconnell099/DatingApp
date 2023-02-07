@@ -99,6 +99,15 @@ namespace API.Controllers
                     EventDate = concertDto.EventDate,
                     City = concertDto.City,
                     Venue = concertDto.Venue,
+                    ConcertUrl = concertDto.ConcertUrl,
+                    VenueUrl = concertDto.VenueUrl,
+                    YoutubeUrl = concertDto.YoutubeUrl,
+                    TwitterUrl = concertDto.TwitterUrl,
+                    SpotifyUrl = concertDto.SpotifyUrl,
+                    FbUrl = concertDto.FbUrl,
+                    InstagramUrl = concertDto.InstagramUrl,
+                    HomepageUrl = concertDto.HomepageUrl,
+                    ImageUrl = concertDto.ImageUrl,
                     UserConcert = new List<UserConcert>()
                 };
                 // Add the Concert to the db before creating the 
@@ -132,12 +141,49 @@ namespace API.Controllers
             return BadRequest("Problem adding the concert");
         }
 
+        // [HttpGet("search")]
+        // public async Task<ActionResult<IEnumerable<ConcertDto>>> SearchConcerts([FromQuery]string keyword) 
+        // {
+            
+        //     keyword = keyword != "" || keyword != null ? keyword.Replace(' ', '+') : ""; // keyword = keyword.Replace(' ', '+');
+        //     // var keyword = ticketMasterParams.Keyword != "" || ticketMasterParams.Keyword != null ? ticketMasterParams.Keyword.Replace(' ', '+') : ""; // keyword = keyword.Replace(' ', '+');
+        //     var uri = new Uri(_config.Value.RootUrl + "keyword=" + keyword
+        //                                         + "&classificationName=" + ticketMasterParams.ClassificationName 
+        //                                         + "&apikey=" + _config.Value.ApiKey);
+
+        //     var httpClient = _httpClientFactory.CreateClient();
+        //     using var httpResponse = await httpClient.GetAsync(uri); //, HttpCompletionOption.ResponseHeadersRead
+
+        //     httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
+
+        //     var concertData =  await httpResponse.Content.ReadAsStreamAsync();
+
+        //     using var streamReader = new StreamReader(concertData);
+        //     using var jsonReader = new JsonTextReader(streamReader);
+
+        //     JsonSerializer serializer = new JsonSerializer();
+
+        //     var concerts = serializer.Deserialize<RootObject>(jsonReader);
+            
+        //     if (concerts == null || concerts.MainEmbedded == null || concerts.MainEmbedded.Events == null) return BadRequest("There was a problem searching for concerts");
+
+        //     var concertsToReturn = concerts.MainEmbedded
+        //         .Events.AsQueryable()
+        //         .ExtractConcertData()
+        //         .ProjectTo<ConcertDto>(_mapper.ConfigurationProvider)
+        //         .AsEnumerable();
+
+        //     return Ok(concertsToReturn);
+        // }
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<ConcertDto>>> SearchConcerts([FromQuery]TicketMasterParams ticketMasterParams) 
+        public async Task<ActionResult<IEnumerable<ConcertDto>>> SearchConcerts([FromQuery] string keyword, [FromQuery] string classificationName) 
         {
-            var keyword = ticketMasterParams.Keyword.Replace(' ', '+'); // keyword = keyword.Replace(' ', '+');
+
+            // var keyword = ticketMasterParams.Keyword != "" || ticketMasterParams.Keyword != null ? ticketMasterParams.Keyword.Replace(' ', '+') : ""; // keyword = keyword.Replace(' ', '+');
+            keyword = keyword != "" || keyword != null ? keyword.Replace(' ', '+') : ""; // keyword = keyword.Replace(' ', '+');
             var uri = new Uri(_config.Value.RootUrl + "keyword=" + keyword
-                                                + "&classificationName=" + ticketMasterParams.ClassificationName 
+                                                + "&classificationName=" + classificationName 
+                                                + "&sort=date,asc"
                                                 + "&apikey=" + _config.Value.ApiKey);
 
             var httpClient = _httpClientFactory.CreateClient();

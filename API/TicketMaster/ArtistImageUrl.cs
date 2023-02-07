@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace API.TicketMaster
 {
-    public class ArtistImages
+    public class ArtistImageUrl
     {
         [JsonProperty("url")]
         public string ImageUrl { get; set; }

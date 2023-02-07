@@ -95,7 +95,16 @@ namespace API.Data
                     EventName = c.EventName,
                     EventDate = c.EventDate,
                     City = c.City,
-                    Venue = c.Venue
+                    Venue = c.Venue,
+                    ConcertUrl = c.ConcertUrl,
+                    VenueUrl = c.VenueUrl,
+                    YoutubeUrl = c.YoutubeUrl,
+                    TwitterUrl = c.TwitterUrl,
+                    SpotifyUrl = c.SpotifyUrl,
+                    FbUrl = c.FbUrl,
+                    InstagramUrl = c.InstagramUrl,
+                    HomepageUrl = c.HomepageUrl,
+                    ImageUrl = c.ImageUrl
                 }));
 
             return await PagedList<ConcertDto>.CreateAsync(concertsForUser, concertParams.PageNumber, concertParams.PageSize);

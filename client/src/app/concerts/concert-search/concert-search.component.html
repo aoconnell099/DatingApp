@@ -1,0 +1,42 @@
+<div>
+    <h5><u><i>Search for concerts to add</i></u></h5>
+    <form class="example-form" (ngSubmit)="searchConcerts()">
+        <mat-form-field class="example-full-width">
+            <span matPrefix> </span>
+            <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
+            <button type="submit" matSuffix mat-button><mat-icon >search</mat-icon></button>
+        </mat-form-field>
+<br/>
+    </form>
+    <div *ngIf="searchResult.length > 0" class="column">
+        Concerts
+        <mat-list class="search-list">
+            <div *ngFor="let concert of searchResult" class="mt-3" > 
+                
+            <div class="list-item-container" (click)="openConcertCard(concert)">
+
+                <mat-list-item>
+                    <img matListItemAvatar style="margin-top: 0; margin-bottom: 0; width: 70px; height: 70px;" src={{concert.imageUrl}} alt="">
+                    
+                    <h3 matListItemTitle>{{concert.artistName}}</h3>
+                    <span matListItemLine>{{concert.venue}}</span>
+                    <span matListItemLine>{{concert.city}}</span>
+                </mat-list-item>
+                <div style="display: flex; align-items: center;">
+                    <mat-list-item class="date-container">
+                        <p matListItemTitle style="font-size: 2rem; padding-bottom: 0.8rem; font-weight: bold; color: black;">{{concert.eventDate | date: 'dd'}}</p>
+                        <span matListItemLine style="font-size: 1.2rem; color: black;">{{concert.eventDate | date: 'LLL'}}</span>
+                        <span matListItemLine>{{concert.eventDate | date: 'h:mm a'}}</span>
+                    </mat-list-item>
+                    <mat-list-item class="add-button-container">
+                        <button mat-fab matToolTip="Add" (click)="addConcert(concert)" style="box-shadow: none;">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </div>
+            </div>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </div> 
+</div>

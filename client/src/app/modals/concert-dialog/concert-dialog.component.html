@@ -1,20 +1,28 @@
-<mat-card class="user-card" *ngIf="concert">
+<div mat-dialog-content>
+<mat-card style="overflow: hidden;" class="user-card" *ngIf="concert">
     <div>
     <mat-card-content class="card-content">
         <div class="card-img-wrapper">
-            <img mat-card-image [ngClass]="{
-                'width-125': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium,
-                'width-145': currentBreakpoint === Breakpoints.Small,
-                'width-165': currentBreakpoint === smallerBreakpoint,
-                'width-135': currentBreakpoint === Breakpoints.XSmall
-            }" class="card-img" src="{{concert.imageUrl || './assets/user.png'}}" alt="{{concert.artistName}}">
+            <img mat-card-image  class="card-img" src="{{concert.imageUrl || './assets/user.png'}}" alt="{{concert.artistName}}">
         
-            <mat-action-list class="card-icon-container animate" role="list"
-            [ngClass]="{
-                'concert-icons-for-animate': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large,
-                'concert-icons-no-animate' : currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall
-            }">
-                <div class="icons-row">
+            <mat-action-list class="card-icon-container concert-icons-no-animate animate" role="list"
+            >
+                <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
+                    <i class='fab fa-instagram'></i>
+                </a>
+                <a *ngIf="concert.twitterUrl" mat-mini-fab href="{{concert.twitterUrl}}" class="btn btn-primary" target="_blank">
+                    <i class='fab fa-twitter'></i>
+                </a>
+                <a *ngIf="concert.spotifyUrl" mat-mini-fab href="{{concert.spotifyUrl}}" class="btn btn-primary" target="_blank">
+                    <i class='fab fa-spotify'></i>
+                </a>
+                <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
+                    <i class='fab fa-youtube'></i>
+                </a>
+                <!-- <div class="icons-row" id="icons-top-row">
                     <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
                         <i class="fab fa-facebook"></i>
                     </a>
@@ -32,17 +40,17 @@
                     <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
                         <i class='fab fa-youtube'></i>
                     </a>
-                </div>
+                </div> -->
             </mat-action-list>
         </div>
     </mat-card-content>
     <div class="card-footer light-theme">
-    <mat-card-footer style="padding: 10px;">
-        <h6 class="text-center mb-1">
+    <mat-card-footer style="padding: 10px; display: flex; flex-direction: column; flex-shrink: 0;">
+        <h4 class="text-center mb-1">
             <span class="card-title">
             {{concert.artistName}}
             </span>
-        </h6>
+        </h4>
         <!-- <span class="card-text city-text text-center">{{concert.eventName}}</span>
         <span class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</span>
         <span class="card-text city-text text-center">{{concert.venue}}</span>
@@ -58,3 +66,4 @@
     </div>
     </div>
 </mat-card>
+</div>

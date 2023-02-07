@@ -14,6 +14,7 @@
 
 @import './app/members/member-card/member-card.component.scss';
 @import './app/members/member-list/member-list.component.scss';
+@import './app/concerts/concert-home/concert-home.component.scss';
 
 // Include the core theme and any additional component themes. Eg. @include mat.button-theme(light.$light-theme);
 @include mat.core-theme(light-theme.$light-theme);
@@ -32,6 +33,7 @@ $warn-palette:    map.get($color-config, 'warn');
 @mixin custom-components-theme($theme) {
   @include card-color($theme);
   @include filter-button-background($theme);
+  @include tab-color($theme);
 }
 @include custom-components-theme(light-theme.$light-theme);
 
@@ -83,6 +85,32 @@ body {
 .mdc-list-item__primary-text {
   line-height: normal !important;
 }
+.concert-dialog {
+//   mat-dialog-container {
+//     padding: 0;
+//     background-color: transparent;
+// }
+display: flex;
+flex-direction: column;
+.mdc-dialog__surface {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  //border-radius: 20px;
+}
+.mdc-dialog__content {
+  padding: 0 !important;
+  overflow: hidden !important;
+  // min-height: 80vh;
+  max-height: 95vh !important;
+  flex-grow: 1;
+  //overflow: auto;
+  
+}
+
+}
+// .mat-mdc-dialog-surface {
+//   background: transparent;
+// }
 /*
 .tab-panel {
     border: 1px solid #ddd;

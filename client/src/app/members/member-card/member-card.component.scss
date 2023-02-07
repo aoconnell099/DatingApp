@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 // @import './'
-
+  
 @mixin card-color($theme){
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -40,17 +40,24 @@
 //     }
 //   }
 
-
-.user-card:hover .card-img {
+.user-card-hover:hover .card-img {
     transform: scale(1.2, 1.2);
     transition-duration: 500ms;
     transition-timing-function: ease-out;
-    opacity: 0.7;
+    opacity: 0.85;
 }
+
+
+// .user-card:hover .card-img {
+//     transform: scale(1.2, 1.2);
+//     transition-duration: 500ms;
+//     transition-timing-function: ease-out;
+//     opacity: 0.7;
+// }
 .user-card {
     //background-color: lavender;
-    border-radius: 10%;
-    cursor: pointer;
+    border-radius: 10% !important;
+    //cursor: pointer;
 }
 .card-content {
     padding-top: 20px;

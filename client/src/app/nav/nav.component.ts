@@ -156,6 +156,7 @@ export class NavComponent implements OnInit {
   }
 
   onSidenavClose() {
+    //console.log('sidenavclose');
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
   }
 

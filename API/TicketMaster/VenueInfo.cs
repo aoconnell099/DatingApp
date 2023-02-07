@@ -14,5 +14,8 @@ namespace API.TicketMaster
         [JsonProperty("city")]
         public CityInfo CityInfo { get; set; }
 
+        [JsonProperty("url")]
+        public string VenueUrl { get; set; }
+
     }
 }

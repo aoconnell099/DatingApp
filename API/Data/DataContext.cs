@@ -52,7 +52,7 @@ namespace API.Data
                 .HasForeignKey(uc => uc.UserId);
             
             builder.Entity<UserConcert>()
-                .HasOne(c => c.Concert)
+                .HasOne(c => c.Concert) 
                 .WithMany(uc => uc.UserConcert)
                 .HasForeignKey(uc => uc.ConcertId);
 
@@ -83,7 +83,7 @@ namespace API.Data
 
             builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
 
-            builder.ApplyUtcDateTimeConverter();
+            //builder.ApplyUtcDateTimeConverter();
         }
     }
 

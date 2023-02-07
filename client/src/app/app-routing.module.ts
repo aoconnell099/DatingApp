@@ -15,6 +15,7 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ConcertListComponent } from './concerts/concert-list/concert-list.component';
+import { ConcertHomeComponent } from './concerts/concert-home/concert-home.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -28,7 +29,7 @@ const routes: Routes = [
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
-      {path: 'concerts', component: ConcertListComponent},
+      {path: 'concerts', component: ConcertHomeComponent},
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]}
     ]
   },

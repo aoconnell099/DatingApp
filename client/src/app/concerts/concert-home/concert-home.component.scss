@@ -1,0 +1,15 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+// @import './'
+ 
+@mixin tab-color($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $primary-contrast: map-get($primary, contrast);
+
+
+    .mat-mdc-tab-header {
+        // background-color: lightblue;
+        background-color: map-get($map: $primary, $key: 100);
+    }
+  }

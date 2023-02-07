@@ -1,4 +1,6 @@
-<mat-card class="user-card" *ngIf="member">
+<mat-card class="user-card" [ngClass]="{
+    'user-card-hover': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
+}" *ngIf="member">
     <div>
     <!-- <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>

@@ -1,18 +1,57 @@
-<div class="column">
-    Your Concerts
-    <div *ngFor="let concert of concerts" class="mt-3"> 
-        <p>{{concert.eventName}}</p>
+<!-- <div>
+    <h5><u><i>Search for concerts to add</i></u></h5>
+    <form class="example-form" (ngSubmit)="searchConcerts()">
+        <mat-form-field class="example-full-width">
+            <span matPrefix> </span>
+            <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
+            <button type="submit" matSuffix mat-button><mat-icon >search</mat-icon></button>
+        </mat-form-field>
+<br/>
+    </form>
+    <div *ngIf="searchResult.length > 0" class="column">
+        Concerts
+        <mat-list class="search-list">
+            <div *ngFor="let concert of searchResult" class="mt-3"> 
+                
+            <div class="list-item-container">
+
+                <mat-list-item>
+                    <img matListItemAvatar style="margin-top: 0; margin-bottom: 0; width: 70px; height: 70px;" src={{concert.imageUrl}} alt="">
+                    
+                    <h3 matListItemTitle>{{concert.artistName}}</h3>
+                    <span matListItemLine>{{concert.venue}}</span>
+                    <span matListItemLine>{{concert.city}}</span>
+                </mat-list-item>
+                <div style="display: flex; align-items: center;">
+                    <mat-list-item class="date-container">
+                        <p matListItemTitle style="font-size: 2rem; padding-bottom: 0.8rem; font-weight: bold; color: black;">{{concert.eventDate | date: 'dd'}}</p>
+                        <span matListItemLine style="font-size: 1.2rem; color: black;">{{concert.eventDate | date: 'LLL'}}</span>
+                        <span matListItemLine>{{concert.eventDate | date: 'h:mm a'}}</span>
+                    </mat-list-item>
+                    <mat-list-item class="add-button-container">
+                        <button mat-fab matToolTip="Add" (click)="addConcert(concert)" style="box-shadow: none;">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </div>
+            </div>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </div> 
+</div> -->
+
+
+
+<mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+    <div *ngFor="let concert of concerts">
+        <mat-grid-tile>
+            <div class="mat-grid-tile-content">
+                <app-concert-card [currentBreakpoint]="currentBreakpoint" [concert]="concert"></app-concert-card>
+            </div>
+        </mat-grid-tile>
     </div>
-</div>
-
-<div class="column">
-    <button mat-raised-button color="primary">Raised</button>
-    <button mat-raised-button color="accent">Accent</button>
-    <button mat-raised-button color="warn">Warn</button>
-</div>
-<mat-icon svgIcon="stage-lights-star-1"></mat-icon>
-
-
+</mat-grid-list>
 
 
 <div class="d-flex justify-content-center" *ngIf="pagination">
@@ -28,3 +67,55 @@
         lastText="&raquo;">
     </pagination>
 </div>
+
+
+
+
+<!-- <mat-list-item class="search-list-item">
+                        <img matListItemAvatar src={{concert.imageUrl}} alt="">
+                    
+                    <h3 matListItemTitle>{{concert.artistName}}</h3>
+                    <span matListItemLine>{{concert.venue}}</span>
+                    <span matListItemLine>{{concert.city}}</span>
+                        <p>dateMedium: {{concert.eventDate | date: 'medium'}}</p>
+                        <p>dateMonth: {{concert.eventDate | date: 'LLL'}}</p>
+                        <p>dateDay: {{concert.eventDate | date: 'dd'}}</p>
+                        <button mat-fab matToolTip="Add">
+                            <mat-icon>add</mat-icon>
+                        </button>
+
+                </mat-list-item> 
+
+                <mat-list-item class="search-list-item">
+                    <div matListItemAvatar class="artist-img-container">
+                        <img matListItemAvatar src={{concert.imageUrl}} alt="">
+                    </div>
+                    <div class="list-item-container">
+                        <div class="concert-info">
+                            <h3 matListItemTitle>{{concert.artistName}}</h3>
+                            <span matListItemLine>{{concert.venue}}</span>
+                            <span matListItemLine>{{concert.city}}</span>
+                        </div>
+                        <div class="date-container">
+                            <p><span style="font-size: 2rem; font-weight: bold; color: black;">{{concert.eventDate | date: 'dd'}}</span></p>
+                            <p><span style="font-size: 1.2rem;">{{concert.eventDate | date: 'LLL'}}</span></p>
+                            <p><span>{{concert.eventDate | date: 'h:mm a'}}</span></p>
+                            
+                        </div>
+                        <div class="add-concert-button">
+                            <button mat-fab matToolTip="Add">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-list-item>-->
+
+
+
+                                <!-- <mat-list-item style="height: auto !important; width: 25% !important;">
+                    <div>
+                        width: -webkit-fill-available; height: 100%;
+                        <img style="width: 60px; height: 60px; margin-top: 0; margin-bottom: 0; border-radius: 50%;" src={{concert.imageUrl}} alt="">
+                    </div>
+                </mat-list-item> -->

@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace API.TicketMaster
 {
-    public class ArtistImages
+    public class Spotify
     {
         [JsonProperty("url")]
-        public string ImageUrl { get; set; }
+        public string SpotifyUrl { get; set; }
     }
 }

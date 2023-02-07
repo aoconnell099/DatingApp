@@ -1,12 +1,23 @@
 .card-text {
     margin-bottom: 0.3em;
 }
+.card-icon-container {
+    display: flex;
+}
+.card-icon-container a {
+    // margin: 0.2em;
+    margin: 0 0.5em 0 0.5em;
+}
 .icons-row {
     display: flex;
     justify-content: center;
 }
 .icons-row a {
-    margin: 0.2em;
+    // margin: 0.2em;
+    margin: 0 0.5em 0 0.5em;
+}
+#icons-top-row {
+    margin-bottom: -0.3em;
 }
 .concert-icons-for-animate {
     position: absolute;
@@ -16,7 +27,7 @@
     margin-right: auto;
     margin-left: auto;
     opacity: 1;
-} 
+}
 .concert-icons-no-animate {
     position: absolute;
     bottom: 0%;
@@ -25,6 +36,10 @@
     margin-right: auto;
     margin-left: auto;
     opacity: 1;
+}
+
+.card-icon-container {
+    padding-bottom: 0.1em !important;
 }
 
 .user-card:hover .concert-icons-for-animate {

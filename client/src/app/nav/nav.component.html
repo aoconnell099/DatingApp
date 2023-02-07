@@ -232,7 +232,7 @@
     </mat-toolbar-row>    
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav #sidenav (close)="onSidenavClose()">
+    <mat-sidenav #sidenav (closedStart)="onSidenavClose()">
         
         <mat-nav-list (click)="sidenav.toggle()">
 
