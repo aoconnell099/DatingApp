@@ -1,13 +1,20 @@
-<mat-tab-group dynamicHeight class="tab">
-    <mat-tab label="Your Concerts">
-      <div class="example-small-box mat-elevation-z4">
-        <app-concert-list></app-concert-list>
-      </div>
+<div id="tabGroupParent">
+  <mat-tab-group id="tabGroup" #tabGroup dynamicHeight class="tab">
+    <mat-tab id="concertListTab" #concertListTab label="Your Concerts">
+      <app-concert-list id="concertList" #concertList></app-concert-list>
     </mat-tab>
-    <mat-tab label="Search">
-        <div>
-            <app-concert-search></app-concert-search>
-        </div>
+    <mat-tab id="concertSearchTab" #concertSearchTab label="Search">
+        <app-concert-search id="concertSearch" #concertSearch></app-concert-search>
     </mat-tab>
-  </mat-tab-group>
+  </mat-tab-group> 
+</div>
+
+<!-- <div style="display: flex;">
+  <div style="flex: 1 1 auto">
+    <app-concert-list></app-concert-list>
+  </div>
+  <div style="flex: 1 1 auto; overflow-y: auto;">
+    <app-concert-search></app-concert-search>
+  </div>
+</div> -->
   

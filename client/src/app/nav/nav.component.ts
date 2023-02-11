@@ -67,6 +67,9 @@ export class NavComponent implements OnInit {
     this.initVars();
   }
 
+  testButton($event: any) {
+    console.log("button pressed");
+  }
   ngAfterContentInit(): void {
     this.onFontChange();
   }

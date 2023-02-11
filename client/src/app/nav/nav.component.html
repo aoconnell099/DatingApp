@@ -55,7 +55,7 @@
             <ng-container *ngIf="accountService.currentUser$ | async">
                 <!-- Navbar container for Medium (960px-1280px) and Large (1280px-1920px) sized screens-->
                 <div *ngIf="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium" class="nav-items" >
-                    <a mat-button class="nav-button-display" id="matches" routerLink='/members' routerLinkActive="nav-button">Matches</a>
+                    <a mat-button class="nav-button-display" id="matches" routerLink='/members' routerLinkActive="nav-button" (click)="testButton($event)">Matches</a>
                     
                     <a mat-button class="nav-button-display" id="concerts" routerLink='/concerts' routerLinkActive="nav-button">Concerts</a>
                     
@@ -190,7 +190,7 @@
                     <!-- Selection list version of the font selection -->
                     <mat-menu #fontEditor="matMenu">
                         <mat-selection-list #fonts
-                            (selectionChange)="onFontChange($event)"
+                            (selectionChange)="onFontChange($event)" 
                             (click)="$event.stopPropagation()" 
                             [multiple]="false">
                             <mat-list-option *ngFor="let font of fontList" [value]="font" [selected]="font === currentFont" >

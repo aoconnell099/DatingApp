@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Concert } from 'src/app/_models/concert';
 import { ConcertParams } from 'src/app/_models/concertParams';
 import { TicketMasterParams } from 'src/app/_models/ticketMasterParams';
@@ -25,6 +25,7 @@ export class ConcertSearchComponent implements OnInit {
   hover: boolean = false;
 
   scrollStrategy: ScrollStrategy | undefined;
+  nativeElement: any;
 
   constructor(private concertService: ConcertService, public concertCard: MatDialog,
         private readonly scrollStrategyOptions: ScrollStrategyOptions) { 
@@ -36,6 +37,8 @@ export class ConcertSearchComponent implements OnInit {
     this.scrollStrategy = this.scrollStrategyOptions.block();
     console.log(this.scrollStrategy);
   }
+
+
 
   searchConcerts() {
     console.log("search");
@@ -91,7 +94,16 @@ export class ConcertSearchComponent implements OnInit {
     
   }
 
-  openConcertCard(concert: Concert): void {
+  openConcertCard($event: MouseEvent, concert: Concert): void {
+    console.log($event);
+    if ($event.target) {
+      const eventTarget: HTMLElement = $event?.target as HTMLButtonElement;
+      if (eventTarget.parentElement?.id === "add-concert-button") {
+        console.log("button with id string check");
+        return;
+      }
+    }
+
     const dialogRef = this.concertCard.open(ConcertDialogComponent, {
       width: '60vw',
       height: 'auto',
@@ -100,10 +112,13 @@ export class ConcertSearchComponent implements OnInit {
       data: concert
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-      // console.log(result);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   // console.log(result);
+    // });
   }
 
+  ngOnDestroy(): void {
+    console.log("concert search onDestroy")
+  }
 }

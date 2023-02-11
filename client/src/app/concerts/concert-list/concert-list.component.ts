@@ -1,6 +1,6 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { distinctUntilChanged, tap } from 'rxjs';
 import { Concert } from 'src/app/_models/concert';
 import { ConcertParams } from 'src/app/_models/concertParams';
@@ -14,7 +14,8 @@ import { ConcertService } from 'src/app/_services/concert.service';
   templateUrl: './concert-list.component.html',
   styleUrls: ['./concert-list.component.scss']
 })
-export class ConcertListComponent implements OnInit {
+export class ConcertListComponent implements OnInit, OnDestroy {
+  
   concerts: Concert[] = [];
   searchResult: Concert[] = [];
   concertToAdd?: Concert;
@@ -51,6 +52,7 @@ export class ConcertListComponent implements OnInit {
     this.loadConcerts();
   }
 
+
   private breakpointChanged() {
     if(this.breakpointObserver.isMatched(Breakpoints.XLarge)) {
       this.currentBreakpoint = Breakpoints.XLarge;
@@ -75,18 +77,31 @@ export class ConcertListComponent implements OnInit {
       console.log('no landscape');
     }
     
-    if(this.currentBreakpoint === Breakpoints.XLarge || this.currentBreakpoint === Breakpoints.Large) {
-      this.numberOfCols = 3;
+    // if(this.currentBreakpoint === Breakpoints.XLarge || this.currentBreakpoint === Breakpoints.Large) {
+    //   this.numberOfCols = 3;
+    //   this.rowHeightRatio = "1:1.3";
+    // } else if(this.currentBreakpoint === Breakpoints.Medium) {
+    //   this.numberOfCols = 2;
+    //   this.rowHeightRatio = "1:1.2";
+    // } else if(this.currentBreakpoint === Breakpoints.Small) {
+    //   this.numberOfCols = 2;
+    //   this.rowHeightRatio = "0.7:1.2";
+    // } else if(this.currentBreakpoint === Breakpoints.XSmall) {
+    //   this.numberOfCols = 1;
+    //   this.rowHeightRatio = "1:1.3";
+    // }
+    if(this.currentBreakpoint === Breakpoints.XLarge) {
+      this.numberOfCols = 2;
       this.rowHeightRatio = "1:1.3";
-    } else if(this.currentBreakpoint === Breakpoints.Medium) {
-      this.numberOfCols = 2;
-      this.rowHeightRatio = "1:1.2";
+    } else if(this.currentBreakpoint === Breakpoints.Large || this.currentBreakpoint === Breakpoints.Medium) {
+      this.numberOfCols = 1;
+      this.rowHeightRatio = "1:1.4";
     } else if(this.currentBreakpoint === Breakpoints.Small) {
-      this.numberOfCols = 2;
-      this.rowHeightRatio = "0.7:1.2";
+      this.numberOfCols = 1;
+      this.rowHeightRatio = "1:1.7";
     } else if(this.currentBreakpoint === Breakpoints.XSmall) {
       this.numberOfCols = 1;
-      this.rowHeightRatio = "1:1.3";
+      this.rowHeightRatio = "1:2.1";
     }
   }
 
@@ -105,46 +120,6 @@ export class ConcertListComponent implements OnInit {
     
   }
 
-  // searchConcerts() {
-  //   if (this.ticketMasterParams) {
-  //     this.ticketMasterParams.keyword = this.search;
-  //     console.log(this.ticketMasterParams.keyword);
-  //     console.log(this.search);
-  //     this.concertService.searchConcerts(this.ticketMasterParams).subscribe({
-  //       next: response => {
-  //         console.log(response);
-  //         if (response) {
-  //           this.searchResult = response;
-  //           console.log(response);
-  //           // this.searchResult.forEach((concert) => {
-  //           //   var newDate = formatDate(concert.eventDate, 'medium');
-  //           //   concert.eventDate.
-  //           // })
-  //         }
-  //       }
-  //     })
-  //   }
-  // }
-
-  // addConcert(concert: Concert) {
-  //   console.log(concert);
-  //   if (concert) {
-  //     this.concertToAdd = concert;
-  //     this.concertService.addConcert(this.concertToAdd).subscribe({
-  //       next: (response: any) => {
-  //         console.log(response);
-  //         if (response) {
-  //           this.loadConcerts();
-  //           // this.searchResult.forEach((concert) => {
-  //           //   var newDate = formatDate(concert.eventDate, 'medium');
-  //           //   concert.eventDate.
-  //           // })
-  //         }
-  //       }
-  //     })
-  //   }
-  // }
-
   resetFilters() {
     this.concertParams = this.concertService.resetConcertParams();
     this.loadConcerts();
@@ -156,6 +131,11 @@ export class ConcertListComponent implements OnInit {
       this.concertService.setConcertParams(this.concertParams);
       this.loadConcerts();
     }
+  }
+
+  
+  ngOnDestroy(): void {
+    console.log("destroy concert list");
   }
 
 }

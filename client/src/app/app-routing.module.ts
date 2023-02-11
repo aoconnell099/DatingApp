@@ -16,6 +16,8 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ConcertListComponent } from './concerts/concert-list/concert-list.component';
 import { ConcertHomeComponent } from './concerts/concert-home/concert-home.component';
+import { ConcertTabsGuard } from './_guards/concert-tabs.guard';
+import { ConcertSearchComponent } from './concerts/concert-search/concert-search.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +31,12 @@ const routes: Routes = [
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},
       {path: 'messages', component: MessagesComponent},
-      {path: 'concerts', component: ConcertHomeComponent},
+      {path: 'concerts', component: ConcertHomeComponent, canDeactivate: [ConcertTabsGuard],
+        // children: [
+        //   {path: '', component: ConcertListComponent},
+        //   {path: '', component: ConcertSearchComponent}
+        // ]
+      },
       {path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]}
     ]
   },
