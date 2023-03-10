@@ -52,6 +52,10 @@ export class ConcertService {
     return getPaginatedResult<Concert[]>(this.baseUrl + 'concerts', params, this.http);
   }
 
+  getUserEventIds() {
+    return this.http.get<string[]>(this.baseUrl + 'concerts/user-events');
+  }
+
   searchConcerts(ticketMasterParams: TicketMasterParams) {
     console.log(ticketMasterParams);
     var paramString = 'keyword=' + ticketMasterParams.keyword + '&classificationName=' + ticketMasterParams.classificationName;
@@ -59,7 +63,12 @@ export class ConcertService {
   }
 
   addConcert(concert: Concert) {
-    console.log("concert service"  + concert);
+    //console.log("concert service"  + concert);
     return this.http.post(this.baseUrl + 'concerts/add-concert', concert);
+  }
+
+  removeUserConcert(concert: Concert) {
+    //console.log("concert service - "+concert);
+    return this.http.delete(this.baseUrl + 'concerts/delete-user-concert/' + concert.eventId);
   }
 }

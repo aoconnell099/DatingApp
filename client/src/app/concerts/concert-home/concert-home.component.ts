@@ -4,6 +4,10 @@ import { ConcertSearchComponent } from '../concert-search/concert-search.compone
 import { NavigationStart, Router } from '@angular/router';
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ConcertParams } from 'src/app/_models/concertParams';
+import { Concert } from 'src/app/_models/concert';
+import { Pagination } from 'src/app/_models/paginations';
+import { ConcertService } from 'src/app/_services/concert.service';
 
 @Component({
   selector: 'app-concert-home',
@@ -16,6 +20,11 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
   @ViewChild('concertListTab') concertListTab!: MatTab;
   @ViewChild('concertSearchTab') concertSearchTab!: MatTab;
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
+  concertParams?: ConcertParams;
+  concerts: Concert[] = [];
+  searchResult: Concert[] = [];
+  concertToAdd?: Concert;
+  pagination?: Pagination;
   @HostListener('window:beforeunload', ['$event'])
     beforeUnloadHandler(event: any) {
     // logic to handle the beforeunload event
@@ -30,7 +39,8 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
   keyManager: any;
   isNavigating: boolean = false;
 
-  constructor(private router: Router, private renderer: Renderer2) { 
+  constructor(private concertService: ConcertService, private router: Router, private renderer: Renderer2) { 
+    this.concertParams = this.concertService.getConcertParams();
     //this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -46,7 +56,30 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
     //     console.log(document.getElementById("concertList"));
     //   }
     // });
+
+    // document?.getElementById("List")?.click();
+    //this.openTab(, 'List');
+    this.loadConcerts();
   }
+
+  loadConcerts() {
+    if (this.concertParams) {
+      this.concertService.getConcertsForUser(this.concertParams).subscribe({
+        next: response => {
+          if (response.result && response.pagination) { 
+            this.concerts = response.result;
+            this.pagination = response.pagination;
+            console.log(this.concerts);
+          }  
+        }
+      })
+    } 
+    
+  }
+
+  // ngAfterContentInit(): void {
+  //   document?.getElementById("List")?.click();
+  // }
 
   // ngAfterViewInit() {
   //   console.log(this.tabGroup._keyManager);
@@ -76,6 +109,30 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
     // document.getElementById("concertSearch")?.remove();
     // this.tabGroup._elementRef.nativeElement.remove();
     // console.log(this.tabGroup);
+  }
+
+  openTab($event: any, tabName: string) {
+    //var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    const tabcontent = Array.from(document.getElementsByClassName("tab-content") as HTMLCollectionOf<HTMLElement>);
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    const tablinks =  Array.from(document.getElementsByClassName("tab-links") as HTMLCollectionOf<HTMLElement>);
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" tab-button", "");
+    }
+
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    const tab = document.getElementById(tabName);
+    if (tab) {
+      tab.style.display = "block";
+    }
+    console.log($event);
+    $event.target.parentElement.className += " tab-button";
   }
 
   ngOnDestroy(): void {

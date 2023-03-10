@@ -20,6 +20,8 @@ namespace API.Interfaces
 
         Task<PagedList<ConcertDto>> GetConcertsForUser(ConcertParams concertParams);
 
+        Task<ICollection<string>> GetUserEventIds(int userId);
+
         Task<UserConcert> GetUserConcertById(int userId, int concertId);
     }
 }

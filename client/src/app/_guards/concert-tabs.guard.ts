@@ -10,9 +10,9 @@ export class ConcertTabsGuard implements CanDeactivate<ConcertHomeComponent> {
   canDeactivate(component: ConcertHomeComponent): boolean {
       console.log("inside of can deactivate");
       console.log(component);
-      component.cleanup();
+      //component.cleanup();
 
-    return false;
+    return true;
   }
   
 }

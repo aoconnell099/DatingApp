@@ -1,5 +1,5 @@
 export class ConcertParams {
-    pageNumber = 1;
-    pageSize = 5;
+    pageNumber = 0;
+    pageSize = 6;
     orderBy = 'lastActive';
 }

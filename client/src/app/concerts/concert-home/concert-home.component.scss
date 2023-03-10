@@ -12,4 +12,80 @@
         // background-color: lightblue;
         background-color: map-get($map: $primary, $key: 100);
     }
+
+    .tab-links {
+        flex: auto;
+        background-color: #ddd !important;
+        color: map-get($map: $accent, $key: 500) !important;
+        float: left;
+        border: none !important;
+        outline: none !important;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        height: 4em !important;
+      }
+
+      .custom-tab button:hover {
+        background-color: map-get($map: $accent, $key: 100) !important;
+        //color: #ddd !important;
+        opacity: 0.7 !important;
+      }
+
+    //   .custom-tab button.active {
+    //     background-color: #ddd !important;
+    //     color: map-get($map: $accent, $key: 500);
+    //   }
+    // .tab-links {
+    //     background-color: #ddd;
+    //     color: map-get($map: $accent, $key: 500);
+    // }
+
+      .tab-button {
+        pointer-events: none;
+        color: #ddd !important;
+        background-color: map-get($map: $accent, $key: 500) !important;
+        //box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%) !important;
+        @include mat.elevation(8);
+          //color: black !important;
+      }
+  }
+
+  .custom-tab {
+    //overflow: hidden;
+    margin: 0.8em;
+    margin-top: 0.4em !important;
+    padding-right: 1.6em !important;
+    display: flex;
+    justify-content: center;
+    //position: fixed;
+    top: 64px;
+    width: 100%;
+    z-index: 10;
+    //align-items: stretch;
+    //border: 1px solid #ccc;
+    //background-color: #f1f1f1;
+    //height: 90%;
+    //border-radius: 2em;
+  }
+
+//   #Search {
+//     height: 90%;
+//     overflow-y: scroll;
+//   }
+  
+  /* Style the buttons that are used to open the tab content */
+
+  
+  /* Change background color of buttons on hover */
+  
+  
+  /* Create an active/current tablink class */
+  
+
+
+  /* Style the tab content */
+  .tab-content {
+    display: none;
+    padding: 6px 12px;
   }

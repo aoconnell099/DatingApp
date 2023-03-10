@@ -232,18 +232,18 @@
     </mat-toolbar-row>    
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav #sidenav (closedStart)="onSidenavClose()">
+    <mat-sidenav #sidenav [autoFocus]="false" (closedStart)="onSidenavClose()">
         
         <mat-nav-list (click)="sidenav.toggle()">
 
-            <a mat-list-item [routerLink]="'/'">Home</a>
-            <a mat-list-item [routerLink]="'/members'">Matches</a>
-            <a mat-list-item [routerLink]="'/concerts'">Concerts</a>
-            <a mat-list-item [routerLink]="'/lists'">Lists</a>
-            <a mat-list-item [routerLink]="'/messages'">Messages</a>
-            <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/admin'">Admin</a>
-            <a mat-list-item *appHasRole='["Admin", "Moderator"]' [routerLink]="'/errors'">Errors</a>
-            <a mat-list-item  mat-list-item>Close</a>
+            <a mat-list-item routerLinkActive="sidenav-active" [routerLink]="'/'" [routerLinkActiveOptions]="{exact: true}" aria-selected="false">Home</a>
+            <a mat-list-item routerLinkActive="sidenav-active" [routerLink]="'/members'" [routerLinkActiveOptions]="{exact: true}">Matches</a>
+            <a mat-list-item routerLinkActive="sidenav-active" [routerLink]="'/concerts'" [routerLinkActiveOptions]="{exact: true}">Concerts</a>
+            <a mat-list-item routerLinkActive="sidenav-active" [routerLink]="'/lists'" [routerLinkActiveOptions]="{exact: true}">Lists</a>
+            <a mat-list-item routerLinkActive="sidenav-active" [routerLink]="'/messages'" [routerLinkActiveOptions]="{exact: true}">Messages</a>
+            <a mat-list-item *appHasRole='["Admin", "Moderator"]' routerLinkActive="sidenav-active" [routerLink]="'/admin'" [routerLinkActiveOptions]="{exact: true}">Admin</a>
+            <a mat-list-item *appHasRole='["Admin", "Moderator"]' routerLinkActive="sidenav-active" [routerLink]="'/errors'" [routerLinkActiveOptions]="{exact: true}">Errors</a>
+            <a mat-list-item>Close</a>
 
         </mat-nav-list>
     </mat-sidenav>

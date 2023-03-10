@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Concert } from 'src/app/_models/concert';
 import { ConcertParams } from 'src/app/_models/concertParams';
 import { TicketMasterParams } from 'src/app/_models/ticketMasterParams';
@@ -7,6 +7,7 @@ import { Pagination } from 'src/app/_models/paginations';
 import { MatDialog } from '@angular/material/dialog';
 import { ConcertDialogComponent } from '../../modals/concert-dialog/concert-dialog.component';
 import { BlockScrollStrategy, ScrollStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-concert-search',
@@ -14,11 +15,17 @@ import { BlockScrollStrategy, ScrollStrategy, ScrollStrategyOptions } from '@ang
   styleUrls: ['./concert-search.component.scss']
 })
 export class ConcertSearchComponent implements OnInit {
+  @Output() load: EventEmitter<any> = new EventEmitter();
+  @Input() concerts?: Concert[];
+  @Input() pagination?: Pagination;
   search = "";
   searchResult: Concert[] = [];
-  concerts: Concert[] = [];
+  initialSearchResult: Concert[] =[];
+  //concerts: Concert[] = [];
   concertToAdd?: Concert;
-  pagination?: Pagination;
+
+  eventList: string[] = [];
+  
   concertParams?: ConcertParams;
   ticketMasterParams?: TicketMasterParams;
 
@@ -27,7 +34,7 @@ export class ConcertSearchComponent implements OnInit {
   scrollStrategy: ScrollStrategy | undefined;
   nativeElement: any;
 
-  constructor(private concertService: ConcertService, public concertCard: MatDialog,
+  constructor(private concertService: ConcertService, private accountService: AccountService, public concertCard: MatDialog,
         private readonly scrollStrategyOptions: ScrollStrategyOptions) { 
     this.concertParams = this.concertService.getConcertParams();
     this.ticketMasterParams = this.concertService.getTicketMasterParams();
@@ -36,6 +43,22 @@ export class ConcertSearchComponent implements OnInit {
   ngOnInit(): void {
     this.scrollStrategy = this.scrollStrategyOptions.block();
     console.log(this.scrollStrategy);
+    console.log("search init");
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("search changes");
+    console.log(changes);
+    // this.concertService.getUserEventIds().subscribe({
+    //   next: (response: string[]) => {
+    //     if (response) {
+    //       console.log(response);
+    //       this.eventList = response;
+    //       console.log(this.eventList);
+    //     }
+    //   }
+    // })
+    this.updateSearchResult();
   }
 
 
@@ -49,14 +72,15 @@ export class ConcertSearchComponent implements OnInit {
       console.log(this.search);
       this.concertService.searchConcerts(this.ticketMasterParams).subscribe({
         next: response => {
-          console.log(response);
+          console.log("inside of search concerts " + response);
+          console.log(response.values);
           if (response) {
-            this.searchResult = response;
-            console.log(response);
-            // this.searchResult.forEach((concert) => {
-            //   var newDate = formatDate(concert.eventDate, 'medium');
-            //   concert.eventDate.
-            // })
+            console.log(this.concerts);
+            //this.searchResult = response.filter(concert => !this.concerts?.includes(concert));
+            this.initialSearchResult = response;
+            this.searchResult = response.filter(concert => !this.eventList?.some(eventId => eventId === concert.eventId));
+            this.updateSearchResult();
+            console.log(this.searchResult);          
           }
         }
       })
@@ -69,14 +93,38 @@ export class ConcertSearchComponent implements OnInit {
       this.concertToAdd = concert;
       this.concertService.addConcert(this.concertToAdd).subscribe({
         next: (response: any) => {
-          console.log(response);
           if (response) {
-            this.loadConcerts();
-
+            console.log(response);
+            console.log("concert added");
+            console.log(this.concerts);
+            this.load.emit(true);
+            //console.log(this.concerts);
+            this.searchResult = this.searchResult.filter(concert => concert.eventId !== response.eventId);
+            // this.searchResult = this.searchResult.filter(concert => !this.concerts?.some(userConcert => userConcert.eventId === concert.eventId));
+            //this.searchConcerts();
+            //this.updateSearchResult();
+            console.log(this.searchResult);
           }
         }
       })
     }
+  }
+
+  updateSearchResult() {
+    console.log("update search result");
+    this.concertService.getUserEventIds().subscribe({
+      next: (response: string[]) => {
+        if (response) {
+          console.log(response);
+          this.eventList = response;
+          //this.searchResult = this.searchResult.filter(concert => !response.some(eventId => eventId === concert.eventId));
+          this.searchResult = this.initialSearchResult.filter(concert => !this.eventList?.some(eventId => eventId === concert.eventId));
+          console.log(this.searchResult);
+        }
+      }
+    })
+
+    //this.searchResult = this.searchResult.filter(concert => !this.concerts?.some(userConcert => userConcert.eventId === concert.eventId));
   }
 
   loadConcerts() {

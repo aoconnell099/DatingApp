@@ -51,6 +51,15 @@ namespace API.Controllers
             return concerts;
         }
 
+        [HttpGet("user-events")]
+        public async Task<ActionResult<ICollection<string>>> GetUserEventIds()
+        {
+            var userId = User.GetUserId();
+            var eventIds = await _unitOfWork.ConcertsRepository.GetUserEventIds(userId);
+
+            return Ok(eventIds);
+        }
+
         [HttpPost("add-concert")]
         public async Task<ActionResult<ConcertDto>> AddConcert(ConcertDto concertDto)
         {
@@ -84,7 +93,8 @@ namespace API.Controllers
                 user.UserConcert.Add(newUserConcert);
                 concert.UserConcert.Add(newUserConcert);
 
-                if (await _unitOfWork.Complete()) return Ok("Successfully added concert");
+                if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(concert));
+                //if (user.UserConcert.Contains(newUserConcert) && concert.UserConcert.Contains(newUserConcert)) return Ok("Successfully added " + concert.EventName);
             }
                        
             // Concert is not in the db yet.
@@ -211,6 +221,26 @@ namespace API.Controllers
             return Ok(concertsToReturn);
         }
 
+        [HttpDelete("delete-user-concert/{eventId}")]
+        public async Task<ActionResult> DeleteConcert(string eventId)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var concert = await _unitOfWork.ConcertsRepository.GetConcertByIdAsync(eventId);
+
+            if (concert == null) return NotFound();
+
+            var user_userConcert = await _unitOfWork.UserRepository.GetUserConcertById(user.Id, concert.Id);
+            var concert_userConcert = await _unitOfWork.ConcertsRepository.GetUserConcertById(user.Id, concert.Id);
+
+            user.UserConcert.Remove(user_userConcert);
+            concert.UserConcert.Remove(concert_userConcert);
+
+            //if (!user.UserConcert.Contains(user_userConcert) && !concert.UserConcert.Contains(concert_userConcert)) return Ok("successfully deleted " + concert.EventName);
+            
+            if (await _unitOfWork.Complete()) return Ok(_mapper.Map<ConcertDto>(concert)); 
+
+            return BadRequest("Failed to delete the concert");
+        }
 
 
     }

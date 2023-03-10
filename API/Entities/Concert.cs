@@ -25,7 +25,6 @@ namespace API.Entities
         public string InstagramUrl { get; set; }
         public string HomepageUrl { get; set; }
         public string ImageUrl { get; set; }
-        [NotMapped]
         public ICollection<UserConcert> UserConcert { get; set; }
     }
 }

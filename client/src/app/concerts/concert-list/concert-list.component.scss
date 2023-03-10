@@ -28,3 +28,13 @@ div:has(> .list-item-container) {
     margin-top: 0.3rem !important;
     margin-bottom: 0.3rem !important;
 }
+
+
+.mobile-pagination-pad-portrait {
+    margin-bottom: 2em;
+    padding-bottom: 3em;
+}
+.mobile-pagination-pad-landscape {
+    margin-bottom: 3em;
+    padding-bottom: 2em;
+}

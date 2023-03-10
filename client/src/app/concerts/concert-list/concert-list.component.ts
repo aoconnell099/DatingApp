@@ -1,6 +1,8 @@
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { distinctUntilChanged, tap } from 'rxjs';
 import { Concert } from 'src/app/_models/concert';
 import { ConcertParams } from 'src/app/_models/concertParams';
@@ -9,19 +11,22 @@ import { TicketMasterParams } from 'src/app/_models/ticketMasterParams';
 import { UserParams } from 'src/app/_models/userParams';
 import { ConcertService } from 'src/app/_services/concert.service';
 
+
 @Component({
   selector: 'app-concert-list',
   templateUrl: './concert-list.component.html',
   styleUrls: ['./concert-list.component.scss']
 })
 export class ConcertListComponent implements OnInit, OnDestroy {
-  
-  concerts: Concert[] = [];
+  //@ViewChild('paginator') paginator!: MatPaginator;
+  @Output() load: EventEmitter<any> = new EventEmitter();
+  @Input() concerts?: Concert[];
+  @Input() pagination?: Pagination;
   searchResult: Concert[] = [];
   concertToAdd?: Concert;
-  pagination?: Pagination;
   concertParams?: ConcertParams;
   ticketMasterParams?: TicketMasterParams;
+  dataSource?: MatTableDataSource<any>;
 
   // search = "";
 
@@ -49,9 +54,14 @@ export class ConcertListComponent implements OnInit, OnDestroy {
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
-    this.loadConcerts();
+    
+    //this.loadConcerts();
   }
 
+  ngViewAfterInit() {
+    // this.dataSource = new MatTableDataSource<any>(this.concerts);
+    // this.dataSource.paginator = this.paginator;
+  }
 
   private breakpointChanged() {
     if(this.breakpointObserver.isMatched(Breakpoints.XLarge)) {
@@ -77,32 +87,34 @@ export class ConcertListComponent implements OnInit, OnDestroy {
       console.log('no landscape');
     }
     
-    // if(this.currentBreakpoint === Breakpoints.XLarge || this.currentBreakpoint === Breakpoints.Large) {
-    //   this.numberOfCols = 3;
-    //   this.rowHeightRatio = "1:1.3";
-    // } else if(this.currentBreakpoint === Breakpoints.Medium) {
-    //   this.numberOfCols = 2;
-    //   this.rowHeightRatio = "1:1.2";
-    // } else if(this.currentBreakpoint === Breakpoints.Small) {
-    //   this.numberOfCols = 2;
-    //   this.rowHeightRatio = "0.7:1.2";
-    // } else if(this.currentBreakpoint === Breakpoints.XSmall) {
-    //   this.numberOfCols = 1;
-    //   this.rowHeightRatio = "1:1.3";
-    // }
-    if(this.currentBreakpoint === Breakpoints.XLarge) {
-      this.numberOfCols = 2;
+    if(this.currentBreakpoint === Breakpoints.XLarge || this.currentBreakpoint === Breakpoints.Large) {
+      this.numberOfCols = 3;
       this.rowHeightRatio = "1:1.3";
-    } else if(this.currentBreakpoint === Breakpoints.Large || this.currentBreakpoint === Breakpoints.Medium) {
-      this.numberOfCols = 1;
-      this.rowHeightRatio = "1:1.4";
+    } else if(this.currentBreakpoint === Breakpoints.Medium) {
+      this.numberOfCols = 2;
+      this.rowHeightRatio = "1:1.2";
     } else if(this.currentBreakpoint === Breakpoints.Small) {
-      this.numberOfCols = 1;
-      this.rowHeightRatio = "1:1.7";
+      this.numberOfCols = 2;
+      this.rowHeightRatio = "0.7:1.2";
     } else if(this.currentBreakpoint === Breakpoints.XSmall) {
       this.numberOfCols = 1;
-      this.rowHeightRatio = "1:2.1";
+      this.rowHeightRatio = "1:1.3";
     }
+
+    // For single page list and search
+    // if(this.currentBreakpoint === Breakpoints.XLarge) {
+    //   this.numberOfCols = 2;
+    //   this.rowHeightRatio = "1:1.3";
+    // } else if(this.currentBreakpoint === Breakpoints.Large || this.currentBreakpoint === Breakpoints.Medium) {
+    //   this.numberOfCols = 1;
+    //   this.rowHeightRatio = "1:1.4";
+    // } else if(this.currentBreakpoint === Breakpoints.Small) {
+    //   this.numberOfCols = 1;
+    //   this.rowHeightRatio = "1:1.7";
+    // } else if(this.currentBreakpoint === Breakpoints.XSmall) {
+    //   this.numberOfCols = 1;
+    //   this.rowHeightRatio = "1:2.1";
+    // }
   }
 
   loadConcerts() {
@@ -120,14 +132,33 @@ export class ConcertListComponent implements OnInit, OnDestroy {
     
   }
 
+  removeConcert(event: Concert) {
+    console.log(event);
+      this.concertService.removeUserConcert(event).subscribe({
+        next: response => {
+          console.log(response);
+          if (this.concerts) {
+            console.log(this.concerts);
+            this.concerts = this.concerts.filter(x => x.id !== event.id); // Returns an array of all of the concerts whose concert id are not equal to the id passed in
+            console.log(this.concerts);
+            this.load.emit(true);
+          } 
+        }
+      })  
+  }
+
   resetFilters() {
     this.concertParams = this.concertService.resetConcertParams();
     this.loadConcerts();
   }
 
   pageChanged(event: any) {
-    if (this.concertParams && this.concertParams?.pageNumber !== event.page) {
-      this.concertParams.pageNumber = event.page;
+    console.log("page changed");
+    console.log(event);
+    if (this.concertParams && this.concertParams?.pageNumber !== event.pageIndex) {
+      console.log(this.concertParams);
+      this.concertParams.pageNumber = event.pageIndex;
+      this.concertParams.pageSize = event.pageSize;
       this.concertService.setConcertParams(this.concertParams);
       this.loadConcerts();
     }

@@ -36,15 +36,23 @@
     transition: all 0.3s ease-in-out;
 }
 
+.width-100 {
+    width: 100% !important;
+    right: 0% !important;
+}
 .width-125 {
     width: 125%;
+    right: 12.5%;
 }
 .width-135 {
     width: 135%;
+    right: 17.5%;
 }
 .width-145 {
     width: 145%;
+    right: 22.5%;
 }
 .width-165 {
     width: 165%;
+    right: 32.5%;
 }

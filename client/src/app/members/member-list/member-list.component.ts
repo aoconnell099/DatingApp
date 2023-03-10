@@ -18,7 +18,8 @@ import { MatSelectionListChange } from '@angular/material/list';
   encapsulation: ViewEncapsulation.None
 })
 export class MemberListComponent implements OnInit {
-  members: Member[] =[];
+  members: Member[] = [];
+  matches: any = [];
   pagination?: Pagination;
   userParams?: UserParams;
   //user: User;
@@ -48,6 +49,7 @@ export class MemberListComponent implements OnInit {
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
+    // this.loadMatches();
     this.loadMembers();
   }
 
@@ -107,14 +109,27 @@ export class MemberListComponent implements OnInit {
     }
   }
 
+  loadMatches() {
+    this.memberService.getMatches().subscribe({
+      next: response => {
+        console.log(response);
+        if (response) {
+         this.matches = response;
+        }
+      }
+    })
+  }
+
   resetFilters() {
     this.userParams = this.memberService.resetUserParams();
     this.loadMembers();
   }
 
   pageChanged(event: any) {
-    if (this.userParams && this.userParams?.pageNumber !== event.page) {
-      this.userParams.pageNumber = event.page;
+    if (this.userParams && this.userParams?.pageNumber !== event.pageIndex) {
+      console.log(event);
+      this.userParams.pageNumber = event.pageIndex;
+      this.userParams.pageSize = event.pageSize;
       this.memberService.setUserParams(this.userParams);
       this.loadMembers();
     }

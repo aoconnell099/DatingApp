@@ -1,14 +1,20 @@
 <mat-card class="user-card" *ngIf="concert">
     <div>
+        <div class="example-button-container" style="display: flex; justify-content: flex-end;">
+            <button (click)="removeUserConcert()" mat-mini-fab color="warn" aria-label="Example icon button with a menu icon">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
     <mat-card-content class="card-content">
         <div class="card-img-wrapper">
-            <img mat-card-image [ngClass]="{
+            <img #cardImg mat-card-image [ngClass]="{
                 'width-125': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium,
                 'width-145': currentBreakpoint === Breakpoints.Small,
                 'width-165': currentBreakpoint === smallerBreakpoint,
-                'width-135': currentBreakpoint === Breakpoints.XSmall
+                'width-135': currentBreakpoint === Breakpoints.XSmall,
+                'width-100': isDefaultImage
             }" class="card-img" src="{{concert.imageUrl || './assets/user.png'}}" alt="{{concert.artistName}}">
-        
+            <!-- [ngClass]="{'width-100': './assets/user.png'}" -->
             <mat-action-list class="card-icon-container animate" role="list"
             [ngClass]="{
                 'concert-icons-for-animate': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large,

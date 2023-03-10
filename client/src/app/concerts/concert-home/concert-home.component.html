@@ -1,4 +1,4 @@
-<div id="tabGroupParent">
+<!-- <div id="tabGroupParent">
   <mat-tab-group id="tabGroup" #tabGroup dynamicHeight class="tab">
     <mat-tab id="concertListTab" #concertListTab label="Your Concerts">
       <app-concert-list id="concertList" #concertList></app-concert-list>
@@ -7,14 +7,18 @@
         <app-concert-search id="concertSearch" #concertSearch></app-concert-search>
     </mat-tab>
   </mat-tab-group> 
+</div> -->
+
+<div class="custom-tab">
+  <button mat-button class="tab-links tab-button" (click)="openTab($event, 'List')">Concert List</button>
+  <button mat-button class="tab-links" (click)="openTab($event, 'Search')">Search Concerts</button>
 </div>
 
-<!-- <div style="display: flex;">
-  <div style="flex: 1 1 auto">
-    <app-concert-list></app-concert-list>
-  </div>
-  <div style="flex: 1 1 auto; overflow-y: auto;">
-    <app-concert-search></app-concert-search>
-  </div>
-</div> -->
+<!-- style="flex: 1 1 auto" -->
+<div class="tab-content" style="display: block;" id="List">
+  <app-concert-list [concerts]="concerts" [pagination]="pagination" (load)="loadConcerts()"></app-concert-list>
+</div>
+<div class="tab-content" id="Search">
+  <app-concert-search [concerts]="concerts" [pagination]="pagination" (load)="loadConcerts()"></app-concert-search>
+</div>
   

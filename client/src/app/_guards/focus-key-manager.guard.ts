@@ -17,10 +17,10 @@ export class FocusKeyManagerGuard implements CanDeactivate<CanComponentDeactivat
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     // Check if the component has a _keyManager property
-    if (component['_keyManager']) {
-      // Call the destroy method on the _keyManager property
-      component['_keyManager'].destroy();
-    }
+    // if (component['_keyManager']) {
+    //   // Call the destroy method on the _keyManager property
+    //   component['_keyManager'].destroy();
+    // }
 
     return component.canDeactivate();
     

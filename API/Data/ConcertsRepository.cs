@@ -110,11 +110,29 @@ namespace API.Data
             return await PagedList<ConcertDto>.CreateAsync(concertsForUser, concertParams.PageNumber, concertParams.PageSize);
         }
 
-        public async Task<ICollection<UserConcert>> GetConcertUserConcerts(string eventId)
+        public async Task<ICollection<string>> GetUserEventIds(int userId) {
+            var concerts = _context.Concerts 
+                .Include(uc => uc.UserConcert)
+                .OrderBy(c => c.Id)
+                .AsQueryable();
+
+                return await _context.Users
+                .Include(uc => uc.UserConcert)
+                .Where(u => u.Id == userId) 
+                .Select(uc => uc.UserConcert) 
+                .SelectMany(uc => uc
+                    .Join(concerts,
+                    uc => uc.ConcertId,
+                    c => c.Id,
+                    (uc, c) => c.EventId))
+                    .ToListAsync();
+        }
+
+        public async Task<ICollection<UserConcert>> GetConcertUserConcerts(int concertId)
         {
             return await _context.Concerts
                 .Include(uc => uc.UserConcert)
-                .Where(c => c.EventId == eventId)
+                .Where(c => c.Id == concertId)
                 .Select(c => c.UserConcert)
                 .FirstOrDefaultAsync();
         }
@@ -127,14 +145,33 @@ namespace API.Data
                 and grab the first element in the table if it exists. Should be only one
                 element in the table if it exists.
             */
+            // return await _context.Concerts
+            //     .Include(uc => uc.UserConcert)
+            //     .Select(uc => 
+            //         uc.UserConcert
+            //         .Where(c => c.UserId == userId && c.ConcertId == concertId)
+            //         .FirstOrDefault()
+            //     ).FirstOrDefaultAsync();
+
+            // return await _context.Concerts
+            //     .Include(uc => uc.UserConcert)
+            //     .Select(uc => 
+            //         uc.UserConcert
+            //         .Where(c => c.UserId == userId && c.ConcertId == concertId)
+            //         .FirstOrDefault()
+            //         ).FirstOrDefaultAsync();
             return await _context.Concerts
                 .Include(uc => uc.UserConcert)
-                .Select(uc => 
-                    uc.UserConcert
-                    .Select(uc => uc)
-                    .Where(c => c.UserId == userId && c.ConcertId == concertId)
+                .Where(c => c.Id == concertId)
+                .Select(c => c.UserConcert
+                    .Where(uc => uc.UserId == userId && uc.ConcertId == concertId)
                     .FirstOrDefault()
-                    ).FirstOrDefaultAsync();
+                ).FirstOrDefaultAsync();
+            // return await _context.Concerts
+            //     .Select(uc => 
+            //         uc.UserConcert
+            //         .FirstOrDefault()
+            //         ).FirstOrDefaultAsync();
         }
 
     }

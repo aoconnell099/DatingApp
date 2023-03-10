@@ -115,4 +115,11 @@ export class MembersService {
     return getPaginatedResult<Member[]>(this.baseUrl + 'likes', params, this.http);
   }
 
+  getMatches() {
+    let matches = this.http.get(this.baseUrl + 'users/matches');
+    console.log(matches);
+    return matches;
+    // return this.http.get(this.baseUrl + 'users/matches');
+  }
+
 }

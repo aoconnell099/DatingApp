@@ -22,6 +22,16 @@ img {
 .sidenav-content-height-landscape {
     height: 85vh !important;
 }
+
+.sidenav-active {
+    background-color: lightgray;
+}
+
+#homeButton {
+    background-color: white !important;
+}
+
+a.mat-list-item.active { color: #a71d1d; }
 // .nav-title {
 // display: flex;
 // justify-content: flex-start;

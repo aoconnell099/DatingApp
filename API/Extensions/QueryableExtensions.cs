@@ -38,15 +38,18 @@ namespace API.Extensions
 
                     //var ExternalLinks = concert.Embedded.ArtistInfo.ExternalLinks;
                     concert.EventDate = concert.DateTypes.Dates.EventDate;
-                    concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
+                    // concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
                     
                     
                     if (Venues == null) {
+                        concert.City = "";
                         concert.Venue = "";
+                        concert.VenueUrl = "";
                     }
                     else {
-                        concert.Venue = concert.Embedded.Venues.FirstOrDefault().Venue;
-                        concert.VenueUrl = concert.Embedded.Venues.FirstOrDefault().VenueUrl;
+                        concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
+                        concert.Venue = concert.Embedded.Venues.FirstOrDefault().Venue != null ? concert.Embedded.Venues.FirstOrDefault().Venue : "";
+                        concert.VenueUrl = concert.Embedded.Venues.FirstOrDefault().VenueUrl != null ? concert.Embedded.Venues.FirstOrDefault().VenueUrl : "";;
                     }
                     if (ArtistInfo == null) {
                         concert.ArtistName = "";
@@ -58,7 +61,7 @@ namespace API.Extensions
                         concert.HomepageUrl = "";
                     }
                     else {
-                        concert.ArtistName = concert.Embedded.ArtistInfo.FirstOrDefault().ArtistName;
+                        concert.ArtistName = concert.Embedded.ArtistInfo.FirstOrDefault().ArtistName != null ? concert.ArtistName = concert.Embedded.ArtistInfo.FirstOrDefault().ArtistName : "";
                         if (concert.Embedded.ArtistInfo.FirstOrDefault().ExternalLinks != null) {
                             // concert.YoutubeUrl = concert.Embedded.ArtistInfo.FirstOrDefault().ExternalLinks.Youtube != null ? concert.Embedded.ArtistInfo.FirstOrDefault().ExternalLinks.Youtube.YoutubeUrl : "";
                             
@@ -110,6 +113,14 @@ namespace API.Extensions
                                 concert.HomepageUrl = "";
                             }
                         }
+                        else {
+                            concert.YoutubeUrl = "";
+                            concert.TwitterUrl = "";
+                            concert.SpotifyUrl = "";
+                            concert.FbUrl = "";
+                            concert.InstagramUrl = "";
+                            concert.HomepageUrl = "";
+                        }
                         if (ArtistImages == null) {
                             concert.ImageUrl = "";
                         }
@@ -122,8 +133,8 @@ namespace API.Extensions
                         // }
                     }
 
-                    concert.ConcertUrl = (concert.ConcertUrl != null) ? concert.ConcertUrl : "";
-                    concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
+                    // concert.ConcertUrl = (concert.ConcertUrl != null) ? concert.ConcertUrl : "";
+                    // concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
                     // concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
                     // concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";
                     // concert.City = (concert.Embedded.Venues.FirstOrDefault().CityInfo.City != null) ? concert.Embedded.Venues.FirstOrDefault().CityInfo.City : "";

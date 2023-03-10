@@ -26,10 +26,12 @@ import { LightboxModule } from  'ng-gallery/lightbox';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
 import { TimeagoModule } from 'ngx-timeago';
 import { MomentModule } from 'ngx-moment';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
 
 
@@ -59,6 +61,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatRadioModule,
     MatExpansionModule,
     MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
     GalleryModule,
@@ -92,10 +96,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatSelectModule,
     MatIconModule,
     MatRadioModule,
+    MatTableModule,
     MatExpansionModule,
     MatTabsModule,
     MatInputModule,
     MatDialogModule,
+    MatPaginatorModule,
     ButtonsModule,
     MomentModule,
     ModalModule
