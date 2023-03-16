@@ -18,6 +18,7 @@ import { ConcertListComponent } from './concerts/concert-list/concert-list.compo
 import { ConcertHomeComponent } from './concerts/concert-home/concert-home.component';
 import { ConcertTabsGuard } from './_guards/concert-tabs.guard';
 import { ConcertSearchComponent } from './concerts/concert-search/concert-search.component';
+import { IonicMemberListComponent } from './members/ionic-member-list/ionic-member-list.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,7 +27,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      {path: 'members', component: MemberListComponent},
+      {path: 'members', component: IonicMemberListComponent},
       {path: 'members/:username', component: MemberDetailComponent, resolve: {member: MemberDetailedResolver}},
       {path: 'member/edit', component: MemberEditComponent, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'lists', component: ListsComponent},

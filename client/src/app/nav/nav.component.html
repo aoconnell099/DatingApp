@@ -140,19 +140,13 @@
                     <!-- <img id="userImg" [matMenuTriggerFor]="menu" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}"> -->
                     
                     <mat-menu #menu="matMenu">
-                        <!-- Member edit link -->
                         <a mat-menu-item routerLink="/member/edit" routerLinkActive='nav-items'>Edit Profile</a>
 
-                        <!-- Nested theme editor -->
                         <button mat-menu-item [matMenuTriggerFor]="themeEditor">Edit Theme</button>
 
-                        <!-- Logout button -->
                         <button mat-menu-item (click)="openLogoutConfirmDialog();">
                             <span>Logout</span>
                         </button>
-                        <!-- <button mat-menu-item (click)="logout();">
-                            <span>Logout</span>
-                        </button> -->
                     </mat-menu>
 
                     <mat-menu #themeEditor="matMenu">

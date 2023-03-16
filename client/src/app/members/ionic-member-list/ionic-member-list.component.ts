@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
-import { Pagination } from 'src/app/_models/paginations';
+//import { Pagination } from 'src/app/_models/paginations';
 import { User } from 'src/app/_models/user';
 import { UserParams } from 'src/app/_models/userParams';
 import { AccountService } from 'src/app/_services/account.service';
@@ -10,18 +10,20 @@ import { MembersService } from 'src/app/_services/members.service';
 //import { MatGridList } from '@angular/material/grid-list';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSelectionListChange } from '@angular/material/list';
+import SwiperCore, { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from 'swiper';
+import { IonicSlides } from '@ionic/angular';
 
+SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
 
 @Component({
-  selector: 'app-member-list',
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  selector: 'app-ionic-member-list',
+  templateUrl: './ionic-member-list.component.html',
+  styleUrls: ['./ionic-member-list.component.scss'],
 })
-export class MemberListComponent implements OnInit {
+export class IonicMemberListComponent implements OnInit {
   members: Member[] = [];
   matches: any = [];
-  pagination?: Pagination;
+  pagination?: any;
   userParams?: UserParams;
   //user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];

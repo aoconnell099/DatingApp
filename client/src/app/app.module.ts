@@ -41,6 +41,8 @@ import { TimeAgoPipe } from './_pipes/time-ago.pipe';
 import { ConcertSearchComponent } from './concerts/concert-search/concert-search.component';
 import { ConcertHomeComponent } from './concerts/concert-home/concert-home.component';
 import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.component';
+import { IonicMemberListComponent } from './members/ionic-member-list/ionic-member-list.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.c
     ConcertSearchComponent,
     ConcertHomeComponent,
     ConcertDialogComponent,
+    IonicMemberListComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,7 @@ import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.c
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

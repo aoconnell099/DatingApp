@@ -4,6 +4,13 @@
 @use "./styles/themes/light" as light-theme;
 @use "./styles/typography/config" as typography;
 
+@import 'swiper/scss';
+@import 'swiper/scss/autoplay';
+@import 'swiper/scss/keyboard';
+@import 'swiper/scss/pagination';
+@import 'swiper/scss/scrollbar';
+@import 'swiper/scss/zoom';
+@import '@ionic/angular/css/ionic-swiper';
 
 // Angular Material defines a mixin named core that includes prerequisite styles for common features used by multiple components, such as ripples. 
 // The core mixin must be included exactly once for your application, even if you define multiple themes. 
