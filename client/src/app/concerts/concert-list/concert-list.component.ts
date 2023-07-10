@@ -98,7 +98,7 @@ export class ConcertListComponent implements OnInit, OnDestroy {
       this.rowHeightRatio = "0.7:1.2";
     } else if(this.currentBreakpoint === Breakpoints.XSmall) {
       this.numberOfCols = 1;
-      this.rowHeightRatio = "1:1.3";
+      this.rowHeightRatio = "1:1.5";
     }
 
     // For single page list and search

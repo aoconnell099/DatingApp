@@ -140,17 +140,17 @@ namespace API.Controllers
         }
 
         [HttpGet("matches")]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMatches()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetMatches([FromQuery]UserParams userParams)
         {
-            // var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
-            // userParams.CurrentUsername = User.GetUsername();
+            var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
+            userParams.CurrentUsername = User.GetUsername();
 
-            // if (string.IsNullOrEmpty(userParams.Gender))
-            //     userParams.Gender = gender == "male" ? "female" : "male";
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = gender == "male" ? "female" : "male";
 
-            var users = await _unitOfWork.UserRepository.GetMatchesAsync(User.GetUserId());
+            var users = await _unitOfWork.UserRepository.GetMatchesAsync(userParams);
 
-            //Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
         }

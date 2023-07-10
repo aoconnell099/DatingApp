@@ -19,6 +19,6 @@ namespace API.Interfaces
         Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser);
         Task<string> GetUserGender(string username);
         Task<UserConcert> GetUserConcertById(int userId, int ConcertId);
-        Task<IEnumerable<MemberDto>> GetMatchesAsync(int userId);
+        Task<PagedList<MemberDto>> GetMatchesAsync(UserParams userParams);
     }
 }

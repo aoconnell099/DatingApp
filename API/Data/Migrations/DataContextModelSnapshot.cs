@@ -100,11 +100,17 @@ namespace API.Data.Migrations
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("LookingFor")
                         .HasColumnType("text");
@@ -338,6 +344,21 @@ namespace API.Data.Migrations
                     b.ToTable("UserConcert");
                 });
 
+            modelBuilder.Entity("API.Entities.UserDislike", b =>
+                {
+                    b.Property<int>("SourceUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DislikedUserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SourceUserId", "DislikedUserId");
+
+                    b.HasIndex("DislikedUserId");
+
+                    b.ToTable("Dislikes");
+                });
+
             modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
@@ -516,6 +537,25 @@ namespace API.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Entities.UserDislike", b =>
+                {
+                    b.HasOne("API.Entities.AppUser", "DislikedUser")
+                        .WithMany("DislikedByUsers")
+                        .HasForeignKey("DislikedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.AppUser", "SourceUser")
+                        .WithMany("DislikedUsers")
+                        .HasForeignKey("SourceUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DislikedUser");
+
+                    b.Navigation("SourceUser");
+                });
+
             modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "LikedUser")
@@ -578,6 +618,10 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
+                    b.Navigation("DislikedByUsers");
+
+                    b.Navigation("DislikedUsers");
+
                     b.Navigation("LikedByUsers");
 
                     b.Navigation("LikedUsers");

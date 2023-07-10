@@ -23,6 +23,7 @@ export class AccountService {
         if ((user)) {
           this.setCurrentUser(user);
           this.presence.createHubConnection(user);
+          
         }
       })
     )

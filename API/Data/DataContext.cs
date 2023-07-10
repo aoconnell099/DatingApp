@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.ComTypes;
 using API.Entities;
+using API.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,13 @@ namespace API.Data
         }
 
         public DbSet<UserLike> Likes { get; set; } 
+        public DbSet<UserDislike> Dislikes { get; set; } 
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Concert> Concerts { get; set; }
+        //public DbSet<Location> Locations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,6 +45,21 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            // builder.Entity<Location>()
+            //     .HasKey(x => new { x.AppUserId });
+
+            // builder.Entity<AppUser>()
+            //     .HasOne(ul => ul.UserLocation)
+            //     .WithOne(u => u.AppUser)
+            //     .HasForeignKey<Location>(x => x.AppUserId)
+            //     .IsRequired();
+            
+            // builder.Entity<Location>()
+            //     .HasOne(u => u.AppUser)
+            //     .WithOne(ul => ul.UserLocation)
+            //     .HasForeignKey<Location>(x => x.AppUserId)
+            //     .IsRequired();
 
             builder.Entity<UserConcert>()
                 .HasKey(x => new { x.UserId, x.ConcertId });
@@ -69,6 +87,21 @@ namespace API.Data
                 .HasOne(s => s.LikedUser)
                 .WithMany(l => l.LikedByUsers) // A liked user can be liked by many other users
                 .HasForeignKey(s => s.LikedUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+           
+            builder.Entity<UserDislike>()
+                .HasKey(k => new {k.SourceUserId, k.DislikedUserId});
+
+            builder.Entity<UserDislike>()
+                .HasOne(s => s.SourceUser)
+                .WithMany(l => l.DislikedUsers) // Source user can like many other users
+                .HasForeignKey(s => s.SourceUserId)
+                .OnDelete(DeleteBehavior.Cascade); // If using SQL Server, then you need to set DeleteBehavior to DeleteBehavior.NoAction, else you get an error
+
+            builder.Entity<UserDislike>() // This is the other side of the relationship with the above Entity
+                .HasOne(s => s.DislikedUser)
+                .WithMany(l => l.DislikedByUsers) // A liked user can be liked by many other users
+                .HasForeignKey(s => s.DislikedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()

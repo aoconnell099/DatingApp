@@ -1,8 +1,107 @@
-<div class="text-center mt-3">
+<!-- <div class="text-center mt-3">
     <h2>Your matches - {{pagination?.totalItems}} found</h2>
-</div>
+</div> -->
 
-<div class="container mt-3" *ngIf="userParams">
+<div class="expansion-panel-container" *ngIf="userParams">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+            Filters
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form #form="ngForm" class="d-flex mb-3 filter-form" style="flex-wrap:wrap;" (ngSubmit)="loadMatches()" autocomplete="off">
+            <mat-form-field appearance="fill">
+                <mat-label>Age from: </mat-label>
+                <mat-select [(value)]="userParams.minAge">
+                    <mat-option *ngFor="let age of ages" [value]="age">
+                        {{age}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Age to: </mat-label>
+                <mat-select [(value)]="userParams.maxAge">
+                    <mat-option *ngFor="let age of ages" [value]="age">
+                        {{age}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field appearance="fill">
+                <mat-label>Show: </mat-label>
+                <mat-select name="gender" [(ngModel)]="userParams.gender" >
+                    <mat-option *ngFor="let gender of genderList" [value]="gender.value"> 
+                        {{gender.display}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+
+            <mat-form-field appearance="fill">
+                <mat-label>Filter by concert?: </mat-label>
+                <mat-select [(value)]="userParams.concertFilter" >
+                    <mat-option [value]="true"> 
+                        Yes
+                    </mat-option>
+                    <mat-option [value]="false"> 
+                        No
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Radius: </mat-label>
+                <mat-select [(value)]="userParams.distance" >
+                    <mat-option [value]="5"> 
+                        5
+                    </mat-option>
+                    <mat-option [value]="10"> 
+                        10
+                    </mat-option>
+                    <mat-option [value]="15"> 
+                        15
+                    </mat-option>
+                    <mat-option [value]="25"> 
+                        25
+                    </mat-option>
+                    <mat-option [value]="50"> 
+                        50
+                    </mat-option>
+                    <mat-option [value]="100"> 
+                        Anywhere
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <div class="col time-filter-buttons">
+                <div class="btn-group float-end">
+                    <button mat-flat-button color="accent"
+                            type="button"
+                            [class.selected]="selected === 'lastActive'"
+                            value='lastActive'
+                            (click)="toggleSelected('lastActive');"
+                            >Last Active</button>
+                    
+                    <button 
+                        mat-flat-button color="accent"
+                        type="button" 
+                        [class.selected]="selected === 'created'"
+                        value='created'
+                        (click)="toggleSelected('created');"
+                        
+                        >Newest Members</button>
+                </div>
+            </div>
+            <div class="apply-filters">
+                <button mat-raised-button color="accent" type="submit">Apply Filters</button>
+                <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1" type="submit">Reset Filters</button>
+            </div>
+        </form>
+    </mat-expansion-panel>
+</div>
+<!-- <div class="container mt-3" *ngIf="userParams">
     <form #form="ngForm" class="d-flex mb-3 filter-form" style="flex-wrap:wrap;" (ngSubmit)="loadMembers()" autocomplete="off">
         <div class="d-flex">
             <label>Age from: </label>
@@ -48,26 +147,52 @@
             </div>
         </div>
     </form>
+</div> -->
+
+<div class="swiper-container">
+    <div #dislikeCont class="dislike-container">
+        <div id="dislikeImgCont">
+            <img src="../../../assets/svg/dislike-2.svg" id="dislikeImg" alt="Dislike">
+        </div>
+    </div>
+    <div class="card-container">
+        <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
+            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match">
+        </app-ionic-member-card>
+    </div>
+    <!-- </div> -->
+    <div #likeCont class="like-container">
+        <div id="likeImgCont">
+            <img src="../../../assets/svg/heart-1.svg" id="likeImg" alt="Heart">
+        </div>
+    </div>
 </div>
 
-<mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+<!-- <div class="card-container">
+    <div>DIV 1</div>
+    div> 
+        <app-ionic-member-card *ngFor="let member of members" (mousedown)="selectMember(member)" (touchstart)="selectMember(member)" 
+            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="member">
+        </app-ionic-member-card>
+    </div>
+    <div>DIV 2</div>
+</div> -->
+<!-- <div style="display: flex; justify-content: center;">
+    <div *ngFor="let member of members" class="card-container">
+        <app-ionic-member-card (click)="logMember(member)" #memberCard [currentBreakpoint]="currentBreakpoint" [member]="member"></app-ionic-member-card>
+    </div>
+</div> -->
+<!-- <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
     <div *ngFor="let member of members">
         <mat-grid-tile>
             <div class="mat-grid-tile-content">
-                <app-member-card [currentBreakpoint]="currentBreakpoint" [member]="member"></app-member-card>
+                <app-ionic-member-card (click)="logMember(member)" #memberCard [currentBreakpoint]="currentBreakpoint" [member]="member"></app-ionic-member-card>
             </div>
         </mat-grid-tile>
     </div>
-</mat-grid-list>
+</mat-grid-list> -->
 
-<!-- [options]="{ slidesPerView: true, loop: true }" -->
-<ion-slides>
-    <ion-slide>Slide 1</ion-slide>
-    <ion-slide>Slide 3</ion-slide>
-    <ion-slide>Slide 3</ion-slide>
-  </ion-slides>
-
-<div *ngIf="pagination" class="d-flex justify-content-center" 
+<div *ngIf="pagination" class="d-flex justify-content-center" style="position: relative;" 
     [ngClass]="{
         'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
         'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint    

@@ -134,17 +134,21 @@ export class NavComponent implements OnInit {
   }
 
   login() {
-    // console.log(this.model.username);
-    // console.log(this.model.password);
+    console.log('login');
     this.accountService.login(this.model).subscribe(response => {
+      console.log('login log');
+      console.log(localStorage.getItem('user'));
       this.router.navigateByUrl('/members');
+      
     });
+    
   }
 
   logout() {
+    console.log('logout');
     this.accountService.logout();
     this.router.navigateByUrl('/');
-  }
+  } 
 
   toggleElevation(event: any) {
     // Check if the button is not elevated

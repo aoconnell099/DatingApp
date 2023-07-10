@@ -32,7 +32,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { MomentModule } from 'ngx-moment';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { SwiperModule } from 'swiper/angular';
+//import { SwiperModule } from 'swiper/angular';
 import { IonicModule } from '@ionic/angular';
 
 
@@ -66,7 +66,7 @@ import { IonicModule } from '@ionic/angular';
     MatTableModule,
     MatPaginatorModule,
     IonicModule.forRoot(),
-    SwiperModule,
+    //SwiperModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
     GalleryModule,
@@ -109,7 +109,7 @@ import { IonicModule } from '@ionic/angular';
     ButtonsModule,
     MomentModule,
     ModalModule,
-    SwiperModule,
+    //SwiperModule,
     IonicModule,
   ]
 })

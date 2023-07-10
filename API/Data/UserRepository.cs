@@ -12,6 +12,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SQLitePCL;
+using API.Extensions;
 
 namespace API.Data
 {
@@ -19,6 +20,9 @@ namespace API.Data
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        public const double deg2rad = Math.PI/180;
+        public const double rad2deg = Math.PI*180;
+        
         public UserRepository(DataContext context, IMapper mapper)
         {
             _context = context;
@@ -43,8 +47,14 @@ namespace API.Data
         {
             var query = _context.Users.AsQueryable();
 
+           // var user = query.Where(u => u.UserName == userParams.CurrentUsername);
+
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
-            query = query.Where(u => u.Gender == userParams.Gender);
+            // If gender isnt equal to both, than query the gender specified, else leave it and query all
+            if (userParams.Gender != "both") {
+                query = query.Where(u => u.Gender == userParams.Gender);
+            }
+             
 
             var minDob = DateTime.UtcNow.AddYears(-userParams.MaxAge-1); // How far you want to go back to check user's Dob preference. Eg. max age they want is 30 so minDob would be 30 years before current date
             var maxDob = DateTime.UtcNow.AddYears(-userParams.MinAge);
@@ -52,6 +62,8 @@ namespace API.Data
             // var maxDob = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-userParams.MinAge));
 
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+            
 
             query = userParams.OrderBy switch
             {
@@ -129,38 +141,112 @@ namespace API.Data
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMatchesAsync(int userId)
+        public async Task<PagedList<MemberDto>> GetMatchesAsync(UserParams userParams)
         {
-            // Get the list of user concerts for everyone except the current user
-            var allUserConcerts = _context.Users
-                .Include(uc => uc.UserConcert)
-                .Where(u => u.Id != userId)
-                .SelectMany(u => u.UserConcert);
-                //.ToListAsync();
-            
-            // Get the list of user concerts for the current user
-            var currentUserConcerts = _context.Users
-                .Include(uc => uc.UserConcert)
-                .Where(u => u.Id == userId)
-                .SelectMany(u => u.UserConcert);
-                
-             var userConcerts = allUserConcerts
-                .Join(currentUserConcerts,
-                    uc => uc.ConcertId,
-                    c => c.ConcertId,
-                    (uc, c) => uc.UserId);
+            var users = _context.Users.AsQueryable();
 
-            var users = _context.Users
-                .AsQueryable()
-                .Join(userConcerts,
-                    u => u.Id,
-                    uid => uid,
-                    (u, uid) => u);
+            // If gender isnt equal to both, than query the gender specified, else leave it and query all
+            if (userParams.Gender != "both") {
+                users = users.Where(u => u.Gender == userParams.Gender);
+            }
+
+            if (userParams.ConcertFilter) {
+                // Get the list of user concerts for everyone except the current user
+                var allUserConcerts = _context.Users
+                    .Include(uc => uc.UserConcert)
+                    .Where(u => u.UserName != userParams.CurrentUsername)
+                    .SelectMany(u => u.UserConcert);
+                    //.ToListAsync();
                 
+                // Get the list of user concerts for the current user
+                var currentUserConcerts = _context.Users
+                    .Include(uc => uc.UserConcert)
+                    .Where(u => u.UserName == userParams.CurrentUsername)
+                    .SelectMany(u => u.UserConcert);
+                    
+                var userConcerts = allUserConcerts
+                    .Join(currentUserConcerts,
+                        uc => uc.ConcertId,
+                        c => c.ConcertId,
+                        (uc, c) => uc.UserId);
+
+                users = users
+                    .Join(userConcerts,
+                        u => u.Id,
+                        uid => uid,
+                        (u, uid) => u)
+                    .Distinct();
+            }
+            else {
+                users = users
+                    .Where(u => u.UserName != userParams.CurrentUsername);
+                
+            }
             
-                return await users.ProjectTo<MemberDto>(_mapper
-                    .ConfigurationProvider).AsNoTracking()
-                    .ToListAsync();
+
+            // foreach (AppUser u in users) {
+            //     // var distance = (Math.Acos(Math.Sin(userParams.Latitude) * Math.Sin(u.Latitude) + Math.Cos(userParams.Latitude) 
+            //     //             * Math.Cos(u.Latitude) * Math.Cos(u.Longitude - userParams.Longitude)) * 6371);
+            //     // distance = distance * 0.621371;
+
+            //     var distance = (Math.Acos(Math.Sin(userParams.Latitude*deg2rad) 
+            //                         * Math.Sin(u.Latitude*deg2rad)
+            //                         + Math.Cos(userParams.Longitude*deg2rad)
+            //                         * Math.Cos(u.Longitude*deg2rad)
+            //                         * Math.Cos((userParams.Longitude-u.Longitude)*deg2rad))
+            //                         / rad2deg
+            //                         *60*1.1515);
+            // }
+            
+
+            if (userParams.Distance != 100) { // 100 is the value set for the search radius to extend to anywhere
+                // Formula for distance using latitude and longitude=acos(sin(lat1)*sin(lat2)+cos(lat1)*cos(lat2)*cos(lon2-lon1))*3,958.8 mi
+                // users = _context.Users
+                //     .AsQueryable()
+                //     .Where(u => (LocationExtensions.distance(userParams.Latitude, userParams.Longitude, u.Latitude, u.Longitude) < userParams.Distance));
+                
+                // users = (IQueryable<AppUser>)await users.ToListAsync();
+
+                //users = users.Where(u => (LocationExtensions.distance(userParams.Latitude, userParams.Longitude, u.Latitude, u.Longitude) < userParams.Distance));
+                
+                users = users
+                    .Where(u => (Math.Acos(Math.Sin(userParams.Latitude*deg2rad) 
+                                    * Math.Sin(u.Latitude*deg2rad)
+                                    + Math.Cos(userParams.Longitude*deg2rad)
+                                    * Math.Cos(u.Longitude*deg2rad)
+                                    * Math.Cos((userParams.Longitude-u.Longitude)*deg2rad))
+                                    / rad2deg
+                                    *60*1.1515) < userParams.Distance);
+            
+            }
+            
+            
+            
+             
+
+            var minDob = DateTime.UtcNow.AddYears(-userParams.MaxAge-1); // How far you want to go back to check user's Dob preference. Eg. max age they want is 30 so minDob would be 30 years before current date
+            var maxDob = DateTime.UtcNow.AddYears(-userParams.MinAge);
+            // var minDob = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-userParams.MaxAge-1)); // How far you want to go back to check user's Dob preference. Eg. max age they want is 30 so minDob would be 30 years before current date
+            // var maxDob = DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-userParams.MinAge));
+
+            users = users.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+            
+
+            users = userParams.OrderBy switch
+            {
+                "created" => users.OrderByDescending(u => u.Created),
+                _ => users.OrderByDescending(u => u.LastActive) // Underscore is used to denote the default switch case
+            };
+
+            return await PagedList<MemberDto>.CreateAsync(users.ProjectTo<MemberDto>(_mapper
+                .ConfigurationProvider).AsNoTracking(), 
+                    userParams.PageNumber, userParams.PageSize);
+            
+            // return await users.ProjectTo<MemberDto>(_mapper
+            //     .ConfigurationProvider).AsNoTracking()
+            //     .ToListAsync();
+
             // return await _context.Users
             //     .Include(uc => uc.UserConcert)
             //     .Where(u => u.Id != userId)

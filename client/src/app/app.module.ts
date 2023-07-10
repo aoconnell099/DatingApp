@@ -43,6 +43,7 @@ import { ConcertHomeComponent } from './concerts/concert-home/concert-home.compo
 import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.component';
 import { IonicMemberListComponent } from './members/ionic-member-list/ionic-member-list.component';
 import { IonicModule } from '@ionic/angular';
+import { IonicMemberCardComponent } from './members/ionic-member-card/ionic-member-card.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { IonicModule } from '@ionic/angular';
     ConcertHomeComponent,
     ConcertDialogComponent,
     IonicMemberListComponent,
+    IonicMemberCardComponent,
   ],
   imports: [
     BrowserModule,

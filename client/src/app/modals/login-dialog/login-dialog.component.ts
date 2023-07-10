@@ -19,7 +19,10 @@ export class LoginDialogComponent implements OnInit {
   login() {
     // console.log(this.model.username);
     // console.log(this.model.password);
+    console.log('login');
     this.accountService.login(this.model).subscribe(response => {
+      console.log('login log');
+      console.log(localStorage.getItem('user'));
       this.router.navigateByUrl('/members');
     });
   }

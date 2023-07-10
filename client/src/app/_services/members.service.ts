@@ -54,6 +54,7 @@ export class MembersService {
   }
 
   getMembers(userParams : UserParams) {
+    console.log(userParams);
     const response = this.memberCache.get(Object.values(userParams).join('-'));
     if (response) {
       return of(response);
@@ -115,10 +116,48 @@ export class MembersService {
     return getPaginatedResult<Member[]>(this.baseUrl + 'likes', params, this.http);
   }
 
-  getMatches() {
-    let matches = this.http.get(this.baseUrl + 'users/matches');
-    console.log(matches);
-    return matches;
+  getMatches(userParams: UserParams) {
+    console.log('members service userparams');
+    console.log(userParams);
+    const response = this.memberCache.get(Object.values(userParams).join('-'));
+    console.log(response);
+    if (response) {
+      return of(response);
+    }
+
+    // let concertFilter = "false";
+    // if (userParams.concertFilter == true) {
+    //   concertFilter = "true";
+    // }
+    // else if (userParams.concertFilter == false) {
+    //   concertFilter = "false";
+    // }
+
+    let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    
+    params = params.append('minAge', userParams.minAge.toString()); //remove tostring
+    params = params.append('maxAge', userParams.maxAge.toString()); //remove tostring
+    params = params.append('gender', userParams.gender);
+    params = params.append('orderBy', userParams.orderBy);
+    if (userParams.concertFilter != undefined) {
+      params = params.append('concertFilter', userParams.concertFilter);
+    }
+    params = params.append('distance', userParams.distance);
+    params = params.append('latitude', userParams.latitude);
+    params = params.append('longitude', userParams.longitude);
+
+    console.log('members service params');
+    console.log(params);
+    return getPaginatedResult<Member[]>(this.baseUrl + 'users/matches', params, this.http)
+      .pipe(map(response => {
+        this.memberCache.set(Object.values(userParams).join('-'), response);
+        console.log(response);
+        return response;
+      }));
+
+    // let matches = this.http.get(this.baseUrl + 'users/matches');
+    // console.log(matches);
+    // return matches;
     // return this.http.get(this.baseUrl + 'users/matches');
   }
 

@@ -1,0 +1,135 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+// @import './'
+  
+@mixin card-color($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $primary-contrast: map-get($primary, contrast);
+
+    // .card-footer {
+    //     background-color: map-get($accent, lighter) !important;
+    // }
+    .user-card {
+        background-color: #626b76 !important;
+        // background-color: map-get($primary, A100) !important;
+        //background-color: map-get($primary, 900) !important;
+    }
+    .city-text {
+        //color:map-get($primary, A100 ) !important;
+        //color:map-get($primary-contrast, 300 ) !important;
+        // color:map-get($primary-contrast, 500 ) !important;
+        color: #babfc4 !important;
+    }
+
+    .card-title {
+        color:map-get($primary, 100 ) !important;
+        // color: #d6d8dc;
+    }
+    .user-icon {
+        color: #e0e5ec;
+    }
+  }
+// @mixin card-color($theme){
+//     // Get the color config from the theme.
+//     $color-config: mat.get-color-config($theme);
+//     // Get the primary color palette from the color-config.
+//     $accent-palette: map.get($color-config, 'accent');
+//     .card-footer {
+//       background-color: mat.get-color-from-palette($accent-palette, 300);
+//     }
+//   }
+
+// .user-card-hover:hover .card-img {
+//     transform: scale(1.2, 1.2);
+//     transition-duration: 500ms;
+//     transition-timing-function: ease-out;
+//     opacity: 0.85;
+// }
+
+
+// .user-card:hover .card-img {
+//     transform: scale(1.2, 1.2);
+//     transition-duration: 500ms;
+//     transition-timing-function: ease-out;
+//     opacity: 0.7;
+// }
+.user-card {
+    //background-color: lavender;
+    border-radius: 10% !important;
+    //cursor: pointer;
+}
+.card-content {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+
+// .card img {
+//     transform: scale(1.0, 1.0);
+//     transition-duration: 500ms;
+//     transition-timing-function: ease-out;
+// }
+
+.card-img {
+    object-fit: fill;
+}
+
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+}
+
+.member-icons-for-animate {
+    position: absolute;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 1;
+}
+.member-icons-no-animate {
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 1;
+}
+
+.user-card:hover .member-icons-for-animate {
+    bottom: 0;
+    opacity: 1;
+}
+
+.animate {
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes fa-blink {
+    0% {opacity: 1;}
+    100% {opacity: 0.4;}
+}
+
+.is-online {
+    animation: fa-blink 1.5s linear infinite !important;
+    color: rgb(1, 189, 42) !important;
+}
+
+.card-icon-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card-icon-container mat-list-item{
+    text-align: center;
+}
+.card-footer {
+    border-radius: 10%;
+}

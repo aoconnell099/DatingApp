@@ -1,24 +1,26 @@
 [
-    {
-      "UserName": "Dawn",
-      "Gender": "female",
-      "DateOfBirth": "1961-09-02T00:00:00Z",
-      "KnownAs": "Dawn",
-      "Created": "2019-02-09T00:00:00Z",
-      "LastActive": "2020-05-31T00:00:00Z",
-      "Introduction": "Cillum id minim est ipsum ea reprehenderit adipisicing. Aute consequat dolore fugiat sunt proident laborum. Ullamco irure sit excepteur ea sint exercitation occaecat.\r\n",
-      "LookingFor": "Enim velit occaecat nostrud officia id non officia quis est excepteur. Occaecat pariatur laboris eu voluptate minim minim adipisicing exercitation. Deserunt in officia nulla eiusmod quis incididunt proident qui pariatur sunt velit sunt sit. Aliquip duis proident mollit do aute sit irure. Non officia et duis reprehenderit cupidatat ea.\r\n",
-      "Interests": "Excepteur eu anim aliquip laboris id laboris.",
-      "City": "Glenbrook",
-      "Country": "Liechtenstein",
-      "Photos": [
-        {
-          "Url": "https://randomuser.me/api/portraits/women/10.jpg",
-          "IsMain": true,
-          "isApproved": true
-        }
-      ]
-    },
+  {
+    "UserName": "Dawn",
+    "Gender": "female",
+    "DateOfBirth": "1961-09-02T00:00:00Z",
+    "KnownAs": "Dawn",
+    "Created": "2019-02-09T00:00:00Z",
+    "LastActive": "2020-05-31T00:00:00Z",
+    "Introduction": "Cillum id minim est ipsum ea reprehenderit adipisicing. Aute consequat dolore fugiat sunt proident laborum. Ullamco irure sit excepteur ea sint exercitation occaecat.\r\n",
+    "LookingFor": "Enim velit occaecat nostrud officia id non officia quis est excepteur. Occaecat pariatur laboris eu voluptate minim minim adipisicing exercitation. Deserunt in officia nulla eiusmod quis incididunt proident qui pariatur sunt velit sunt sit. Aliquip duis proident mollit do aute sit irure. Non officia et duis reprehenderit cupidatat ea.\r\n",
+    "Interests": "Excepteur eu anim aliquip laboris id laboris.",
+    "City": "Glenbrook",
+    "Country": "Liechtenstein",
+    "Photos": [
+      {
+        "Url": "https://randomuser.me/api/portraits/women/10.jpg",
+        "IsMain": true,
+        "isApproved": true
+      }
+    ],
+    "Latitude": 41.8781,
+      "Longitude": -87.6298
+  },
     {
       "UserName": "Tricia",
       "Gender": "female",
@@ -37,7 +39,10 @@
           "IsMain": true,
           "isApproved": true
         }
-      ]
+      ],
+      "Latitude": 41.8781,
+        "Longitude": -87.6298
+
     },
     {
       "UserName": "Betsy",
@@ -57,7 +62,10 @@
           "IsMain": true,
           "isApproved": true
         }
-      ]
+      ],
+      "Latitude": 41.8781,
+        "Longitude": -87.6298
+
     },
     {
       "UserName": "Sally",
@@ -77,7 +85,10 @@
           "IsMain": true,
           "isApproved": true
         }
-      ]
+      ],
+      "Latitude": 41.8781,
+        "Longitude": -87.6298
+
     },
     {
       "UserName": "Tanisha",
@@ -97,7 +108,10 @@
           "IsMain": true,
           "isApproved": true
         }
-      ]
+      ],
+      "Latitude": 41.8781,
+        "Longitude": -87.6298
+
     },
 
     {
@@ -118,7 +132,10 @@
             "IsMain": true,
             "isApproved": true
         }
-        ]
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -87.6298
+  
     },
     {
         "UserName": "Fisher",
@@ -138,7 +155,10 @@
             "IsMain": true,
             "isApproved": true
         }
-        ]
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -87.6298
+  
     },
     {
         "UserName": "Guy",
@@ -158,7 +178,10 @@
             "IsMain": true,
             "isApproved": true
         }
-        ]
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -87.6298
+  
     },
     {
         "UserName": "Holcomb",
@@ -178,7 +201,10 @@
             "IsMain": true,
             "isApproved": true
         }
-        ]
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -87.6298
+  
     },
     {
         "UserName": "Dodson",
@@ -198,7 +224,33 @@
             "IsMain": true,
             "isApproved": true
         }
-        ]
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -87.6298
+  
+    },
+    {
+        "UserName": "Link",
+        "Gender": "male",
+        "DateOfBirth": "1980-01-27T00:00:00Z",
+        "KnownAs": "Link",
+        "Created": "2019-03-18T00:00:00Z",
+        "LastActive": "2020-06-11T00:00:00Z",
+        "Introduction": "Sunt sunt anim ipsum est aliquip sunt fugiat consequat ex sint quis nulla. Ad nulla adipisicing sint eu labore occaecat culpa et enim. Non consequat reprehenderit labore tempor labore.\r\n",
+        "LookingFor": "Reprehenderit commodo proident non ex aute dolore duis occaecat tempor amet fugiat laboris minim. Aliquip voluptate laboris minim qui aute enim laboris laborum laborum sunt sint excepteur nostrud proident. Nostrud id nostrud anim aliquip laboris magna amet ut qui minim et.\r\n",
+        "Interests": "Aute ut ad pariatur culpa.",
+        "City": "Kokiri Forest",
+        "Country": "Hyrule",
+        "Photos": [
+        {
+            "Url": "https://randomuser.me/api/portraits/men/79.jpg",
+            "IsMain": true,
+            "isApproved": true
+        }
+        ],
+        "Latitude": 41.8781,
+          "Longitude": -88.0350
+  
     }
     
   ]

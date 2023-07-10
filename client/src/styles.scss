@@ -19,8 +19,10 @@
 
 //@import './styles/themes/light';
 
-@import './app/members/member-card/member-card.component.scss';
-@import './app/members/member-list/member-list.component.scss';
+// @import './app/members/member-card/member-card.component.scss';
+// @import './app/members/member-list/member-list.component.scss';
+@import './app/members/ionic-member-card/ionic-member-card.component.scss';
+@import './app/members/ionic-member-list/ionic-member-list.component.scss';
 @import './app/concerts/concert-home/concert-home.component.scss';
 
 // Include the core theme and any additional component themes. Eg. @include mat.button-theme(light.$light-theme);

@@ -1,4 +1,6 @@
+using API.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Entities
 {
@@ -17,10 +19,14 @@ namespace API.Entities
         public ICollection<Photo> Photos { get; set; } 
         public ICollection<UserLike> LikedByUsers { get; set; } 
         public ICollection<UserLike> LikedUsers { get; set; } 
+        public ICollection<UserDislike> DislikedByUsers { get; set; } 
+        public ICollection<UserDislike> DislikedUsers { get; set; } 
         public ICollection<Message> MessagesSent { get; set; }
         public ICollection<Message> MessageReceived  { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
         public ICollection<UserConcert> UserConcert { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
     }
 }

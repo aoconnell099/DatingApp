@@ -111,14 +111,18 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMatches() {
-    this.memberService.getMatches().subscribe({
-      next: response => {
-        console.log(response);
-        if (response) {
-         this.matches = response;
+    if (this.userParams) {
+      this.memberService.setUserParams(this.userParams);
+      this.memberService.getMatches(this.userParams).subscribe({
+        next: response => {
+          if (response.result && response.pagination) {
+           this.matches = response.result;
+           this.pagination = response.pagination;
+          }
         }
-      }
-    })
+      })
+    }
+    
   }
 
   resetFilters() {

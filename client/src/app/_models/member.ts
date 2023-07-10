@@ -15,4 +15,8 @@ export interface Member {
     city: string;
     country: string;
     photos: Photo[];
+    concertFilter: boolean;
+    distance: number;
+    latitude: number;
+    longitude: number;
 }
