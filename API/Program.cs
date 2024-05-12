@@ -28,6 +28,7 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    // connStr = builder.Configuration.GetConnectionString("DefaultConnection");
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
     // Parse connection URL to connection string for Npgsql
@@ -40,8 +41,9 @@ else
     var pgPass = pgUserPass.Split(":")[1];
     var pgHost = pgHostPort.Split(":")[0];
     var pgPort = pgHostPort.Split(":")[1];
+    var updatedHost = pgHost.Replace("flycast", "internal");
 
-    connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};"; //SSL Mode=Require;TrustServerCertificate=True
+    connStr = $"Server={updatedHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};"; //SSL Mode=Require;TrustServerCertificate=True
 }
 
 builder.Services.AddDbContext<DataContext>(opt =>

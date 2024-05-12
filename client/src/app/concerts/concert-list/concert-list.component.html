@@ -43,15 +43,16 @@
 
 
 
-<div><mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
-    <div *ngFor="let concert of concerts">
-        <mat-grid-tile>
-            <div class="mat-grid-tile-content">
-                <app-concert-card (remove)="removeConcert($event)" [currentBreakpoint]="currentBreakpoint" [concert]="concert"></app-concert-card>
-            </div>
-        </mat-grid-tile>
-    </div>
-</mat-grid-list>
+<div>
+    <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+        <div *ngFor="let concert of concerts">
+            <mat-grid-tile>
+                <div class="mat-grid-tile-content">
+                    <app-concert-card (remove)="removeConcert($event)" [currentBreakpoint]="currentBreakpoint" [concert]="concert"></app-concert-card>
+                </div>
+            </mat-grid-tile>
+        </div>
+    </mat-grid-list>
 
 
 <!-- <div class="d-flex justify-content-center" *ngIf="pagination">
@@ -67,24 +68,24 @@
         lastText="&raquo;">
     </pagination>
 </div> -->
-<div class="d-flex justify-content-center" *ngIf="pagination && concerts"
-    [ngClass]="{
-        'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
-        'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
-        
-    }">
-<mat-paginator #paginator
-               class="demo-paginator"
-               (page)="pageChanged($event)"
-               [length]="pagination.totalItems"
-               [pageSize]="pagination.itemsPerPage"
-               [disabled]="false"
-               [showFirstLastButtons]="true"
-               [pageSizeOptions]="[5, 10, 25]"
-               [hidePageSize]="true"
-               [pageIndex]="pagination.currentPage"
-               aria-label="Select page">
-</mat-paginator>
+    <div class="d-flex justify-content-center" *ngIf="pagination && concerts"
+        [ngClass]="{
+            'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
+            'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
+            
+        }">
+        <mat-paginator #paginator
+                    class="demo-paginator"
+                    (page)="pageChanged($event)"
+                    [length]="pagination.totalItems"
+                    [pageSize]="pagination.itemsPerPage"
+                    [disabled]="false"
+                    [showFirstLastButtons]="true"
+                    [pageSizeOptions]="[5, 10, 25]"
+                    [hidePageSize]="true"
+                    [pageIndex]="pagination.currentPage"
+                    aria-label="Select page">
+        </mat-paginator>
 
 <!-- <mat-paginator [length]="100"
               [pageSize]="10"
@@ -93,7 +94,7 @@
 </mat-paginator> -->
 
 <!--[length]="50" pagination.totalItems !== 0 ? pagination.totalItems : 0 -->
-</div>
+    </div>
 </div>
 
 

@@ -1,9 +1,33 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="toolbar-nav">
+    <!-- <mat-toolbar-row id="pagination-row"> -->
+        <!-- <div class="d-flex justify-content-center" 
+        [ngClass]="{
+            'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
+            'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
+            
+        }">
+    <mat-paginator #paginator
+                   class="demo-paginator"
+                   (page)="pageChanged($event)"
+                   [length]="pagination.totalItems"
+                   [pageSize]="pagination.itemsPerPage"
+                   [disabled]="false"
+                   [showFirstLastButtons]="true"
+                   [pageSizeOptions]="[5, 10, 25]"
+                   [hidePageSize]="true"
+                   [pageIndex]="pagination.currentPage"
+                   aria-label="Select page">
+    </mat-paginator>
+   
+    </div> -->
+    <!-- </mat-toolbar-row> -->
     <mat-toolbar-row id="nav-toolbar-row">
+        
+        
         <!-- Show the sidenav hamburger toggle if the screen size is small (600px-960px) or extra small (<599px)   [class.nav-row]="currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium"-->
         <!-- <span class="menu-spacer"></span> -->
-        <div [class.nav-row]="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">         
-            <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="nav-title">
+        <!-- <div [class.nav-row]="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall">          -->
+            <!-- <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="nav-title">
                 <button mat-fab (click)="sidenav.toggle()" color="accent">
                 <span [ngClass]="{
                     'transparent': toggleFade,
@@ -22,7 +46,11 @@
                     {{logoChar}}
                 </span>
                 </button>
-            </div>
+            </div> -->
+
+
+
+
             <!-- <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="nav-title">
                 <button mat-icon-button (click)="sidenav.toggle()">
                   <mat-icon>menu</mat-icon>
@@ -32,7 +60,7 @@
             <!-- 
                 class="fade-in-text" 
             [ngClass]="{'fade-in-text': font != null}"
-        -->
+            -->
             <div *ngIf="currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small"> 
                 <a id="nav-title" class="navbar-brand" routerLink='/' routerLinkActive='active' 
                     [ngClass]="{
@@ -70,8 +98,25 @@
                 </div>
 
                 <div *ngIf="currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall" class="nav-items" >
-
-                    <a class="elevate-icon" mat-icon-button routerLink='/members' routerLinkActive='nav-button'>
+                    <button mat-flat-button routerLink='/members' routerLinkActive="active-link">
+                        <mat-icon class="material-icons color_blue">
+                          star_border</mat-icon>
+                        <span>Match</span>
+                    </button>
+                    <button mat-flat-button routerLink='/concerts' routerLinkActive="active-link">
+                        <mat-icon class="material-icons color_blue">favorite_border
+                        </mat-icon>
+                        <span>Concerts</span>
+                    </button>
+                    <button mat-flat-button routerLink='/lists' routerLinkActive="active-link">
+                        <mat-icon class="material-icons color_blue">history</mat-icon>
+                        <span>Likes</span>
+                    </button>
+                    <button mat-flat-button routerLink='/messages' routerLinkActive="active-link">
+                        <mat-icon class="material-icons material-symbols-outlined color_blue">chat_border</mat-icon>
+                        <span>Messages</span>
+                    </button>
+                    <!-- <a class="elevate-icon" mat-icon-button routerLink='/members' routerLinkActive='nav-button'>
                         <mat-icon class="icon-display" id="stage-icon" svgIcon="stage-lights-star-1"></mat-icon>
                     </a>
                     <a class="elevate-icon" mat-icon-button routerLink='/concerts' routerLinkActive='nav-button'>
@@ -80,16 +125,16 @@
                     <a class="elevate-icon" mat-icon-button routerLink='/lists' routerLinkActive="nav-button">
                         <i id="heart-icon" class="fa fa-heart" aria-hidden="true"></i>
                     </a>
-                    <a class="elevate-icon" mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>        
+                    <a class="elevate-icon" mat-icon-button routerLink='/messages' routerLinkActive='nav-button'>         -->
                         <!-- <mat-icon id="message-icon">message</mat-icon> -->
-                        <img class="icon-display" id="message-icon" src="../../assets/icons/message-chat-1.png">
+                        <!-- <img class="icon-display" id="message-icon" src="../../assets/icons/message-chat-1.png">
                     </a>
                     <button mat-button *appHasRole='["Admin", "Moderator"]' >
                         <a routerLink='/admin' routerLinkActive='active'>Admin</a>
                     </button>
                     <button mat-button *appHasRole='["Admin", "Moderator"]' >
                         <a routerLink='/errors' routerLinkActive='active'>Errors</a>
-                    </button>
+                    </button> -->
 
                 </div>
     
@@ -151,6 +196,7 @@
 
                     <mat-menu #themeEditor="matMenu">
                         <button mat-menu-item [matMenuTriggerFor]="backgroundEditor">Backgrounds</button>
+                        <button mat-menu-item [matMenuTriggerFor]="effectEditor">Effects</button>
                         <button mat-menu-item [matMenuTriggerFor]="fontEditor">Fonts</button>
                         <button mat-menu-item [matMenuTriggerFor]="titleEditor">Titles</button>
                     </mat-menu>
@@ -162,6 +208,17 @@
                             [multiple]="false">
                             <mat-list-option *ngFor="let background of backgroundList" [value]="background" [selected]="background === currentBackground">
                                 {{background}}
+                            </mat-list-option>
+                            </mat-selection-list>
+                    </mat-menu>
+                    
+                    <mat-menu #effectEditor="matMenu" (click)="$event.stopPropagation()">
+                        <mat-selection-list #effects
+                            (selectionChange)="onEffectChange($event, effects.selectedOptions.selected)"
+                            (click)="$event.stopPropagation()" 
+                            [multiple]="false">
+                            <mat-list-option *ngFor="let effect of effectList" [value]="effect" [selected]="effect === currentEffect">
+                                {{effect}}
                             </mat-list-option>
                             </mat-selection-list>
                     </mat-menu>
@@ -222,7 +279,7 @@
                     placeholder="Password">
                 <button class="btn btn-success" type="submit">Login</button>
             </form> -->
-        </div>
+        <!-- </div> -->
     </mat-toolbar-row>    
 </mat-toolbar>
 <mat-sidenav-container>
@@ -241,16 +298,53 @@
 
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content class="mat-sidenav-content" [class.sidenav-content-height-landscape]="mobileBreakpoint === landscapeBreakpoint" style="height: 94vh;" 
+    <mat-sidenav-content id="sidenavContent" class="mat-sidenav-content bg-animate" [class.sidenav-content-height-landscape]="mobileBreakpoint === landscapeBreakpoint"  
         [ngClass]="{
             'original': background === 'Original',
             'wave': background === 'Wave',
             'stained': background === 'Stained',
             'drowning-girl': background === 'Drowning Girl',
-            'beeple': background === 'Beeple'
+            'beeple': background === 'Beeple',
+            'bg-1': background === 'Bg-1',
+            'bg-2': background === 'Bg-2',
+            'bg-3': background === 'Bg-3',
+            'bg-4': background === 'Bg-4',
+            'bg-5': background === 'Bg-5',
+            'bg-6': background === 'Bg-6',
+            'bg-7': background === 'Bg-7',
+            'bg-8': background === 'Bg-8',
+            'bg-9': background === 'Bg-9',
+            'bg-10': background === 'Bg-10'
         }">
-        <div style="height: 88vh;">
+        <ng-container *ngIf="effect === 'Bubbles'">
+            <ul class="bg-bubbles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul> 
+        </ng-container>
+        <ng-container *ngIf="effect === 'Orbs'">
+            <div class="bg-orbs"></div>
+        </ng-container>
+        <ng-container *ngIf="effect === 'Particles'">
+            <div *ngFor="let n of numSequence(100)" class="circle-container">
+                <div class="circle"></div>
+            </div>        
+        </ng-container>
+
+        
+
+        
+        <div style="height: 88vh; z-index: 3;">
             <router-outlet></router-outlet>
         </div>
+        
     </mat-sidenav-content>
 </mat-sidenav-container>

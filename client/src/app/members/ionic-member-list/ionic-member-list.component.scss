@@ -29,6 +29,7 @@ app-ionic-member-card {
     // left: 0;
     width: 65%;
     //height: 100%;
+    z-index: 3;
 }
 .card-container {
     position: relative;
@@ -41,6 +42,7 @@ app-ionic-member-card {
     height: 100%; 
     display: flex; 
     flex-direction: column;
+    top: 10%
 }
 .dislike-container {
     position: absolute;
@@ -51,7 +53,7 @@ app-ionic-member-card {
     background-color: whitesmoke;
     border-radius: 50%;
     opacity: 0;
-    z-index: 3;
+    z-index: 4;
     pointer-events: none;
 }
 // @keyframes enlarge {
@@ -67,7 +69,7 @@ app-ionic-member-card {
     background-color: whitesmoke;
     border-radius: 50%;
     opacity: 0;
-    z-index: 3;
+    z-index: 4;
     pointer-events: none;
     //animation: enlarge 0.3s linear;
 }
@@ -129,8 +131,10 @@ app-ionic-member-card {
     padding-bottom: 10px !important;
   }
 .mobile-pagination-pad-portrait { 
-    margin-bottom: 2em;
-    padding-bottom: 1em;
+    position: absolute;
+    bottom: 0;
+    // margin-bottom: 2em;
+    // padding-bottom: 1em;
     // margin-bottom: 40px;
     // padding-bottom: 80px;
 }

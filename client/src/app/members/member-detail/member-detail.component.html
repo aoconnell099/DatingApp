@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="col-8">
+    <div class="col-8" style="z-index: 3;">
         <tabset class="member-tabset" #memberTabs> <!-- Template reference variable so the element can be accessed in the component ts -->
             <tab heading='About {{member.knownAs}}' (selectTab)="onTabActivated($event)">
                 <h4>Description</h4>

@@ -31,8 +31,15 @@ div:has(> .list-item-container) {
 
 
 .mobile-pagination-pad-portrait {
-    margin-bottom: 2em;
-    padding-bottom: 3em;
+    // margin-bottom: 2em;
+    // padding-bottom: 3em;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 80vw;
+    // margin-bottom: 40px;
+    // padding-bottom: 80px;
 }
 .mobile-pagination-pad-landscape {
     margin-bottom: 3em;

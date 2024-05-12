@@ -28,10 +28,13 @@ export class NavComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   backgroundToggle = true;
 
-  background = 'Original';
-  backgroundList: string[] = ['Original', 'Wave', 'Stained', 'Drowning Girl', 'Beeple'];
+  background = 'Bg-8';
+  backgroundList: string[] = ['Original', 'Wave', 'Stained', 'Drowning Girl', 'Beeple', 'Bg-1', 'Bg-2', 'Bg-3', 'Bg-4', 'Bg-5', 'Bg-6', 'Bg-7', 'Bg-8', 'Bg-9', 'Bg-10'];
   currentBackground ='';
   currentFont = '';
+  currentEffect = 'None'
+  effect = 'None';
+  effectList: string[] = ['None', 'Bubbles', 'Orbs', 'Particles'];
   font = 'Roboto';
   fontList: string[] = ['Roboto', 'A Gentle Touch', 'Kells', 'Lieselotte', 'Meath', 'Remachine'];
   title = 'Dating App';
@@ -174,8 +177,13 @@ export class NavComponent implements OnInit {
 
   onBackgroundChange(event: MatSelectionListChange, value: any) {
     //console.log(event);
-    this.background = value[0].value != null ? value[0].value : 'Original';
+    this.background = value[0].value != null ? value[0].value : 'Bg-8';
     this.currentBackground = this.background;
+  }
+  onEffectChange(event: MatSelectionListChange, value: any) {
+    //console.log(event);
+    this.effect = value[0].value != null ? value[0].value : 'None';
+    this.currentEffect = this.effect;
   }
 
   onTitleChange(event: MatSelectionListChange, value: any) {
@@ -184,6 +192,10 @@ export class NavComponent implements OnInit {
     this.currentTitle = this.title;
     this.logoChar = this.title.charAt(0);
   }
+
+  numSequence(n: number): Array<number> { 
+    return Array(n); 
+  } 
 
   // onFontChange((event?: MatSelectionListChange) => {
   //   var currTit = this.title;

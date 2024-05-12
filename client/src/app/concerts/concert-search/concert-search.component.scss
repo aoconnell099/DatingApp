@@ -43,3 +43,8 @@ div:has(> .list-item-container) {
     margin-top: 0.3rem !important;
     margin-bottom: 0.3rem !important;
 }
+
+.column {
+    //z-index: 2;
+    position: relative;
+}

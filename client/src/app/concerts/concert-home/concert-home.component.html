@@ -14,8 +14,8 @@
   <button mat-button class="tab-links" (click)="openTab($event, 'Search')">Search Concerts</button>
 </div>
 
-<!-- style="flex: 1 1 auto" -->
-<div class="tab-content" style="display: block;" id="List">
+<!-- style="flex: 1 1 auto"   style="display: block;" -->
+<div class="tab-content" id="List">
   <app-concert-list [concerts]="concerts" [pagination]="pagination" (load)="loadConcerts()"></app-concert-list>
 </div>
 <div class="tab-content" id="Search">

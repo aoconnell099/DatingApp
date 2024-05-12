@@ -21,7 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
       if (user) {
         request = request.clone({
           setHeaders: {
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${user.token}` // Alternative way of using concatenation just without '+'
           }
         })
       }

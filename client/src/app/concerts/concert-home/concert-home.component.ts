@@ -53,13 +53,16 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
     //     this.concertSearch.ngOnDestroy();
     //     document.getElementById("concertList")?.remove();
     //     document.getElementById("concertSearch")?.remove();
-    //     console.log(document.getElementById("concertList"));
+    //     console.log(document.getElementById("concertList")); 
     //   }
     // });
 
     // document?.getElementById("List")?.click();
     //this.openTab(, 'List');
+    
     this.loadConcerts();
+    this.openTab('PageLoad', 'List');
+    //document?.getElementById("List")?.click();
   }
 
   loadConcerts() {
@@ -128,11 +131,44 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
 
     // Show the current tab, and add an "active" class to the button that opened the tab
     const tab = document.getElementById(tabName);
+    //const sidenavContainer = Array.from(document.getElementsByClassName("mat-sidenav-content") as HTMLCollectionOf<HTMLElement>);
+    const sidenavContainer = document.getElementById("sidenavContent");
+
+    console.log(sidenavContainer);
     if (tab) {
-      tab.style.display = "block";
+      if (tabName == "List") {
+        tab.style.display = "flex";
+        tab.style.flexDirection = "column";
+        // for (let i = 0; i < sidenavContainer.length; i++) {
+        //   sidenavContainer[i].style.display = "flex !important";
+        //   console.log(sidenavContainer[i].style.display);
+        // }
+        if (sidenavContainer) {
+          //sidenavContainer.style.display = "flex";
+          sidenavContainer.style.setProperty("display", "flex", "important");
+          sidenavContainer.style.setProperty("flex-direction", "column", "important");
+          sidenavContainer.style.setProperty("width", "100vw", "important");
+        }
+        
+      }
+      else if (tabName == "Search") {
+        tab.style.display = "block";
+        // for (let i = 0; i < sidenavContainer.length; i++) {
+        //   sidenavContainer[i].style.display = "block !important";
+        //   console.log(sidenavContainer[i].style.display);
+        // }
+        if (sidenavContainer) {
+          //sidenavContainer.style.display = "block";
+          sidenavContainer.style.setProperty("display", "block", "important");
+        }
+      }
+      console.log(sidenavContainer?.style.display);
     }
     console.log($event);
-    $event.target.parentElement.className += " tab-button";
+    if ($event !== 'PageLoad') {
+      $event.target.parentElement.className += " tab-button";
+    }
+    
   }
 
   ngOnDestroy(): void {

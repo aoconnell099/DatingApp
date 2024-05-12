@@ -1,39 +1,46 @@
-<div class="text-center mt-3">
-    <h2>{{predicate === 'liked' ? 'Members I Like' : 'Members who like me'}}</h2>
-</div>
-
-<div class="container mt-3">
-    <div class="d-flex">
-        <div class="btn-group" name="predicate">
-            <button class="btn btn-primary" btnRadio="liked" 
-                [(ngModel)]="predicate" (click)="loadLikes()">Members I like</button>
-            <button class="btn btn-primary" btnRadio="likedBy" 
-                [(ngModel)]="predicate" (click)="loadLikes()">Members who like me</button>
-        </div>
+<div style="display: block; width: 100vw;">
+    <div class="text-center mt-3">
+        <h2>{{predicate === 'liked' ? 'Members I Like' : 'Members who like me'}}</h2>
     </div>
 
-    <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
-        <div *ngFor="let member of members">
-            <mat-grid-tile>
-                <div class="mat-grid-tile-content">
-                    <app-member-card [currentBreakpoint]="currentBreakpoint" [member]="member"></app-member-card>
-                </div>
-            </mat-grid-tile>
+    <div class="container mt-3">
+        <div class="d-flex">
+            <div class="btn-group" name="predicate">
+                <button class="btn btn-primary" btnRadio="liked" 
+                    [(ngModel)]="predicate" (click)="loadLikes()">Members I like</button>
+                <button class="btn btn-primary" btnRadio="likedBy" 
+                    [(ngModel)]="predicate" (click)="loadLikes()">Members who like me</button>
+            </div>
         </div>
-    </mat-grid-list>
-</div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
-    <mat-paginator #paginator
-        class="demo-paginator"
-        (page)="pageChanged($event)"
-        [length]="pagination.totalItems"
-        [pageSize]="pagination.itemsPerPage"
-        [disabled]="false"
-        [showFirstLastButtons]="true"
-        [pageSizeOptions]="[5, 10, 25]"
-        [hidePageSize]="true"
-        [pageIndex]="pagination.currentPage"
-        aria-label="Select page">
-    </mat-paginator>
+        <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+            <div *ngFor="let member of members">
+                <mat-grid-tile>
+                    <div class="mat-grid-tile-content">
+                        <app-member-card [currentBreakpoint]="currentBreakpoint" [member]="member"></app-member-card>
+                    </div>
+                </mat-grid-tile>
+            </div>
+        </mat-grid-list>
+    </div>
+
+    <div class="d-flex justify-content-center" *ngIf="pagination"
+        [ngClass]="{
+            'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
+            'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
+            
+        }">
+        <mat-paginator #paginator
+            class="demo-paginator"
+            (page)="pageChanged($event)"
+            [length]="pagination.totalItems"
+            [pageSize]="pagination.itemsPerPage"
+            [disabled]="false"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25]"
+            [hidePageSize]="true"
+            [pageIndex]="pagination.currentPage"
+            aria-label="Select page">
+        </mat-paginator>
+    </div>
 </div>

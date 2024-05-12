@@ -86,6 +86,12 @@
 
   /* Style the tab content */
   .tab-content {
-    display: none;
+    //display: none;
     padding: 6px 12px;
+  }
+
+  #List {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
   }

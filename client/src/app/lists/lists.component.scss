@@ -1,0 +1,35 @@
+.mobile-pagination-pad-portrait {
+    // margin-bottom: 2em;
+    // padding-bottom: 3em;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 80vw;
+    z-index: 2;
+    // margin-bottom: 40px;
+    // padding-bottom: 80px;
+}
+.mobile-pagination-pad-landscape {
+    margin-bottom: 3em;
+    padding-bottom: 2em;
+    // margin-bottom: 80px;
+    // padding-bottom: 40px;
+}
+
+mat-paginator div {
+    margin: 0 !important;
+    background: green;
+}
+
+.mat-mdc-paginator-range-label {
+    margin: 0 !important;
+}
+
+.container {
+    padding-bottom: 6em !important;
+}
+
+// mat-paginator {
+//     background: green !important;
+// }
