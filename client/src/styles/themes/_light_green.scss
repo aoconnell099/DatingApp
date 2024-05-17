@@ -1,0 +1,48 @@
+@use "sass:map";
+@use 'theme-helper';
+@use "@angular/material" as mat;
+@use "../palettes/light_green" as pal;
+@use "../typography/config" as typ;
+//@use '@angular/material-experimental' as matx;
+
+//@include mat.all-component-themes($light-theme);
+
+$primary: mat.define-palette(pal.$md-base);
+$accent: mat.define-palette(pal.$md-complementary);
+$contrast: mat.define-palette(pal.$md-contrast);
+$extended: pal.$mat-light-green;
+
+// $light-background-color: map-get(pal.$md-lightgray,500);
+// $dark-background-color: map-get(pal.$md-darkgray, 900);
+// $light-background-image: "../assets/background-image.svg";
+//$light-typography: map-get(typ.$app-typography, $body-1);
+
+
+$light-theme: mat.define-light-theme((
+ color: (
+   primary: $primary,
+   accent: $accent,
+   warn: $contrast,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+
+// $theme: matx.define-theme((
+//   color: (
+//     theme-type: dark,
+//     primary: matx.$m3-violet-palette,
+//   ),
+//   typography: (
+//     brand-family: 'Comic Sans',
+//     bold-weight: 900
+//   ),
+//   density: (
+//     scale: -1
+//   )
+// ));
+
+// $light-theme: theme-helper.modify-background($light-theme, $light-background-color);
+//$my-theme: theme-helper.modify-background($my-theme, $light-background-color);
+//$theme: theme-helper.modify-background($theme, $light-background-color);

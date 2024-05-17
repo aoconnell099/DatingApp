@@ -15,6 +15,8 @@ import { LoginDialogComponent } from '../modals/login-dialog/login-dialog.compon
 import { ConfirmLogoutComponent } from '../modals/confirm-logout/confirm-logout.component';
 import { MatSidenav } from '@angular/material/sidenav';
 //import { animate, transition } from '@angular/material/animations';
+import { argbFromHex, themeFromSourceColor, applyTheme } from "@material/material-color-utilities";
+
 
 @Component({
   selector: 'app-nav',
@@ -51,6 +53,7 @@ export class NavComponent implements OnInit {
   landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 400px)'
   isActive = false;
   hide = true;
+  
 
   readonly breakpoint$ = this.breakpointObserver
     .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, this.landscapeBreakpoint])
@@ -68,6 +71,24 @@ export class NavComponent implements OnInit {
       this.breakpointChanged()
     );
     this.initVars();
+    const theme = themeFromSourceColor(argbFromHex('#f82506'), [
+      {
+        name: "custom-1",
+        value: argbFromHex("#ff0000"),
+        blend: true,
+      },
+    ]);
+    
+    // Print out the theme as JSON
+    console.log("NAV_COMPONENT");
+    console.log(JSON.stringify(theme, null, 2));
+    //console.log(theme.primary)
+    
+    // Check if the user has dark mode turned on
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    
+    // Apply the theme to the body by updating custom properties for material tokens
+    applyTheme(theme, {target: document.body, dark: systemDark});
   }
 
   testButton($event: any) {

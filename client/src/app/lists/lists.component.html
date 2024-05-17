@@ -6,9 +6,9 @@
     <div class="container mt-3">
         <div class="d-flex">
             <div class="btn-group" name="predicate">
-                <button class="btn btn-primary" btnRadio="liked" 
+                <button id="liked" mat-button class="tab-links" btnRadio="liked" 
                     [(ngModel)]="predicate" (click)="loadLikes()">Members I like</button>
-                <button class="btn btn-primary" btnRadio="likedBy" 
+                <button id="likedBy" mat-button class="tab-links" btnRadio="likedBy" 
                     [(ngModel)]="predicate" (click)="loadLikes()">Members who like me</button>
             </div>
         </div>

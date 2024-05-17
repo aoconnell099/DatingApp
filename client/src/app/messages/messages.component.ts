@@ -25,6 +25,29 @@ export class MessagesComponent implements OnInit {
 
   loadMessages() {
     this.loading = true;
+    console.log(this.container);
+    const tablinks =  Array.from(document.getElementsByClassName("tab-links") as HTMLCollectionOf<HTMLElement>);
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" tab-button", "");
+    }
+    if (this.container == "Unread") {
+      const tab = document.getElementById("unread");
+      if (tab) {
+        tab.className += " tab-button";
+      }
+    }
+    else if (this.container == "Inbox") {
+      const tab = document.getElementById("inbox");
+      if (tab) {
+        tab.className += " tab-button";
+      }
+    }
+    else if (this.container == "Outbox") {
+      const tab = document.getElementById("outbox");
+      if (tab) {
+        tab.className += " tab-button";
+      }
+    }
     this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe({
       next: response => {
         if (response.result && response.pagination) {

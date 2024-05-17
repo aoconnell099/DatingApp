@@ -21,7 +21,7 @@
                 'concert-icons-no-animate' : currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall
             }">
                 <div class="icons-row">
-                    <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
+                    <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn " target="_blank">
                         <i class="fab fa-facebook"></i>
                     </a>
                     <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
@@ -58,7 +58,7 @@
         <p class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</p>
         <p class="card-text city-text text-center">{{concert.venue}}</p>
         <p class="card-text city-text text-center">{{concert.city}}</p>
-        <p *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></p>
+        <p *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a class="concert-link" href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></p>
         <!-- <a href="{{concert.homepageUrl}}" *ngIf="concert.homepageUrl" class="card-text city-text text-center">{{concert.homepageUrl}}</a> -->
     </mat-card-footer>
     </div>

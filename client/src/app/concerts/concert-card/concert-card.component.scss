@@ -56,3 +56,46 @@
     width: 165%;
     right: 32.5%;
 }
+
+.user-card {
+    //background-color: lavender;
+    border-radius: 10% !important;
+    //cursor: pointer;
+}
+.card-content {
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+
+
+// .card img {
+//     transform: scale(1.0, 1.0);
+//     transition-duration: 500ms;
+//     transition-timing-function: ease-out;
+// }
+
+.card-img {
+    object-fit: fill;
+}
+
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    // border-top-left-radius: 10%;
+    // border-top-right-radius: 10%;
+    border-radius: 10%;
+}
+
+// .card-icon-container {
+//     display: flex;
+//     justify-content: space-evenly;
+// }
+
+.card-icon-container mat-list-item{
+    text-align: center;
+}
+.card-footer {
+    border-radius: 10%;
+}

@@ -83,6 +83,23 @@ export class ListsComponent implements OnInit {
   }
   
   loadLikes() {
+    console.log(this.predicate);
+    const tablinks =  Array.from(document.getElementsByClassName("tab-links") as HTMLCollectionOf<HTMLElement>);
+    for (let i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" tab-button", "");
+    }
+    if (this.predicate == "liked") {
+      const tab = document.getElementById("liked");
+      if (tab) {
+        tab.className += " tab-button";
+      }
+    }
+    else if (this.predicate == "likedBy") {
+      const tab = document.getElementById("likedBy");
+      if (tab) {
+        tab.className += " tab-button";
+      }
+    }
     this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {

@@ -34,6 +34,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 //import { SwiperModule } from 'swiper/angular';
 import { IonicModule } from '@ionic/angular';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+//import { MdFilledButton } from '@material/web/button/filled-button.js';
 
 
 
@@ -65,7 +67,9 @@ import { IonicModule } from '@ionic/angular';
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    IonicModule.forRoot(),
+    //MdFilledButton,
+    IonicModule.forRoot(), 
+    InfiniteScrollModule,
     //SwiperModule,
     TabsModule.forRoot(),
     //NgxGalleryModule,
@@ -111,6 +115,8 @@ import { IonicModule } from '@ionic/angular';
     ModalModule,
     //SwiperModule,
     IonicModule,
+    InfiniteScrollModule,
+    //MdFilledButton
   ]
 })
 export class SharedModule { }

@@ -8,15 +8,10 @@
     $primary-contrast: map-get($primary, contrast);
 
 
-    .mat-mdc-tab-header {
-        // background-color: lightblue;
-        background-color: map-get($map: $primary, $key: 100);
-    }
-
-    .tab-links {
+    .tab-links { 
         flex: auto;
-        background-color: #ddd !important;
-        color: map-get($map: $accent, $key: 500) !important;
+        // background-color: #ddd !important;
+        // color: map-get($map: $accent, $key: 500) !important;
         float: left;
         border: none !important;
         outline: none !important;
@@ -26,16 +21,16 @@
         height: 4em !important;
       }
 
-      .custom-tab button:hover {
-        background-color: map-get($map: $accent, $key: 100) !important;
-        //color: #ddd !important;
-        opacity: 0.7 !important;
-      }
+      // .custom-tab button:hover {
+      //   background-color: map-get($map: $accent, $key: 100) !important;
+      //   //color: #ddd !important;
+      //   opacity: 0.7 !important;
+      // }
 
-    //   .custom-tab button.active {
-    //     background-color: #ddd !important;
-    //     color: map-get($map: $accent, $key: 500);
-    //   }
+      // .custom-tab button.active {
+      //   background-color: #ddd !important;
+      //   color: map-get($map: $accent, $key: 500);
+      // }
     // .tab-links {
     //     background-color: #ddd;
     //     color: map-get($map: $accent, $key: 500);
@@ -43,8 +38,8 @@
 
       .tab-button {
         pointer-events: none;
-        color: #ddd !important;
-        background-color: map-get($map: $accent, $key: 500) !important;
+        // color: #ddd !important;
+        // background-color: map-get($map: $accent, $key: 500) !important;
         //box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%) !important;
         @include mat.elevation(8);
           //color: black !important;

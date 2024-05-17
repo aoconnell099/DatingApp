@@ -1,0 +1,152 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use "../palettes/light_green" as pal;
+
+// @import './'
+  
+@mixin user-card($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+    //$extended: map-get(pal.$mat-light-green, extended);
+    // .card-footer {
+    //     background-color: map-get($accent, lighter) !important;
+    // }
+    .user-card {
+        //background-color: #626b76 !important;
+        //background-color: map-get($primary, 900) !important;
+        background-color: map-get(pal.$mat-light-green, primary-var, hex) !important;
+    }
+    .city-text {
+        //color:map-get($primary, A100 ) !important;
+        //color:map-get($primary-contrast, 300 ) !important;
+        // color:map-get($primary-contrast, 500 ) !important;
+        color:map-get(pal.$mat-light-green, on-surface) !important;
+    }
+
+    .card-title {
+        //color:map-get(pal.$mat-light-green, on-primary) !important;
+        //color: #8C9184!important;
+        color:map-get($contrast, 800 ) !important;
+    }
+    .concert-link {
+        color:map-get(pal.$mat-light-green, contrast) !important;
+        // color: #d6d8dc;
+    }
+    .user-icon {
+        color: #e0e5ec;
+    }
+  }
+
+@mixin nav($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    //$extended: map-get(pal.$mat-light-green, extended);
+    // .card-footer {
+    //     background-color: map-get($accent, lighter) !important;
+    // }
+    .toolbar-nav {
+        //background-color: #626b76 !important;
+        //background-color: map-get($primary, 900) !important;
+        //background-color: map-get(pal.$mat-light-green, primary-var, hex) !important;
+        background: linear-gradient(135deg, map-get(pal.$mat-light-green, primary-var, hex) 0%, map-get(pal.$mat-light-green, primary-var, lighter) 50%, map-get(pal.$mat-light-green, primary-var, hex) 100%);
+    
+        button:hover,
+        .active-link {
+        //   color: map-get(pal.$mat-light-green, secondary, hex) !important;
+          color: map-get($accent, 300) !important;
+        }
+    }
+    //.nav-items { background-color: inherit;}
+  }
+
+@mixin filter($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+   
+    .mat-expansion-panel {
+        // background-color: map-get(pal.$mat-light-green, primary-var, lighter) !important;
+        //background-color: map-get($accent, 50) !important;
+        background: linear-gradient(135deg, map-get($primary, 200) 0%, map-get($primary, 800) 50%, map-get($primary, 100) 100%) !important;
+        //background: linear-gradient(135deg, map-get($accent, 300) 0%, map-get($accent, 800) 50%, map-get($accent, 500) 100%) !important;
+
+   }
+    .mat-expansion-panel-header {
+        // background-color: map-get(pal.$mat-light-green, primary-var, lighter) !important;
+        background: map-get($primary, 500) !important;
+        //background: linear-gradient(135deg, map-get(pal.$mat-light-green, surface) 0%, map-get(pal.$mat-light-green, secondary, hex) 50%, map-get(pal.$mat-light-green, background-color) 100%) !important;
+        //background: linear-gradient(135deg, map-get($accent, 300) 0%, map-get($accent, 800) 50%, map-get($accent, 500) 100%) !important;
+
+   }
+  }
+
+@mixin concert-buttons($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+
+    .tab-links.tab-button {
+        background:map-get($accent, 800 ) !important;
+    }
+   
+    .tab-links {
+        background:map-get($accent, 100 ) !important;
+    }
+    // .mdc-button {
+    //     background:map-get($accent, 100 );
+    // }
+  }
+
+@mixin search-form($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+
+    .search-form-field > .mdc-text-field {
+        background-color: map-get(pal.$mat-light-green, primary-var, darker);
+        @include mat.elevation(4);
+    }
+
+    .search-form-field > button {
+        color: map-get($accent, 500) !important;
+    }
+
+    .search-input {
+        color: map-get(pal.$mat-light-green, primary-var, lighter) !important;
+    }
+    .search-input::placeholder {
+        color: map-get(pal.$mat-light-green, primary-var, lighter) !important;
+    }
+
+    .search-button {
+        color: map-get(pal.$mat-light-green, primary-var, lighter) !important;
+    }
+   
+  }
+@mixin search-list($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+
+    .search-list {
+        background-color: map-get(pal.$mat-light-green, primary-var, hex);
+        @include mat.elevation(10);
+        height: 68vh;
+        overflow-y: scroll;
+    }
+    .mat-divider {
+        border-top-width: 0.15em;
+        border-top-color: map-get($accent, 300);
+        // border-top-color: map-get(pal.$mat-light-green, secondary, hex);
+    }
+
+    #add-concert-button {
+        background-color: map-get($contrast, 500);
+        color: map-get(pal.$mat-light-green, surface);
+    }
+    // .list-item-container {
+    //     @include mat.elevation(1);
+    // }
+
+   
+  }

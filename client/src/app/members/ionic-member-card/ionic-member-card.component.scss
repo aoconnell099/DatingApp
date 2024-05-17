@@ -2,34 +2,34 @@
 @use '@angular/material' as mat;
 // @import './'
   
-@mixin card-color($theme){
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $primary-contrast: map-get($primary, contrast);
+// @mixin card-color($theme){
+//     $primary: map-get($theme, primary);
+//     $accent: map-get($theme, accent);
+//     $primary-contrast: map-get($primary, contrast);
 
-    // .card-footer {
-    //     background-color: map-get($accent, lighter) !important;
-    // }
-    .user-card {
-        background-color: #626b76 !important;
-        // background-color: map-get($primary, A100) !important;
-        //background-color: map-get($primary, 900) !important;
-    }
-    .city-text {
-        //color:map-get($primary, A100 ) !important;
-        //color:map-get($primary-contrast, 300 ) !important;
-        // color:map-get($primary-contrast, 500 ) !important;
-        color: #babfc4 !important;
-    }
+//     // .card-footer {
+//     //     background-color: map-get($accent, lighter) !important;
+//     // }
+//     .user-card-1 {
+//         //background-color: #626b76 !important;
+//         // background-color: map-get($primary, 900) !important;
+//         background-color: map-get($primary-contrast, 900) !important;
+//     }
+//     .city-text {
+//         //color:map-get($primary, A100 ) !important;
+//         //color:map-get($primary-contrast, 300 ) !important;
+//         // color:map-get($primary-contrast, 500 ) !important;
+//         color: #babfc4 !important;
+//     }
 
-    .card-title {
-        color:map-get($primary, 100 ) !important;
-        // color: #d6d8dc;
-    }
-    .user-icon {
-        color: #e0e5ec;
-    }
-  }
+//     .card-title {
+//         color:map-get($primary, 100 ) !important;
+//         // color: #d6d8dc;
+//     }
+//     .user-icon {
+//         color: #e0e5ec;
+//     }
+//   }
 // @mixin card-color($theme){
 //     // Get the color config from the theme.
 //     $color-config: mat.get-color-config($theme);
@@ -75,13 +75,15 @@
 
 .card-img {
     object-fit: fill;
+    border-radius: 10%;
 }
 
 .card-img-wrapper {
     position: relative;
     overflow: hidden;
-    border-top-left-radius: 10%;
-    border-top-right-radius: 10%;
+    // border-top-left-radius: 10%;
+    // border-top-right-radius: 10%;
+    border-radius: 10%;
 }
 
 .member-icons-for-animate {

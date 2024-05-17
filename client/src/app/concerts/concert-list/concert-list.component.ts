@@ -12,6 +12,7 @@ import { UserParams } from 'src/app/_models/userParams';
 import { ConcertService } from 'src/app/_services/concert.service';
 
 
+
 @Component({
   selector: 'app-concert-list',
   templateUrl: './concert-list.component.html',
@@ -20,13 +21,15 @@ import { ConcertService } from 'src/app/_services/concert.service';
 export class ConcertListComponent implements OnInit, OnDestroy {
   //@ViewChild('paginator') paginator!: MatPaginator;
   @Output() load: EventEmitter<any> = new EventEmitter();
-  @Input() concerts?: Concert[];
+  @Input() concerts: Concert[] = [];
   @Input() pagination?: Pagination;
   searchResult: Concert[] = [];
   concertToAdd?: Concert;
   concertParams?: ConcertParams;
   ticketMasterParams?: TicketMasterParams;
   dataSource?: MatTableDataSource<any>;
+
+  isLoading=false;
 
   // search = "";
 
@@ -116,17 +119,20 @@ export class ConcertListComponent implements OnInit, OnDestroy {
     //   this.rowHeightRatio = "1:2.1";
     // }
   }
+  toggleLoading = ()=>this.isLoading=!this.isLoading;
 
   loadConcerts() {
     if (this.concertParams) {
+      this.toggleLoading();
       this.concertService.getConcertsForUser(this.concertParams).subscribe({
         next: response => {
           if (response.result && response.pagination) { 
-            this.concerts = response.result;
+            this.concerts = response.result; //[...this.concerts, ...response.result];
             this.pagination = response.pagination;
             console.log(this.concerts);
           }  
-        }
+        },
+        //complete: () => this.toggleLoading()
       })
     } 
     
@@ -164,6 +170,16 @@ export class ConcertListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onScroll= ()=>{
+    if (this.concertParams) {
+      this.concertParams.pageNumber++;
+      this.concertService.setConcertParams(this.concertParams);
+      this.loadConcerts();
+
+    }
+    
+    //this.appendData();
+   }
   
   ngOnDestroy(): void {
     console.log("destroy concert list");

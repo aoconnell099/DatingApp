@@ -60,9 +60,12 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
     // document?.getElementById("List")?.click();
     //this.openTab(, 'List');
     
+    
+    
     this.loadConcerts();
-    this.openTab('PageLoad', 'List');
     //document?.getElementById("List")?.click();
+    this.openTab('PageLoad', 'List');
+
   }
 
   loadConcerts() {
@@ -167,6 +170,12 @@ export class ConcertHomeComponent implements OnInit, OnDestroy {
     console.log($event);
     if ($event !== 'PageLoad') {
       $event.target.parentElement.className += " tab-button";
+    }
+    else if ($event == 'PageLoad') {
+      const tabButton = document.getElementById('listButton');
+      if (tabButton) {
+        tabButton.className += " tab-button";
+      }
     }
     
   }

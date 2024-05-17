@@ -10,8 +10,15 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
 </head>
-<body class="mat-typography mat-app-background">
+<body class="mat-typography mat-app-background" id="outerBody">
   <app-root></app-root>
 </body>
 </html>

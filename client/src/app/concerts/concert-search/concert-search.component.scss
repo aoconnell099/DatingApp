@@ -1,7 +1,7 @@
-.search-list {
-    background-color: lightgray;
-    //cursor: pointer;
-}
+// .search-list {
+//     background-color: lightgray;
+//     //cursor: pointer;
+// }
 // .search-list > *{
 //     cursor: pointer;
 // }
@@ -47,4 +47,12 @@ div:has(> .list-item-container) {
 .column {
     //z-index: 2;
     position: relative;
+    overflow-y:auto;
 }
+.concert-search-header {
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+}
+
+

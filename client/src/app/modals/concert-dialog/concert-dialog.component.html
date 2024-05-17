@@ -1,69 +1,68 @@
 <div mat-dialog-content>
-<mat-card style="overflow: hidden;" class="user-card" *ngIf="concert">
-    <div>
-    <mat-card-content class="card-content">
-        <div class="card-img-wrapper">
-            <img mat-card-image  class="card-img" src="{{concert.imageUrl || './assets/user.png'}}" alt="{{concert.artistName}}">
-        
-            <mat-action-list class="card-icon-container concert-icons-no-animate animate" role="list"
-            >
-                <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
-                    <i class='fab fa-instagram'></i>
-                </a>
-                <a *ngIf="concert.twitterUrl" mat-mini-fab href="{{concert.twitterUrl}}" class="btn btn-primary" target="_blank">
-                    <i class='fab fa-twitter'></i>
-                </a>
-                <a *ngIf="concert.spotifyUrl" mat-mini-fab href="{{concert.spotifyUrl}}" class="btn btn-primary" target="_blank">
-                    <i class='fab fa-spotify'></i>
-                </a>
-                <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
-                    <i class='fab fa-youtube'></i>
-                </a>
-                <!-- <div class="icons-row" id="icons-top-row">
-                    <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
-                        <i class='fab fa-instagram'></i>
-                    </a>
-                    <a *ngIf="concert.twitterUrl" mat-mini-fab href="{{concert.twitterUrl}}" class="btn btn-primary" target="_blank">
-                        <i class='fab fa-twitter'></i>
-                    </a>
+    <mat-card style="overflow: hidden;" class="user-card" *ngIf="concert">
+        <div>
+            <mat-card-content class="card-content">
+                <div class="card-img-wrapper">
+                    <img mat-card-image  class="card-img" src="{{concert.imageUrl || './assets/user.png'}}" alt="{{concert.artistName}}">
+                
+                    <mat-action-list class="card-icon-container concert-icons-no-animate animate" role="list">
+                        <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
+                            <i class='fab fa-instagram'></i>
+                        </a>
+                        <a *ngIf="concert.twitterUrl" mat-mini-fab href="{{concert.twitterUrl}}" class="btn btn-primary" target="_blank">
+                            <i class='fab fa-twitter'></i>
+                        </a>
+                        <a *ngIf="concert.spotifyUrl" mat-mini-fab href="{{concert.spotifyUrl}}" class="btn btn-primary" target="_blank">
+                            <i class='fab fa-spotify'></i>
+                        </a>
+                        <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
+                            <i class='fab fa-youtube'></i>
+                        </a>
+                        <!-- <div class="icons-row" id="icons-top-row">
+                            <a *ngIf="concert.fbUrl" mat-mini-fab href="{{concert.fbUrl}}" class="btn btn-primary" target="_blank">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a *ngIf="concert.instagramUrl" mat-mini-fab href="{{concert.instagramUrl}}" class="btn btn-primary" target="_blank">
+                                <i class='fab fa-instagram'></i>
+                            </a>
+                            <a *ngIf="concert.twitterUrl" mat-mini-fab href="{{concert.twitterUrl}}" class="btn btn-primary" target="_blank">
+                                <i class='fab fa-twitter'></i>
+                            </a>
+                        </div>
+                        <div class="icons-row">
+                            <a *ngIf="concert.spotifyUrl" mat-mini-fab href="{{concert.spotifyUrl}}" class="btn btn-primary" target="_blank">
+                                <i class='fab fa-spotify'></i>
+                            </a>
+                            <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
+                                <i class='fab fa-youtube'></i>
+                            </a>
+                        </div> -->
+                    </mat-action-list>
                 </div>
-                <div class="icons-row">
-                    <a *ngIf="concert.spotifyUrl" mat-mini-fab href="{{concert.spotifyUrl}}" class="btn btn-primary" target="_blank">
-                        <i class='fab fa-spotify'></i>
-                    </a>
-                    <a *ngIf="concert.youtubeUrl" mat-mini-fab href="{{concert.youtubeUrl}}" class="btn btn-primary" target="_blank">
-                        <i class='fab fa-youtube'></i>
-                    </a>
-                </div> -->
-            </mat-action-list>
+            </mat-card-content>
         </div>
-    </mat-card-content>
-    <div class="card-footer light-theme">
-    <mat-card-footer style="padding: 10px; display: flex; flex-direction: column; flex-shrink: 0;">
-        <h4 class="text-center mb-1">
-            <span class="card-title">
-            {{concert.artistName}}
-            </span>
-        </h4>
-        <!-- <span class="card-text city-text text-center">{{concert.eventName}}</span>
-        <span class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</span>
-        <span class="card-text city-text text-center">{{concert.venue}}</span>
-        <span class="card-text city-text text-center">{{concert.city}}</span>
-        <span *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></span> -->
-        <p class="card-text city-text text-center">{{concert.eventName}}</p>
-        <p class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</p>
-        <p class="card-text city-text text-center">{{concert.venue}}</p>
-        <p class="card-text city-text text-center">{{concert.city}}</p>
-        <p *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></p>
-        <!-- <a href="{{concert.homepageUrl}}" *ngIf="concert.homepageUrl" class="card-text city-text text-center">{{concert.homepageUrl}}</a> -->
-    </mat-card-footer>
-    </div>
-    </div>
-</mat-card>
+        <div class="card-footer light-theme">
+            <mat-card-footer style="padding: 10px; display: flex; flex-direction: column; flex-shrink: 0;">
+                <h4 class="text-center mb-1">
+                    <span class="card-title">
+                    {{concert.artistName}}
+                    </span>
+                </h4>
+                <!-- <span class="card-text city-text text-center">{{concert.eventName}}</span>
+                <span class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</span>
+                <span class="card-text city-text text-center">{{concert.venue}}</span>
+                <span class="card-text city-text text-center">{{concert.city}}</span>
+                <span *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></span> -->
+                <p class="card-text city-text text-center">{{concert.eventName}}</p>
+                <p class="card-text city-text text-center">{{concert.eventDate | date: 'LLL d, y, h:mm a'}}</p>
+                <p class="card-text city-text text-center">{{concert.venue}}</p>
+                <p class="card-text city-text text-center">{{concert.city}}</p>
+                <p *ngIf="concert.homepageUrl" class="card-text city-text text-center"><span><a class="concert-link" href="{{concert.homepageUrl}}" target="_blank">{{concert.artistName}} Homepage</a></span></p>
+                <!-- <a href="{{concert.homepageUrl}}" *ngIf="concert.homepageUrl" class="card-text city-text text-center">{{concert.homepageUrl}}</a> -->
+            </mat-card-footer>
+        </div>
+    </mat-card>
 </div>

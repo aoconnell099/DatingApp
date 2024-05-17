@@ -2,6 +2,7 @@
 @use "@angular/material" as mat;
 
 @use "./styles/themes/light" as light-theme;
+@use "./styles/themes/light_green" as light-green;
 @use "./styles/typography/config" as typography;
 
 @import 'swiper/scss';
@@ -12,6 +13,7 @@
 @import 'swiper/scss/zoom';
 @import '@ionic/angular/css/ionic-swiper';
 
+
 // Angular Material defines a mixin named core that includes prerequisite styles for common features used by multiple components, such as ripples. 
 // The core mixin must be included exactly once for your application, even if you define multiple themes. 
 // Including the core mixin multiple times will result in duplicate CSS in your application.
@@ -21,30 +23,40 @@
 
 // @import './app/members/member-card/member-card.component.scss';
 // @import './app/members/member-list/member-list.component.scss';
-@import './app/members/ionic-member-card/ionic-member-card.component.scss';
+//@import './app/members/ionic-member-card/ionic-member-card.component.scss';
 @import './app/members/ionic-member-list/ionic-member-list.component.scss';
 @import './app/concerts/concert-home/concert-home.component.scss';
+@import './styles/mixins/cards';
 
 // Include the core theme and any additional component themes. Eg. @include mat.button-theme(light.$light-theme);
-@include mat.core-theme(light-theme.$light-theme);
+// @include mat.core-theme(light-theme.$light-theme);
+//@include mat.core-theme(light-green.$light-theme);
 
 // Workaround to the problem applying typographies globally. Unecessary loading of all available themes and typographies
-@include mat.all-component-themes(light-theme.$light-theme);
+// @include mat.all-component-themes(light-theme.$light-theme);
+@include mat.all-component-themes(light-green.$light-theme);
 //@include mat.all-component-typographies(typography.$app-typography);
-$color-config:    mat.get-color-config(light-theme.$light-theme);
-$primary-palette: map.get($color-config, 'primary');
-$accent-palette:  map.get($color-config, 'accent');
-$warn-palette:    map.get($color-config, 'warn');
+// $color-config:    mat.get-color-config(light-theme.$light-theme);
+// $color-config:    mat.get-color-config(light-green.$light-theme);
+// $primary-palette: map.get($color-config, 'primary');
+// $accent-palette:  map.get($color-config, 'accent');
+// $warn-palette:    map.get($color-config, 'warn');
 
 
 //$accent-color: mat-color($accent-palette, 300);
 
 @mixin custom-components-theme($theme) {
-  @include card-color($theme);
+  @include user-card($theme);
   @include filter-button-background($theme);
   @include tab-color($theme);
+  @include nav($theme);
+  @include filter($theme);
+  @include concert-buttons($theme);
+  @include search-form($theme);
+  @include search-list($theme);
 }
-@include custom-components-theme(light-theme.$light-theme);
+@include custom-components-theme(light-green.$light-theme);
+//@include custom-components-theme(light-green.$light-theme);
 
 // @include card-color(light-theme.$light-theme);
 //   @include filter-button-background($theme);
@@ -116,6 +128,57 @@ flex-direction: column;
   
 }
 
+}
+.light {
+  --md-sys-color-primary: rgb(133 75 113);
+  --md-sys-color-surface-tint: rgb(133 75 113);
+  --md-sys-color-on-primary: rgb(255 255 255);
+  --md-sys-color-primary-container: rgb(255 216 237);
+  --md-sys-color-on-primary-container: rgb(54 7 43);
+  --md-sys-color-secondary: rgb(112 87 102);
+  --md-sys-color-on-secondary: rgb(255 255 255);
+  --md-sys-color-secondary-container: rgb(251 218 235);
+  --md-sys-color-on-secondary-container: rgb(40 22 34);
+  --md-sys-color-tertiary: rgb(128 84 63);
+  --md-sys-color-on-tertiary: rgb(255 255 255);
+  --md-sys-color-tertiary-container: rgb(255 219 204);
+  --md-sys-color-on-tertiary-container: rgb(49 19 4);
+  --md-sys-color-error: rgb(186 26 26);
+  --md-sys-color-on-error: rgb(255 255 255);
+  --md-sys-color-error-container: rgb(255 218 214);
+  --md-sys-color-on-error-container: rgb(65 0 2);
+  --md-sys-color-background: rgb(255 248 249);
+  --md-sys-color-on-background: rgb(33 26 29);
+  --md-sys-color-surface: rgb(255 248 249);
+  --md-sys-color-on-surface: rgb(33 26 29);
+  --md-sys-color-surface-variant: rgb(239 222 229);
+  --md-sys-color-on-surface-variant: rgb(79 68 74);
+  --md-sys-color-outline: rgb(129 115 122);
+  --md-sys-color-outline-variant: rgb(211 194 201);
+  --md-sys-color-shadow: rgb(0 0 0);
+  --md-sys-color-scrim: rgb(0 0 0);
+  --md-sys-color-inverse-surface: rgb(54 46 50);
+  --md-sys-color-inverse-on-surface: rgb(251 237 242);
+  --md-sys-color-inverse-primary: rgb(248 177 221);
+  --md-sys-color-primary-fixed: rgb(255 216 237);
+  --md-sys-color-on-primary-fixed: rgb(54 7 43);
+  --md-sys-color-primary-fixed-dim: rgb(248 177 221);
+  --md-sys-color-on-primary-fixed-variant: rgb(106 52 89);
+  --md-sys-color-secondary-fixed: rgb(251 218 235);
+  --md-sys-color-on-secondary-fixed: rgb(40 22 34);
+  --md-sys-color-secondary-fixed-dim: rgb(221 190 207);
+  --md-sys-color-on-secondary-fixed-variant: rgb(87 64 78);
+  --md-sys-color-tertiary-fixed: rgb(255 219 204);
+  --md-sys-color-on-tertiary-fixed: rgb(49 19 4);
+  --md-sys-color-tertiary-fixed-dim: rgb(244 185 159);
+  --md-sys-color-on-tertiary-fixed-variant: rgb(101 61 41);
+  --md-sys-color-surface-dim: rgb(228 214 220);
+  --md-sys-color-surface-bright: rgb(255 248 249);
+  --md-sys-color-surface-container-lowest: rgb(255 255 255);
+  --md-sys-color-surface-container-low: rgb(254 240 245);
+  --md-sys-color-surface-container: rgb(248 234 240);
+  --md-sys-color-surface-container-high: rgb(243 229 234);
+  --md-sys-color-surface-container-highest: rgb(237 223 228);
 }
 // .mat-mdc-dialog-surface {
 //   background: transparent;

@@ -54,7 +54,7 @@ $md-lightpurplegray: (
         200 : #000000,
         300 : #000000,
         400 : #000000,
-        500 : #000000,
+        500 : #3d2f2f,
         600 : #000000,
         700 : #000000,
         800 : #000000,
@@ -406,3 +406,125 @@ $md-darkgray: (
     )
 );
 
+$md-lightblue-alt: (
+    50   : #e6faff,
+    100  : #b3e6ff,
+    200  : #80d2ff,
+    300  : #4dcfff,
+    400  : #1acbff,
+    500  : #00b8ff,
+    600  : #00a5e6,
+    700  : #0092cc,
+    800  : #007fb3,
+    900  : #006b99,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #e6faff,
+    A700 : #b3e6ff,
+    contrast: (
+        50   : #000000,
+        100  : #000000,
+        200  : #000000,
+        300  : #000000,
+        400  : #000000,
+        500  : #000000,
+        600  : #000000,
+        700  : #000000,
+        800  : #000000,
+        900  : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$md-pinkish: (
+    50   : #FFECF4,
+    100  : #FFD8ED,
+    200  : #ECB7D6,
+    300  : #CF9CBA,
+    400  : #B2829F,
+    500  : #976985,
+    600  : #7C516C,
+    700  : #623A54,
+    800  : #48243C,
+    900  : #300F27,
+    A100 : #FFFBFF,
+    A200 : #FFF8F9,
+    A400 : #FFECF4,
+    A700 : #FFD8ED,
+    contrast: (
+        50   : #000000,
+        100  : #000000,
+        200  : #000000,
+        300  : #000000,
+        400  : #000000,
+        500  : #FFFFFF,
+        600  : #FFFFFF,
+        700  : #FFFFFF,
+        800  : #FFFFFF,
+        900  : #FFFFFF,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+
+
+
+.light {
+    --md-sys-color-primary: rgb(133 75 113);
+    --md-sys-color-surface-tint: rgb(133 75 113);
+    --md-sys-color-on-primary: rgb(255 255 255);
+    --md-sys-color-primary-container: rgb(255 216 237);
+    --md-sys-color-on-primary-container: rgb(54 7 43);
+    --md-sys-color-secondary: rgb(112 87 102);
+    --md-sys-color-on-secondary: rgb(255 255 255);
+    --md-sys-color-secondary-container: rgb(251 218 235);
+    --md-sys-color-on-secondary-container: rgb(40 22 34);
+    --md-sys-color-tertiary: rgb(128 84 63);
+    --md-sys-color-on-tertiary: rgb(255 255 255);
+    --md-sys-color-tertiary-container: rgb(255 219 204);
+    --md-sys-color-on-tertiary-container: rgb(49 19 4);
+    --md-sys-color-error: rgb(186 26 26);
+    --md-sys-color-on-error: rgb(255 255 255);
+    --md-sys-color-error-container: rgb(255 218 214);
+    --md-sys-color-on-error-container: rgb(65 0 2);
+    --md-sys-color-background: rgb(255 248 249);
+    --md-sys-color-on-background: rgb(33 26 29);
+    --md-sys-color-surface: rgb(255 248 249);
+    --md-sys-color-on-surface: rgb(33 26 29);
+    --md-sys-color-surface-variant: rgb(239 222 229);
+    --md-sys-color-on-surface-variant: rgb(79 68 74);
+    --md-sys-color-outline: rgb(129 115 122);
+    --md-sys-color-outline-variant: rgb(211 194 201);
+    --md-sys-color-shadow: rgb(0 0 0);
+    --md-sys-color-scrim: rgb(0 0 0);
+    --md-sys-color-inverse-surface: rgb(54 46 50);
+    --md-sys-color-inverse-on-surface: rgb(251 237 242);
+    --md-sys-color-inverse-primary: rgb(248 177 221);
+    --md-sys-color-primary-fixed: rgb(255 216 237);
+    --md-sys-color-on-primary-fixed: rgb(54 7 43);
+    --md-sys-color-primary-fixed-dim: rgb(248 177 221);
+    --md-sys-color-on-primary-fixed-variant: rgb(106 52 89);
+    --md-sys-color-secondary-fixed: rgb(251 218 235);
+    --md-sys-color-on-secondary-fixed: rgb(40 22 34);
+    --md-sys-color-secondary-fixed-dim: rgb(221 190 207);
+    --md-sys-color-on-secondary-fixed-variant: rgb(87 64 78);
+    --md-sys-color-tertiary-fixed: rgb(255 219 204);
+    --md-sys-color-on-tertiary-fixed: rgb(49 19 4);
+    --md-sys-color-tertiary-fixed-dim: rgb(244 185 159);
+    --md-sys-color-on-tertiary-fixed-variant: rgb(101 61 41);
+    --md-sys-color-surface-dim: rgb(228 214 220);
+    --md-sys-color-surface-bright: rgb(255 248 249);
+    --md-sys-color-surface-container-lowest: rgb(255 255 255);
+    --md-sys-color-surface-container-low: rgb(254 240 245);
+    --md-sys-color-surface-container: rgb(248 234 240);
+    --md-sys-color-surface-container-high: rgb(243 229 234);
+    --md-sys-color-surface-container-highest: rgb(237 223 228);
+  }
+  

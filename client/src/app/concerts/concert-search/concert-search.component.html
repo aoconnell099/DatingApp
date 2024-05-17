@@ -1,14 +1,15 @@
 <!-- style="position: relative;" -->
 <div>
-    <h5><u><i>Search for concerts to add</i></u></h5>
-    <form class="example-form" (ngSubmit)="searchConcerts()">
-        <mat-form-field class="example-full-width">
-            <span matPrefix> </span>
-            <input type="text" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
-            <button type="submit" matSuffix mat-button><mat-icon >search</mat-icon></button>
-        </mat-form-field>
-<br/>
-    </form>
+    <div class="concert-search-header">
+        <!-- <h5><u><i>Search for concerts to add</i></u></h5> -->
+        <form class="search-form" (ngSubmit)="searchConcerts()">
+            <mat-form-field class="search-form-field"> 
+                <input class="search-input" type="text" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
+                <button class="search-button" type="submit" matSuffix mat-button><mat-icon >search</mat-icon></button>
+            </mat-form-field>
+    <br/>
+        </form>
+    </div>
     <div *ngIf="searchResult.length > 0" class="column">
         Concerts
         <mat-list class="search-list">
