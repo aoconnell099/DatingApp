@@ -47,10 +47,18 @@ infiniteScroll
 [infiniteScrollDistance]="2"
 [infiniteScrollThrottle]="500"
 (scrolled)="onScroll()"
-[scrollWindow]="false" -->
-<div>
-    <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
-        <div *ngFor="let concert of concerts">
+[scrollWindow]="false"
+[fromRoot]="true"
+[infiniteScrollContainer]="body" -->
+<div class="search-results"
+infiniteScroll
+[infiniteScrollDistance]="2"
+[infiniteScrollThrottle]="500"
+(scrolled)="onScroll()" 
+[infiniteScrollContainer]="cont">
+    <mat-grid-list   [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+        <div *ngFor="let concert of concerts"
+        >
             <mat-grid-tile>
                 <div class="mat-grid-tile-content">
                     <app-concert-card (remove)="removeConcert($event)" [currentBreakpoint]="currentBreakpoint" [concert]="concert"></app-concert-card>
@@ -59,7 +67,7 @@ infiniteScroll
         </div>
     </mat-grid-list>
 
-    <div class="d-flex justify-content-center" *ngIf="pagination && concerts"
+    <!-- <div class="d-flex justify-content-center" *ngIf="pagination && concerts"
         [ngClass]="{
             'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
             'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
@@ -78,8 +86,8 @@ infiniteScroll
                     aria-label="Select page">
         </mat-paginator>
 
-    </div>
-    <!-- <div *ngIf="isLoading">Loading...</div> -->
+    </div> -->
+    <div *ngIf="isLoading">Loading...</div>
 </div>
 
 

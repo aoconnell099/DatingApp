@@ -49,12 +49,12 @@
         //background-color: #626b76 !important;
         //background-color: map-get($primary, 900) !important;
         //background-color: map-get(pal.$mat-light-green, primary-var, hex) !important;
-        background: linear-gradient(135deg, map-get(pal.$mat-light-green, primary-var, hex) 0%, map-get(pal.$mat-light-green, primary-var, lighter) 50%, map-get(pal.$mat-light-green, primary-var, hex) 100%);
+        background: linear-gradient(135deg, map-get(pal.$mat-light-green, primary-var, hex) 0%, map-get(pal.$mat-light-green, primary-var, lighter) 50%, map-get(pal.$mat-light-green, primary-var, hex) 100%) !important;
     
         button:hover,
         .active-link {
         //   color: map-get(pal.$mat-light-green, secondary, hex) !important;
-          color: map-get($accent, 300) !important;
+          color: map-get($accent, 400) !important;
         }
     }
     //.nav-items { background-color: inherit;}

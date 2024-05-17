@@ -7,13 +7,18 @@
         <div class="d-flex">
             <div class="btn-group" name="predicate">
                 <button id="liked" mat-button class="tab-links" btnRadio="liked" 
-                    [(ngModel)]="predicate" (click)="loadLikes()">Members I like</button>
+                    [(ngModel)]="predicate" (click)="loadLikes(true)">Members I like</button>
                 <button id="likedBy" mat-button class="tab-links" btnRadio="likedBy" 
-                    [(ngModel)]="predicate" (click)="loadLikes()">Members who like me</button>
+                    [(ngModel)]="predicate" (click)="loadLikes(true)">Members who like me</button>
             </div>
         </div>
 
-        <mat-grid-list [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
+        <mat-grid-list class="search-results"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()" 
+        [infiniteScrollContainer]="cont" [cols]="numberOfCols" [rowHeight]="rowHeightRatio"> 
             <div *ngFor="let member of members">
                 <mat-grid-tile>
                     <div class="mat-grid-tile-content">
@@ -24,7 +29,7 @@
         </mat-grid-list>
     </div>
 
-    <div class="d-flex justify-content-center" *ngIf="pagination"
+    <!-- <div class="d-flex justify-content-center" *ngIf="pagination"
         [ngClass]="{
             'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
             'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint
@@ -42,5 +47,5 @@
             [pageIndex]="pagination.currentPage"
             aria-label="Select page">
         </mat-paginator>
-    </div>
+    </div> -->
 </div>

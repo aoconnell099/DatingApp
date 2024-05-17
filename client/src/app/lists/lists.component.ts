@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Member } from '../_models/member';
 import { Pagination } from '../_models/paginations';
 import { MembersService } from '../_services/members.service';
@@ -10,11 +10,11 @@ import { distinctUntilChanged, tap } from 'rxjs';
   templateUrl: './lists.component.html',
   styleUrls: ['./lists.component.scss']
 })
-export class ListsComponent implements OnInit {
+export class ListsComponent implements OnInit, OnDestroy {
   members?: Member[]; // Partial makes each property in member optional
   predicate = 'liked';
   pageNumber = 0;
-  pageSize = 5;
+  pageSize = 6;
   pagination?: Pagination;
 
   numberOfCols?: number;
@@ -24,6 +24,9 @@ export class ListsComponent implements OnInit {
   landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 400px)'
   rowHeightRatio = "1:1.5";
 
+  isLoading = false;
+  cont: any;
+
   readonly breakpoint$ = this.breakpointObserver
   .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape, this.landscapeBreakpoint])
   .pipe(
@@ -31,13 +34,16 @@ export class ListsComponent implements OnInit {
     distinctUntilChanged()
   );
 
-  constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver) { }
+  constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver) { 
+    this.cont = document.getElementById('sidenavContent');
+  }
+  
 
   ngOnInit(): void {
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged()
     );
-    this.loadLikes();
+    this.loadLikes(false);
   }
 
   private breakpointChanged() {
@@ -81,9 +87,13 @@ export class ListsComponent implements OnInit {
       this.rowHeightRatio = "1:1.1"
     }
   }
+
+  toggleLoading = ()=>this.isLoading=!this.isLoading;
   
-  loadLikes() {
+  loadLikes(predicateChange: boolean) {
     console.log(this.predicate);
+    console.log(this.pageNumber);
+    console.log(this.pageSize);
     const tablinks =  Array.from(document.getElementsByClassName("tab-links") as HTMLCollectionOf<HTMLElement>);
     for (let i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" tab-button", "");
@@ -99,22 +109,56 @@ export class ListsComponent implements OnInit {
       if (tab) {
         tab.className += " tab-button";
       }
+    }      
+    if (predicateChange) {
+      this.pageNumber = 0;
+      this.members = [];
     }
+    this.toggleLoading();
     this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe({
       next: response => {
         if (response.result && response.pagination) {
-          this.members = response.result;
+          if (this.members) {
+            this.members = [...this.members!, ...response.result];
+          }
+          else {
+            this.members = response.result;
+          }
+          
           this.pagination = response.pagination;
         }
-      }
+      },
+      complete: () => this.toggleLoading()
     })
   }
 
   pageChanged(event: any) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
-      this.loadLikes();
+    console.log("page changed");
+    console.log(event);
+    if (this.pageNumber !== event.pageIndex) {
+      this.pageNumber = event.pageIndex;
+      //this.loadLikes();
+    } 
+  }
+
+  onScroll() {
+    console.log("on scroll");
+    
+    if (this.pagination) {
+      if (this.pageNumber < this.pagination?.totalPages - 1) {
+        this.pageNumber++;
+        this.loadLikes(false);
+
+      }
     }
+    
+    //this.appendData();
+   }
+
+   ngOnDestroy(): void {
+    console.log("destroy member list");
+    this.pageNumber = 0;
+    
   }
 
 }

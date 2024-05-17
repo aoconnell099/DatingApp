@@ -21,7 +21,7 @@ import { ConcertService } from 'src/app/_services/concert.service';
 export class ConcertListComponent implements OnInit, OnDestroy {
   //@ViewChild('paginator') paginator!: MatPaginator;
   @Output() load: EventEmitter<any> = new EventEmitter();
-  @Input() concerts: Concert[] = [];
+  @Input() concerts?: Concert[];
   @Input() pagination?: Pagination;
   searchResult: Concert[] = [];
   concertToAdd?: Concert;
@@ -30,6 +30,7 @@ export class ConcertListComponent implements OnInit, OnDestroy {
   dataSource?: MatTableDataSource<any>;
 
   isLoading=false;
+  cont: any;
 
   // search = "";
 
@@ -51,6 +52,7 @@ export class ConcertListComponent implements OnInit, OnDestroy {
   constructor(private concertService: ConcertService, private breakpointObserver: BreakpointObserver) {
     this.concertParams = this.concertService.getConcertParams();
     this.ticketMasterParams = this.concertService.getTicketMasterParams();
+    this.cont = document.getElementById('sidenavContent');
    }
 
   ngOnInit(): void {
@@ -127,12 +129,17 @@ export class ConcertListComponent implements OnInit, OnDestroy {
       this.concertService.getConcertsForUser(this.concertParams).subscribe({
         next: response => {
           if (response.result && response.pagination) { 
-            this.concerts = response.result; //[...this.concerts, ...response.result];
+            console.log("loadConcerts");
+            console.log("concert params \n", this.concertParams);
+            console.log("response \n", response.result);
+            console.log("this.concerts \n", this.concerts);
+            this.concerts = [...this.concerts!, ...response.result];
+            console.log("this.concerts \n", this.concerts);
             this.pagination = response.pagination;
-            console.log(this.concerts);
+            console.log(this.pagination);
           }  
         },
-        //complete: () => this.toggleLoading()
+        complete: () => this.toggleLoading()
       })
     } 
     
@@ -170,12 +177,17 @@ export class ConcertListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onScroll= ()=>{
-    if (this.concertParams) {
-      this.concertParams.pageNumber++;
-      this.concertService.setConcertParams(this.concertParams);
-      this.loadConcerts();
+  onScroll() {
+    console.log("on scroll");
+    
+    if (this.concertParams && this.pagination) {
+      if (this.concertParams?.pageNumber < this.pagination?.totalPages - 1) {
+        console.log(this.concertParams);
+        this.concertParams.pageNumber++;
+        this.concertService.setConcertParams(this.concertParams);
+        this.loadConcerts();
 
+      }
     }
     
     //this.appendData();
@@ -183,6 +195,10 @@ export class ConcertListComponent implements OnInit, OnDestroy {
   
   ngOnDestroy(): void {
     console.log("destroy concert list");
+    if (this.concertParams) {
+      this.concertParams.pageNumber = 0;
+    }
+    
   }
 
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
@@ -25,7 +25,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
   templateUrl: './ionic-member-list.component.html',
   styleUrls: ['./ionic-member-list.component.scss'],
 })
-export class IonicMemberListComponent implements OnInit, AfterViewInit {
+export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     this.windowWidth = event.target.innerWidth;
@@ -63,6 +63,9 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
   distance?: number;
 
   userLoc?: any;
+
+  isLoading=false;
+  cont: any;
   
 
 
@@ -77,6 +80,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
       private gestureCtrl: GestureController, private animationCtrl: AnimationController,
       private toastr: ToastrService) { 
     this.userParams = this.memberService.getUserParams();
+    this.cont = document.getElementById('sidenavContent');
+
     
   }
 
@@ -112,7 +117,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
   ngAfterViewChecked(): void {
     this.cardElRefs.forEach((memberCard: any, index: number) => {
       memberCard.nativeElement.addEventListener("transitionend", () => {
-        
+        console.log("TEST");
       });      
       let gesture = this.gestureCtrl.create({
         el: memberCard.nativeElement,
@@ -145,7 +150,18 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
             }
             memberCard.nativeElement.ontransitionend = () => {
               console.log("transitionEnd");
+              
+              console.log(document.getElementById("cardCont")?.children.length);
+              // if (document.getElementById("cardCont")?.children.length === 2) {
+              //   this.onScroll();
+              // }
               memberCard.nativeElement.remove();
+              console.log(document.getElementById("cardCont")?.children.length);
+
+              if (document.getElementById("cardCont")?.children.length === 0) {
+                this.onScroll();
+              }
+              
             } 
             //memberCard.nativeElement.remove();
           } else if (detail.deltaX < -this.windowWidth / 2.5) {
@@ -156,7 +172,17 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
             //emit event or like the user
             memberCard.nativeElement.ontransitionend = () => {
               console.log("transitionEnd");
+              
+              //console.log(document.getElementById("cardCont")?.children.length);
+              // if (document.getElementById("cardCont")?.children.length === 2) {
+              //   this.onScroll();
+              // }
               memberCard.nativeElement.remove();
+              console.log(document.getElementById("cardCont")?.children.length);
+              if (document.getElementById("cardCont")?.children.length === 0) {
+                  this.onScroll();
+                }
+              
             } 
           } else {
             memberCard.nativeElement.style.transform = '';
@@ -166,6 +192,11 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
           console.log(this.selectedMember);
           // this.likeCont.nativeElement.style.transform = 'scale(1)';
           // this.dislikeCont.nativeElement.style.transform = 'scale(1)';
+          // console.log(document.getElementById("cardCont")?.children.length);
+          // if (document.getElementById("cardCont")?.children.length === 0) {
+          //   this.onScroll();
+          // }
+          console.log(this.matches);
         }
         
       });
@@ -219,8 +250,11 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  toggleLoading = ()=>this.isLoading=!this.isLoading;
+
   loadMembers() {
     if (this.userParams) {
+      this.toggleLoading();
       this.userParams.concertFilter = this.concertFilter;
       console.log('load');
       console.log(this.userParams);
@@ -237,7 +271,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
             console.log(this.matches);
             this.pagination = response.pagination;
           }
-        }
+        },
+        complete: () => this.toggleLoading()
       }) 
     }
   }
@@ -272,6 +307,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
 
   loadMatches() {
     if (this.userParams) {
+      this.toggleLoading();
       console.log('before concert filter');
       console.log(this.userParams);
       //this.userParams.concertFilter = this.concertFilter;
@@ -284,10 +320,17 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
       this.memberService.getMatches(this.userParams).subscribe({
         next: response => {
           if (response.result && response.pagination) {
+            console.log("this.matches\n", this.matches);
            this.matches = response.result;
+           console.log("this.matches\n", this.matches);
            this.pagination = response.pagination;
           }
-        }
+        },
+        complete: () => 
+          {
+            this.toggleLoading();
+            console.log("complete\n", this.matches);
+          }
       })
     }
     
@@ -309,6 +352,23 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onScroll() {
+    console.log("on scroll");
+    console.log("userParams\n", this.userParams);
+    console.log("pagination\n", this.pagination);
+    if (this.userParams && this.pagination) {
+      if (this.userParams?.pageNumber < this.pagination?.totalPages - 1) {
+        console.log(this.userParams);
+        this.userParams.pageNumber++;
+        this.memberService.setUserParams(this.userParams);
+        this.loadMatches();
+
+      }
+    }
+    
+    //this.appendData();
+   }
+
   toggleSelected(value: string) {
     this.selected = this.selected != value ? value : this.selected;
     console.log(this.selected);
@@ -322,6 +382,14 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit {
     console.log(event.currentTarget.getAttribute('value'));
     if (this.userParams != null) {
       this.userParams.orderBy = event.source._value != null ? event.source._value[0] : '';
+    }
+    
+  }
+
+  ngOnDestroy(): void {
+    console.log("destroy match list");
+    if (this.userParams) {
+      this.userParams.pageNumber = 0;
     }
     
   }

@@ -155,7 +155,7 @@
             <img src="../../../assets/svg/dislike-2.svg" id="dislikeImg" alt="Dislike">
         </div>
     </div>
-    <div class="card-container">
+    <div id="cardCont" class="card-container">
         <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
             #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match">
         </app-ionic-member-card>
@@ -192,7 +192,7 @@
     </div>
 </mat-grid-list> -->
 
-<div *ngIf="pagination" class="d-flex justify-content-center" style="position: relative;" 
+<!-- <div *ngIf="pagination" class="d-flex justify-content-center" style="position: relative;" 
     [ngClass]="{
         'mobile-pagination-pad-portrait': currentBreakpoint === Breakpoints.XSmall || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.XLarge,
         'mobile-pagination-pad-landscape': mobileBreakpoint === landscapeBreakpoint    
@@ -210,4 +210,4 @@
                        [pageIndex]="pagination.currentPage"
                        aria-label="Select page">
         </mat-paginator>
-</div>
+</div> -->
