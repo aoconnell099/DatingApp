@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostListener, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, DoCheck, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
@@ -19,13 +19,14 @@ import { Element } from '@angular/compiler';
 import { ToastrService } from 'ngx-toastr';
 import {MatExpansionModule} from '@angular/material/expansion';
 //SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-ionic-member-list',
   templateUrl: './ionic-member-list.component.html',
   styleUrls: ['./ionic-member-list.component.scss'],
 })
-export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChanges, DoCheck, OnDestroy {
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     this.windowWidth = event.target.innerWidth;
@@ -40,6 +41,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
   
   members: Member[] = [];
   matches: any = [];
+  remainingMatches: any = [];
+  remainingCards: number = 0;
   ages: number[] = [];
   selectedMember?: Member;
   pagination?: any;
@@ -66,6 +69,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
 
   isLoading=false;
   cont: any;
+  cardContainer: any;
   
 
 
@@ -78,10 +82,10 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver,
       private gestureCtrl: GestureController, private animationCtrl: AnimationController,
-      private toastr: ToastrService) { 
+      private toastr: ToastrService, private ref: ChangeDetectorRef) { 
     this.userParams = this.memberService.getUserParams();
     this.cont = document.getElementById('sidenavContent');
-
+    
     
   }
 
@@ -89,7 +93,9 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
     this.breakpoint$.subscribe(() =>
       this.breakpointChanged() 
     );
-    
+    console.log(this.cardCont);
+    this.cardContainer = document.getElementById('cardCont');
+    console.log(this.cardContainer);
     for (let i=18; i<100; i++) {
       this.ages.push(i);
     }
@@ -107,18 +113,32 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
     this.loadMatches();    
   }
 
+  ngOnChanges(): void {
+    console.log("onChanges");
+  }
+  ngDoCheck(): void {
+    console.log("doCheck");
+    // if (this.remainingCards === 0) {
+    //   this.onScroll();
+    // }
+  }
+
   ngAfterViewInit(): void {
     console.log("afterViewInit");
-    this.cardElRefs.forEach((memberCard: any) => {
-      console.log(memberCard);
-    })
+  }
+  ngAfterContentInit(): void {
+    console.log("afterContentInit");
+  }
+  ngAfterContentChecked(): void {
+    console.log("afterContentChecked");
   }
 
   ngAfterViewChecked(): void {
+    console.log("afterviewchecked");
     this.cardElRefs.forEach((memberCard: any, index: number) => {
-      memberCard.nativeElement.addEventListener("transitionend", () => {
-        console.log("TEST");
-      });      
+      // memberCard.nativeElement.addEventListener("transitionend", () => {
+      //   //console.log("TEST");
+      // });      
       let gesture = this.gestureCtrl.create({
         el: memberCard.nativeElement,
         threshold: 0,
@@ -147,21 +167,41 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
             
             if (this.selectedMember) {
               this.addLike(this.selectedMember);
+              
             }
             memberCard.nativeElement.ontransitionend = () => {
               console.log("transitionEnd");
               
-              console.log(document.getElementById("cardCont")?.children.length);
+              //console.log(document.getElementById("cardCont")?.children.length);
               // if (document.getElementById("cardCont")?.children.length === 2) {
               //   this.onScroll();
               // }
               memberCard.nativeElement.remove();
-              console.log(document.getElementById("cardCont")?.children.length);
+              //console.log(document.getElementById("cardCont")?.children.length);
 
-              if (document.getElementById("cardCont")?.children.length === 0) {
+              // if (document.getElementById("cardCont")?.children.length === 0) {
+              //   // this.onScroll();
+              //   if (this.userParams && this.pagination) {
+              //     if (this.userParams?.pageNumber < this.pagination?.totalPages - 1) {
+              //       console.log(this.userParams);
+              //       this.userParams.pageNumber++;
+              //       this.memberService.setUserParams(this.userParams);
+              //       this.loadMatches();
+            
+              //     }
+              //   }
+              // }
+              // this.remainingMatches.shift();
+              this.remainingCards--;
+              console.log(this.remainingCards);
+              if (this.remainingCards === 0) {
                 this.onScroll();
               }
-              
+              // else {
+              //   memberCard.nativeElement.remove();
+              // }
+              //this.ngDoCheck();
+              //this.ref.detectChanges();
             } 
             //memberCard.nativeElement.remove();
           } else if (detail.deltaX < -this.windowWidth / 2.5) {
@@ -178,11 +218,30 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
               //   this.onScroll();
               // }
               memberCard.nativeElement.remove();
-              console.log(document.getElementById("cardCont")?.children.length);
-              if (document.getElementById("cardCont")?.children.length === 0) {
-                  this.onScroll();
-                }
+              //console.log(document.getElementById("cardCont")?.children.length);
+              // if (document.getElementById("cardCont")?.children.length === 0) {
+              //     // this.onScroll();
+              //     if (this.userParams && this.pagination) {
+              //       if (this.userParams?.pageNumber < this.pagination?.totalPages - 1) {
+              //         console.log(this.userParams);
+              //         this.userParams.pageNumber++;
+              //         this.memberService.setUserParams(this.userParams);
+              //         this.loadMatches();
               
+              //       }
+              //     }
+              //   }
+              // this.remainingMatches.shift();
+              this.remainingCards--;
+              console.log(this.remainingCards);
+              if (this.remainingCards === 0) {
+                this.onScroll();
+              }
+              // else {
+              //   memberCard.nativeElement.remove();
+              // }
+              //this.ngDoCheck();
+              //this.ref.detectChanges();
             } 
           } else {
             memberCard.nativeElement.style.transform = '';
@@ -193,10 +252,12 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
           // this.likeCont.nativeElement.style.transform = 'scale(1)';
           // this.dislikeCont.nativeElement.style.transform = 'scale(1)';
           // console.log(document.getElementById("cardCont")?.children.length);
-          // if (document.getElementById("cardCont")?.children.length === 0) {
+          // if (document.getElementById("cardCont")?.children.length === 1) {
           //   this.onScroll();
           // }
           console.log(this.matches);
+          // this.ref.detectChanges();
+          // this.ngDoCheck();
         }
         
       });
@@ -302,7 +363,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
   addLike(member: Member) {
     this.memberService.addLike(member.username).subscribe({
       next: () => this.toastr.success('You have liked ' + member.knownAs)
-    })
+    });
   }
 
   loadMatches() {
@@ -316,30 +377,50 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnDestro
       // }
       console.log('afterconcert filter');
       console.log(this.userParams);
-      this.memberService.setUserParams(this.userParams);
+      //this.memberService.setUserParams(this.userParams);
       this.memberService.getMatches(this.userParams).subscribe({
         next: response => {
           if (response.result && response.pagination) {
-            console.log("this.matches\n", this.matches);
-           this.matches = response.result;
+          //   console.log("this.matches\n", this.matches);
+          //   if (this.matches) {
+          //     console.log("if this matches");
+          //     this.matches = response.result; //[...response.result, ...this.remainingMatches];
+          //   }
+          //  else {
+          //   console.log("else this matches");
+          //   this.matches = response.result;
+          //  }
            console.log("this.matches\n", this.matches);
+           this.matches = response.result;
            this.pagination = response.pagination;
+           this.remainingCards = this.matches.length;
+           console.log(this.remainingCards);
+           this.remainingMatches = this.matches;
+           
           }
         },
         complete: () => 
           {
-            this.toggleLoading();
-            console.log("complete\n", this.matches);
+            
+          //   console.log("complete\n", this.matches);
+          //   console.log(this.cardElRefs);
+          //  console.log(this.cardElRefs.length);
+           this.ref.detectChanges();
+           this.ngAfterViewChecked();
+           this.toggleLoading();
+            // this.ngDoCheck();
           }
       })
     }
     
   }
-
+  closeFilter() {
+    this.panelOpenState = false;
+  }
   resetFilters() {
     this.userParams = this.memberService.resetUserParams();
     this.selected = 'lastActive';
-    this.loadMembers();
+    this.loadMatches();
   }
 
   pageChanged(event: any) {

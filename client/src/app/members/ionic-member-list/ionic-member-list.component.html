@@ -4,7 +4,8 @@
 
 <div class="expansion-panel-container" *ngIf="userParams">
     <mat-expansion-panel (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
+                        (closed)="panelOpenState = false"
+                        [expanded]="panelOpenState === true">
         <mat-expansion-panel-header>
         <mat-panel-title>
             Filters
@@ -13,8 +14,8 @@
         <form #form="ngForm" class="d-flex mb-3 filter-form" style="flex-wrap:wrap;" (ngSubmit)="loadMatches()" autocomplete="off">
             <mat-form-field appearance="fill">
                 <mat-label>Age from: </mat-label>
-                <mat-select [(value)]="userParams.minAge">
-                    <mat-option *ngFor="let age of ages" [value]="age">
+                <mat-select class="filter-select" [(value)]="userParams.minAge">
+                    <mat-option class="filter-option" *ngFor="let age of ages" [value]="age">
                         {{age}}
                     </mat-option>
                 </mat-select>
@@ -95,8 +96,8 @@
                 </div>
             </div>
             <div class="apply-filters">
-                <button mat-raised-button color="accent" type="submit">Apply Filters</button>
-                <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1" type="submit">Reset Filters</button>
+                <button mat-raised-button color="accent" (click)="closeFilter()" type="submit">Apply Filters</button>
+                <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1">Reset Filters</button> <!-- removed type="submit" -->
             </div>
         </form>
     </mat-expansion-panel>
@@ -159,8 +160,15 @@
         <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
             #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match">
         </app-ionic-member-card>
+        
     </div>
-    <!-- </div> -->
+    <!-- <div *ngIf="cardContainer.children.length === 0"
+        infiniteScroll
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onScroll()" 
+        [infiniteScrollContainer]="cont">Please swipe up to load more matches</div> -->
+    
     <div #likeCont class="like-container">
         <div id="likeImgCont">
             <img src="../../../assets/svg/heart-1.svg" id="likeImg" alt="Heart">

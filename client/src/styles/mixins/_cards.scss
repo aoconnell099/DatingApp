@@ -103,7 +103,7 @@
     $contrast: map-get($theme, warn);
 
     .search-form-field > .mdc-text-field {
-        background-color: map-get(pal.$mat-light-green, primary-var, darker);
+        background-color: map-get(pal.$mat-light-green, primary-var, darker) !important;
         @include mat.elevation(4);
     }
 
