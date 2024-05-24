@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ContentChildren, DoCheck, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AfterViewInit, ApplicationRef, Component, ContentChildren, DoCheck, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { Member } from 'src/app/_models/member';
 //import { Pagination } from 'src/app/_models/paginations';
@@ -36,8 +36,11 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   @ViewChild('cardCont') cardCont!: ElementRef<any>;
   @ViewChild('dislikeCont') dislikeCont!: ElementRef<any>;
   @ViewChild('likeCont') likeCont!: ElementRef<any>;
+  @ViewChild('memberCard') memberCard!: IonicMemberCardComponent;
   @ViewChildren(IonicMemberCardComponent, { read: ElementRef }) cardElRefs!: QueryList<ElementRef>
   @ViewChildren(IonicMemberCardComponent) cardCompRefs!: QueryList<IonicMemberListComponent>
+
+  eventsSubject: Subject<void> = new Subject<void>();
   
   members: Member[] = [];
   matches: any = [];
@@ -69,7 +72,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
 
   isLoading=false;
   cont: any;
-  cardContainer: any;
+  cardContainer: any; 
+  shouldLike?:boolean;
   
 
 
@@ -82,7 +86,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
 
   constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver,
       private gestureCtrl: GestureController, private animationCtrl: AnimationController,
-      private toastr: ToastrService, private ref: ChangeDetectorRef) { 
+      private toastr: ToastrService, private ref: ChangeDetectorRef, private appRef: ApplicationRef) { 
     this.userParams = this.memberService.getUserParams();
     this.cont = document.getElementById('sidenavContent');
     
@@ -133,6 +137,10 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
     console.log("afterContentChecked");
   }
 
+  emitEventToChild() {
+    this.eventsSubject.next();
+  }
+
   ngAfterViewChecked(): void {
     console.log("afterviewchecked");
     this.cardElRefs.forEach((memberCard: any, index: number) => {
@@ -166,10 +174,23 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
             this.likeCont.nativeElement.style.opacity = 0; // This runs before the animation completes but looks good so leave for now.
             
             if (this.selectedMember) {
-              this.addLike(this.selectedMember);
-              
+              // setTimeout(()=>this.addLike(this.selectedMember!), 0);
+              //this.addLike(this.selectedMember);
+              //this.appRef.tick();
+              //document.getElementById("addLike")?.click();
+              console.log(this.memberCard);
+              //this.memberCard.addLike(this.selectedMember)  //addLike(this.selectedMember);
+              //this.shouldLike = true;
+              console.log(this.selectedMember.id);
+              console.log(document.querySelector("#addLike-"+this.selectedMember.id));
+              console.log(document.getElementById("#addLike-"+this.selectedMember.id));
+              //document.querySelector("#addLike")?.click();
+
+              let butt: HTMLElement = document.getElementById("addLike-"+this.selectedMember.id) as HTMLElement;
+              butt.click();
             }
             memberCard.nativeElement.ontransitionend = () => {
+              //this.shouldLike = false;
               console.log("transitionEnd");
               
               //console.log(document.getElementById("cardCont")?.children.length);
@@ -248,6 +269,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
             this.likeCont.nativeElement.style.opacity = 0;
             this.dislikeCont.nativeElement.style.opacity = 0;
           }
+          console.log(memberCard);
           console.log(this.selectedMember);
           // this.likeCont.nativeElement.style.transform = 'scale(1)';
           // this.dislikeCont.nativeElement.style.transform = 'scale(1)';
@@ -362,8 +384,18 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
 
   addLike(member: Member) {
     this.memberService.addLike(member.username).subscribe({
-      next: () => this.toastr.success('You have liked ' + member.knownAs)
+      next: () => {
+        // this.appRef.tick(); 
+        // this.ref.markForCheck();
+        this.toastr.success('You have liked ' + member.knownAs)
+      },
+      complete: () => {
+        // this.appRef.tick(); 
+        // this.ref.markForCheck();
+      }
     });
+    //console.log(this.appRef.components);
+    //this.appRef.tick();
   }
 
   loadMatches() {
@@ -397,6 +429,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
            console.log(this.remainingCards);
            this.remainingMatches = this.matches;
            
+           
           }
         },
         complete: () => 
@@ -408,6 +441,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
            this.ref.detectChanges();
            this.ngAfterViewChecked();
            this.toggleLoading();
+           console.log(document.getElementById("cardCont")?.lastChild?.previousSibling?.childNodes);
+           console.log(document.querySelector("#addLike"));
             // this.ngDoCheck();
           }
       })
