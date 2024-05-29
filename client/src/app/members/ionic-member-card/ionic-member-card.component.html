@@ -16,6 +16,9 @@
                     <button mat-fab routerLink='/members/{{member.username}}' class="btn btn-primary">
                         <i class="fa fa-user"></i>
                     </button>
+                    <button mat-fab (click)="addDislike(member)" class="btn btn-primary" id="addDislike-{{member.id}}">
+                        <i class="fa"></i>
+                    </button>
                     <button mat-fab (click)="addLike(member)" class="btn btn-primary" id="addLike-{{member.id}}">
                         <i class="fa fa-heart"></i>
                     </button>

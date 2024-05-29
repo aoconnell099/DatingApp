@@ -154,6 +154,22 @@ namespace API.Controllers
 
             return Ok(users);
         }
+        
+        // [HttpGet("checkMatch")]
+        // public async Task<ActionResult<MemberDto>> CheckMatch([FromQuery]UserParams userParams, int userLikeId)
+        // {
+        //     var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
+        //     userParams.CurrentUsername = User.GetUsername();
+
+        //     if (string.IsNullOrEmpty(userParams.Gender))
+        //         userParams.Gender = gender == "male" ? "female" : "male";
+
+        //     var users = await _unitOfWork.UserRepository.GetMatchesAsync(userParams);
+
+        //     Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+
+        //     return Ok(users);
+        // }
 
     }
 }

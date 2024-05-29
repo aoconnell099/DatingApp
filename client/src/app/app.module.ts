@@ -44,6 +44,7 @@ import { ConcertDialogComponent } from './modals/concert-dialog/concert-dialog.c
 import { IonicMemberListComponent } from './members/ionic-member-list/ionic-member-list.component';
 import { IonicModule } from '@ionic/angular';
 import { IonicMemberCardComponent } from './members/ionic-member-card/ionic-member-card.component';
+import { MatchDialogComponent } from './modals/match-dialog/match-dialog.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { IonicMemberCardComponent } from './members/ionic-member-card/ionic-memb
     ConcertDialogComponent,
     IonicMemberListComponent,
     IonicMemberCardComponent,
+    MatchDialogComponent,
   ],
   imports: [
     BrowserModule,

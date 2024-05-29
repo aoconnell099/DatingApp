@@ -20,6 +20,7 @@ export class IonicMemberCardComponent implements OnInit, OnDestroy {
   @Output() like: EventEmitter<Member> = new EventEmitter();
   @Input() shouldLike?: boolean;
   private eventsSubscription?: Subscription;
+  @Output() openMatch: EventEmitter<Member> = new EventEmitter();
 
   
 
@@ -65,8 +66,8 @@ export class IonicMemberCardComponent implements OnInit, OnDestroy {
     // Extract changes to the input property by its name
     let change: SimpleChange = changes['shouldLike']; 
 
-    console.log("onChanges");
-    console.log(change);
+    //console.log("onChanges");
+    //console.log(change);
     // Whenever the data in the parent changes, this method gets triggered
     // You can act on the changes here. You will have both the previous
     // value and the  current value here.
@@ -101,9 +102,21 @@ console.log(detail);console.log(this.p);
   //   }
   // }
   addLike(member: Member) {
-    console.log("add like");
+    console.log("ion member card add like");
     this.memberService.addLike(member.username).subscribe({
-      next: () => this.toastr.success('You have liked ' + member.knownAs)
+      next: (result) =>  { 
+        this.toastr.success('You have liked ' + member.knownAs);
+        console.log(result);
+        if (result == true) {
+          this.openMatch.emit(member);
+        }
+       }
+    })
+  }
+  addDislike(member: Member) {
+    console.log("ion member card add dislike");
+    this.memberService.addDislike(member.username).subscribe({
+      next: () => console.log("disliked " + member.knownAs)
     })
   }
 

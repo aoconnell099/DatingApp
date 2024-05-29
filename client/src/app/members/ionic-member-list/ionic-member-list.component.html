@@ -158,7 +158,8 @@
     </div>
     <div id="cardCont" class="card-container">
         <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
-            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike">
+            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike"
+            (openMatch)="openMatchDialog($event, match)">
         </app-ionic-member-card>
         
     </div>

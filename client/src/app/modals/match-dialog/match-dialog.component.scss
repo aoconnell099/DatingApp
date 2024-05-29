@@ -1,0 +1,78 @@
+.card-text {
+    margin-bottom: 0.3em;
+}
+.card-icon-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.card-icon-container a {
+    // margin: 0.2em;
+    margin: 0 0.5em 0 0.5em;
+}
+.icons-row {
+    display: flex;
+    justify-content: center;
+}
+.icons-row a {
+    // margin: 0.2em;
+    margin: 0 0.5em 0 0.5em;
+}
+#icons-top-row {
+    margin-bottom: -0.3em;
+}
+.card-img {
+    object-fit: fill;
+}
+
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    // border-top-left-radius: 10%;
+    // border-top-right-radius: 10%;
+    border-radius: 10%;
+}
+.concert-icons-for-animate {
+    position: absolute;
+    bottom: -60%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 1;
+}
+.concert-icons-no-animate {
+    position: absolute;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 1;
+}
+
+.card-icon-container {
+    padding-bottom: 0.1em !important;
+}
+
+.user-card:hover .concert-icons-for-animate {
+    bottom: 0;
+    opacity: 1;
+}
+
+.animate {
+    transition: all 0.3s ease-in-out;
+}
+
+.width-125 {
+    width: 125%;
+}
+.width-135 {
+    width: 135%;
+}
+.width-145 {
+    width: 145%;
+}
+.width-165 {
+    width: 165%;
+}

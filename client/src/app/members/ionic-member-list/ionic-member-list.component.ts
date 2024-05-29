@@ -20,6 +20,8 @@ import { ToastrService } from 'ngx-toastr';
 import {MatExpansionModule} from '@angular/material/expansion';
 //SwiperCore.use([Autoplay, Keyboard, Pagination, Scrollbar, Zoom, IonicSlides]);
 import { ChangeDetectorRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatchDialogComponent } from 'src/app/modals/match-dialog/match-dialog.component';
 
 @Component({
   selector: 'app-ionic-member-list',
@@ -86,7 +88,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
 
   constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver,
       private gestureCtrl: GestureController, private animationCtrl: AnimationController,
-      private toastr: ToastrService, private ref: ChangeDetectorRef, private appRef: ApplicationRef) { 
+      private toastr: ToastrService, private ref: ChangeDetectorRef, private appRef: ApplicationRef,
+    public matchDialog: MatDialog) { 
     this.userParams = this.memberService.getUserParams();
     this.cont = document.getElementById('sidenavContent');
     
@@ -118,23 +121,23 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngOnChanges(): void {
-    console.log("onChanges");
+    //console.log("onChanges");
   }
   ngDoCheck(): void {
-    console.log("doCheck");
+    //console.log("doCheck");
     // if (this.remainingCards === 0) {
     //   this.onScroll();
     // }
   }
 
   ngAfterViewInit(): void {
-    console.log("afterViewInit");
+    //console.log("afterViewInit");
   }
   ngAfterContentInit(): void {
-    console.log("afterContentInit");
+    //console.log("afterContentInit");
   }
   ngAfterContentChecked(): void {
-    console.log("afterContentChecked");
+   // console.log("afterContentChecked");
   }
 
   emitEventToChild() {
@@ -142,7 +145,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngAfterViewChecked(): void {
-    console.log("afterviewchecked");
+    //console.log("afterviewchecked");
     this.cardElRefs.forEach((memberCard: any, index: number) => {
       // memberCard.nativeElement.addEventListener("transitionend", () => {
       //   //console.log("TEST");
@@ -230,6 +233,22 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
             this.animateLikeDislike(this.dislikeCont);
             //this.dislikeCont.nativeElement.style.transform = 'scale(1.2)';
             this.dislikeCont.nativeElement.style.opacity = 0;
+            if (this.selectedMember) {
+              // setTimeout(()=>this.addLike(this.selectedMember!), 0);
+              //this.addLike(this.selectedMember);
+              //this.appRef.tick();
+              //document.getElementById("addLike")?.click();
+              console.log(this.memberCard);
+              //this.memberCard.addLike(this.selectedMember)  //addLike(this.selectedMember);
+              //this.shouldLike = true;
+              console.log(this.selectedMember.id);
+              console.log(document.querySelector("addDislike-"+this.selectedMember.id));
+              console.log(document.getElementById("addDislike-"+this.selectedMember.id));
+              //document.querySelector("#addLike")?.click();
+
+              let butt: HTMLElement = document.getElementById("addDislike-"+this.selectedMember.id) as HTMLElement;
+              butt.click();
+            }
             //emit event or like the user
             memberCard.nativeElement.ontransitionend = () => {
               console.log("transitionEnd");
@@ -383,8 +402,10 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   }
 
   addLike(member: Member) {
+    console.log("ion member list add like");
     this.memberService.addLike(member.username).subscribe({
       next: () => {
+        
         // this.appRef.tick(); 
         // this.ref.markForCheck();
         this.toastr.success('You have liked ' + member.knownAs)
@@ -441,8 +462,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
            this.ref.detectChanges();
            this.ngAfterViewChecked();
            this.toggleLoading();
-           console.log(document.getElementById("cardCont")?.lastChild?.previousSibling?.childNodes);
-           console.log(document.querySelector("#addLike"));
+          // console.log(document.getElementById("cardCont")?.lastChild?.previousSibling?.childNodes);
+           //console.log(document.querySelector("addLike"));
             // this.ngDoCheck();
           }
       })
@@ -501,6 +522,33 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
     }
     
   }
+
+  openMatchDialog($event: MouseEvent, member: Member): void {
+    console.log($event);
+    if ($event.target) {
+      console.log($event.target);
+      // const eventTarget: HTMLElement = $event?.target as HTMLButtonElement;
+      // if (eventTarget.parentElement?.id === "add-concert-button") {
+      //   console.log("button with id string check");
+      //   return;
+      // }
+    }
+
+    const dialogRef = this.matchDialog.open(MatchDialogComponent, {
+      width: '60vw',
+      height: 'auto',
+      // scrollStrategy: this.scrollStrategy,
+      panelClass: 'concert-dialog',
+      data: member
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   // console.log(`Dialog result: ${result}`);
+    //   // console.log(result);
+    // });
+  }
+
+
 
   ngOnDestroy(): void {
     console.log("destroy match list");

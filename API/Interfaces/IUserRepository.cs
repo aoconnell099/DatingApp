@@ -20,5 +20,6 @@ namespace API.Interfaces
         Task<string> GetUserGender(string username);
         Task<UserConcert> GetUserConcertById(int userId, int ConcertId);
         Task<PagedList<MemberDto>> GetMatchesAsync(UserParams userParams);
+        // Task<MemberDto> CheckMatch(UserParams userParams, int likedUserId);
     }
 }

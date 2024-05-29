@@ -109,6 +109,10 @@ export class MembersService {
     return this.http.post(this.baseUrl + 'likes/' + username, {});
   }
 
+  addDislike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/dislike/' + username, {});
+  }
+
   getLikes(predicate: string, pageNumber: number, pageSize: number) {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('predicate', predicate);

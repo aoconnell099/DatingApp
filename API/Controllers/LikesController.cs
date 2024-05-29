@@ -45,9 +45,41 @@ namespace API.Controllers
 
             sourceUser.LikedUsers.Add(userLike);
 
-            if (await _unitOfWork.Complete()) return Ok();
+            // Check if the user has been liked by the user they just liked and return the userLike if true to trigger the match modal
+            var checkMatch = await _unitOfWork.LikesRepository.GetUserLike(likedUser.Id, sourceUserId) == null ? false : true;
+
+            if (await _unitOfWork.Complete()) return Ok(checkMatch);
 
             return BadRequest("Failed to like user");
+
+        }
+        
+        [HttpPost("dislike/{username}")]
+        public async Task<ActionResult> AddDislike(string username)
+        {
+            var sourceUserId = User.GetUserId();
+            var dislikedUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var sourceUser = await _unitOfWork.LikesRepository.GetUserWithDislikes(sourceUserId);
+
+            if (dislikedUser == null) return NotFound();
+
+            if (sourceUser.UserName == username) return BadRequest("You cannot dislike yourself");
+
+            var userDislike = await _unitOfWork.LikesRepository.GetUserDislike(sourceUserId, dislikedUser.Id);
+
+            if (userDislike != null) return BadRequest("You already dislike this user"); // Can add a toggle here to remove the like if pressed again. Implement later
+
+            userDislike = new Entities.UserDislike
+            {
+                SourceUserId = sourceUserId,
+                DislikedUserId = dislikedUser.Id
+            };
+
+            sourceUser.DislikedUsers.Add(userDislike);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Failed to dislike user");
 
         }
 
@@ -56,6 +88,18 @@ namespace API.Controllers
         {
             likesParams.UserId = User.GetUserId();
             var users = await _unitOfWork.LikesRepository.GetUserLikes(likesParams);
+
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, 
+                users.TotalCount, users.TotalPages);
+
+            return Ok(users);
+        }
+        
+        [HttpGet("dislikes")]
+        public async Task<ActionResult<IEnumerable<DislikeDto>>> GetUserDislikes([FromQuery]DislikesParams dislikesParams)
+        {
+            dislikesParams.UserId = User.GetUserId();
+            var users = await _unitOfWork.LikesRepository.GetUserDislikes(dislikesParams);
 
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, 
                 users.TotalCount, users.TotalPages);
