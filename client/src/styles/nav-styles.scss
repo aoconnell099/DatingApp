@@ -14,11 +14,11 @@
   //   @include mat.elevation-transition();
   //   @include mat.elevation(1);
   // }
-  // .nav-button {
-  //   box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%) !important;
-  //     @include mat.elevation(6);
-  //     //color: black !important;
-  // }
+  .nav-button {
+    box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%), 0px 6px 10px 0px rgb(0 0 0 / 14%), 0px 1px 18px 0px rgb(0 0 0 / 12%) !important;
+      @include mat.elevation(6);
+      //color: black !important;
+  }
   .nav-row {
     display: flex;
     flex: auto;
@@ -131,7 +131,7 @@
     // display: block;
     position: static !important;
     height: 92vh !important;
-    justify-content: center;
+    justify-content: space-between;
   }
   // .original {
   //   transition: background 300ms ease-in 200ms;

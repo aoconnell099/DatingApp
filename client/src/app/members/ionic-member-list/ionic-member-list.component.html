@@ -11,73 +11,78 @@
             Filters
         </mat-panel-title>
         </mat-expansion-panel-header>
-        <form #form="ngForm" class="d-flex mb-3 filter-form" style="flex-wrap:wrap;" (ngSubmit)="loadMatches()" autocomplete="off">
-            <mat-form-field appearance="fill">
-                <mat-label>Age from: </mat-label>
-                <mat-select class="filter-select" [(value)]="userParams.minAge">
-                    <mat-option class="filter-option" *ngFor="let age of ages" [value]="age">
-                        {{age}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>Age to: </mat-label>
-                <mat-select [(value)]="userParams.maxAge">
-                    <mat-option *ngFor="let age of ages" [value]="age">
-                        {{age}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <mat-form-field appearance="fill">
-                <mat-label>Show: </mat-label>
-                <mat-select name="gender" [(ngModel)]="userParams.gender" >
-                    <mat-option *ngFor="let gender of genderList" [value]="gender.value"> 
-                        {{gender.display}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-
-            <mat-form-field appearance="fill">
-                <mat-label>Filter by concert?: </mat-label>
-                <mat-select [(value)]="userParams.concertFilter" >
-                    <mat-option [value]="true"> 
-                        Yes
-                    </mat-option>
-                    <mat-option [value]="false"> 
-                        No
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Radius: </mat-label>
-                <mat-select [(value)]="userParams.distance" >
-                    <mat-option [value]="5"> 
-                        5
-                    </mat-option>
-                    <mat-option [value]="10"> 
-                        10
-                    </mat-option>
-                    <mat-option [value]="15"> 
-                        15
-                    </mat-option>
-                    <mat-option [value]="25"> 
-                        25
-                    </mat-option>
-                    <mat-option [value]="50"> 
-                        50
-                    </mat-option>
-                    <mat-option [value]="100"> 
-                        Anywhere
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-    
-            <div class="col time-filter-buttons">
-                <div class="btn-group float-end">
+        <form #form="ngForm" class="d-flex mb-3 filter-form" (ngSubmit)="loadMatches()" autocomplete="off">
+            <div class="dropdown-container">
+                <div class="age-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Age from: </mat-label>
+                        <mat-select class="filter-select" [(value)]="userParams.minAge">
+                            <mat-option class="filter-option" *ngFor="let age of ages" [value]="age">
+                                {{age}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="fill">
+                        <mat-label>Age to: </mat-label>
+                        <mat-select [(value)]="userParams.maxAge">
+                            <mat-option *ngFor="let age of ages" [value]="age">
+                                {{age}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="gender-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Show: </mat-label>
+                        <mat-select name="gender" [(ngModel)]="userParams.gender" >
+                            <mat-option *ngFor="let gender of genderList" [value]="gender.value"> 
+                                {{gender.display}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="concert-filter-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Filter by concert?: </mat-label>
+                        <mat-select [(value)]="userParams.concertFilter" >
+                            <mat-option [value]="true"> 
+                                Yes
+                            </mat-option>
+                            <mat-option [value]="false"> 
+                                No
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="radius-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Radius: </mat-label>
+                        <mat-select [(value)]="userParams.distance" >
+                            <mat-option [value]="5"> 
+                                5
+                            </mat-option>
+                            <mat-option [value]="10"> 
+                                10
+                            </mat-option>
+                            <mat-option [value]="15"> 
+                                15
+                            </mat-option>
+                            <mat-option [value]="25"> 
+                                25
+                            </mat-option>
+                            <mat-option [value]="50"> 
+                                50
+                            </mat-option>
+                            <mat-option [value]="100"> 
+                                Anywhere
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="time-filter-buttons">
+                <!-- <div class="btn-group float-end"> -->
                     <button mat-flat-button color="accent"
                             type="button"
                             [class.selected]="selected === 'lastActive'"
@@ -93,12 +98,22 @@
                         (click)="toggleSelected('created');"
                         
                         >Newest Members</button>
-                </div>
+                <!-- </div> -->
             </div>
             <div class="apply-filters">
                 <button mat-raised-button color="accent" (click)="closeFilter()" type="submit">Apply Filters</button>
                 <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1">Reset Filters</button> <!-- removed type="submit" -->
             </div>
+            
+    
+            
+            
+
+            
+            
+            
+    
+            
         </form>
     </mat-expansion-panel>
 </div>
@@ -150,7 +165,11 @@
     </form>
 </div> -->
 
-<div class="swiper-container">
+<div class="swiper-container" [ngClass]="{
+    'swiper-cont-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
+    'swiper-cont-large': currentBreakpoint === Breakpoints.Medium,
+    'swiper-cont-xLarge': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large 
+    }" >
     <div #dislikeCont class="dislike-container">
         <div id="dislikeImgCont">
             <img src="../../../assets/svg/dislike-2.svg" id="dislikeImg" alt="Dislike">
@@ -159,7 +178,10 @@
     <div id="cardCont" class="card-container">
         <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
             #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike"
-            (openMatch)="openMatchDialog($event, match)">
+            (openMatch)="openMatchDialog(match)" [ngClass]="{
+                'user-card-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
+                'user-card-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+                }">
         </app-ionic-member-card>
         
     </div>
@@ -175,6 +197,59 @@
             <img src="../../../assets/svg/heart-1.svg" id="likeImg" alt="Heart">
         </div>
     </div>
+</div>
+
+<div *ngIf="isMatchDialogVisible" [@visibleHidden]="isMatchDialogVisible ? 'visible' : 'hidden'" class="match-dialog-cont">
+    <div class="background-div"></div>
+
+    <div class="match-dialog">
+        <div class="match-dialog-heading">
+            <h1>It's a Match!</h1>
+            <h6>You and {{selectedMember?.knownAs}} have liked each other!</h6>
+        </div>
+        <div *ngIf="(accountService.currentUser$ | async) as user" class="match-dialog-avatars">
+            <img  mat-card-image class="match-avatar" 
+                    [ngClass]="{
+                        'match-avatar-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
+                         'match-avatar-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+                        }" 
+                    draggable="false" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.knownAs}}">
+            <div class="match-heart-cont">
+                <img src="../../../assets/svg/heart-1.svg" id="likeImg" alt="Heart">
+            </div>
+            <img mat-card-image class="match-avatar"
+                [ngClass]="{
+                    'match-avatar-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
+                    'match-avatar-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+                    }" 
+                draggable="false" src="{{selectedMember?.photoUrl || './assets/user.png'}}" alt="{{selectedMember?.knownAs}}">
+        </div>
+        <div class="match-dialog-buttons">
+            <button mat-raised-button routerLink='/members/{{selectedMember?.username}}' color="primary" type="button">View Profile</button>
+            <button mat-raised-button routerLink='/members/{{selectedMember?.username}}' [queryParams]='{tab: 3}' color="primary" type="button">Send Message</button>
+            <button mat-raised-button color="accent" (click)="closeMatchDialog()" type="button">Close</button>
+        </div>
+    </div>
+    
+
+    
+    
+    
+    <!-- <mat-card style="overflow: hidden;" class="match-card">
+        <div>
+            <mat-card-content class="card-content">
+                <div class="card-img-wrapper">
+                    <p>match dialog test</p>
+                </div>
+                <button mat-raised-button color="accent" (click)="closeMatchDialog()" type="button">Close</button>
+            </mat-card-content>
+        </div>
+        <div class="card-footer light-theme">
+            <-- <mat-card-footer style="padding: 10px; display: flex; flex-direction: column; flex-shrink: 0;">
+                
+            </mat-card-footer> ->
+        </div>
+    </mat-card> -->
 </div>
 
 <!-- <div class="card-container">

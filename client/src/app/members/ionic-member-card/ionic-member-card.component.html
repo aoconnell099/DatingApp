@@ -1,6 +1,59 @@
 <mat-card class="user-card" [ngClass]="{
     'user-card-hover': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
 }" *ngIf="member">
+    <!-- <div> -->
+
+        <mat-card-content class="card-content">
+            <div class="card-img-wrapper">
+                <img mat-card-image class="card-img" [ngClass]="{
+                    'card-img-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
+                    'card-img-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+                    }" draggable="false" src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}">
+            
+                
+            </div>
+            <mat-action-list class="card-icon-container animate" role="list"
+                    >
+                <!-- [ngClass]="{
+                    'member-icons-for-animate': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large,
+                    'member-icons-no-animate' : currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall
+                }" -->
+                    <button mat-fab routerLink='/members/{{member.username}}' class="btn btn-primary">
+                        <i class="fa fa-user"></i>
+                    </button>
+                    <button mat-fab (click)="addDislike(member)" class="btn btn-primary" id="addDislike-{{member.id}}">
+                        <i class="fa"></i>
+                    </button>
+                    <button mat-fab (click)="addLike(member)" class="btn btn-primary" id="addLike-{{member.id}}">
+                        <i class="fa fa-heart"></i>
+                    </button>
+                    <button 
+                        mat-fab 
+                        routerLink='/members/{{member.username}}' 
+                        [queryParams]='{tab: 3}'
+                        class="btn btn-primary">
+                    <i class="fa fa-envelope"></i></button>
+                </mat-action-list>
+                <div class="card-footer light-theme">
+                    <mat-card-footer style="padding: 10px;">
+                        <h6 class="text-center mb-1">
+                            <span class="user-icon" [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
+                                <i class="fa fa-user me-2"></i>
+                            </span>
+                            <span class="card-title">
+                            {{member.knownAs}}, {{member.age}}
+                            </span>
+                        </h6>
+                        <p class="card-text city-text text-center">{{member.city}}</p>
+                    </mat-card-footer>
+                </div>
+        </mat-card-content>
+        
+    <!-- </div> -->
+</mat-card>
+<!-- <mat-card class="user-card" [ngClass]="{
+    'user-card-hover': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
+}" *ngIf="member">
     <div>
 
         <mat-card-content class="card-content">
@@ -9,10 +62,10 @@
             
                 <mat-action-list class="card-icon-container animate" role="list"
                 >
-                <!-- [ngClass]="{
+                <-- [ngClass]="{
                     'member-icons-for-animate': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large,
                     'member-icons-no-animate' : currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall
-                }" -->
+                }" ->
                     <button mat-fab routerLink='/members/{{member.username}}' class="btn btn-primary">
                         <i class="fa fa-user"></i>
                     </button>
@@ -45,4 +98,4 @@
             </mat-card-footer>
         </div>
     </div>
-</mat-card>
+</mat-card> -->

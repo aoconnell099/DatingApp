@@ -22,11 +22,32 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatchDialogComponent } from 'src/app/modals/match-dialog/match-dialog.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-ionic-member-list',
   templateUrl: './ionic-member-list.component.html',
   styleUrls: ['./ionic-member-list.component.scss'],
+  animations: [
+	  trigger('visibleHidden', [
+		state(
+			'visible',
+			style({
+				transform: 'translate(1%, 1%) scale(1)',
+				opacity: 1,
+			})
+		),
+		state(
+			'void, hidden',
+			style({
+				transform: 'translate(0%, 0%) scale(0.5)',
+				opacity: 0,
+			})
+		),
+		transition('* => visible', animate('2000ms')),
+		transition('* => void, * => hidden', animate('1000ms'))
+	  ]),
+	],
 })
 export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChanges, DoCheck, OnDestroy {
   @HostListener('window:resize', ['$event'])
@@ -76,6 +97,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   cont: any;
   cardContainer: any; 
   shouldLike?:boolean;
+
+  isMatchDialogVisible = false;
   
 
 
@@ -89,7 +112,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   constructor(private memberService: MembersService, private breakpointObserver: BreakpointObserver,
       private gestureCtrl: GestureController, private animationCtrl: AnimationController,
       private toastr: ToastrService, private ref: ChangeDetectorRef, private appRef: ApplicationRef,
-    public matchDialog: MatDialog) { 
+    public matchDialog: MatDialog, public accountService: AccountService) { 
     this.userParams = this.memberService.getUserParams();
     this.cont = document.getElementById('sidenavContent');
     
@@ -523,29 +546,35 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
     
   }
 
-  openMatchDialog($event: MouseEvent, member: Member): void {
-    console.log($event);
-    if ($event.target) {
-      console.log($event.target);
-      // const eventTarget: HTMLElement = $event?.target as HTMLButtonElement;
-      // if (eventTarget.parentElement?.id === "add-concert-button") {
-      //   console.log("button with id string check");
-      //   return;
-      // }
-    }
+  openMatchDialog(member: Member): void {
+    console.log(member);
+    // if ($event.target) {
+    //   console.log($event.target);
+    //   // const eventTarget: HTMLElement = $event?.target as HTMLButtonElement;
+    //   // if (eventTarget.parentElement?.id === "add-concert-button") {
+    //   //   console.log("button with id string check");
+    //   //   return;
+    //   // }
+    // }
 
-    const dialogRef = this.matchDialog.open(MatchDialogComponent, {
-      width: '60vw',
-      height: 'auto',
-      // scrollStrategy: this.scrollStrategy,
-      panelClass: 'concert-dialog',
-      data: member
-    });
+    this.isMatchDialogVisible = true;
+
+    // const dialogRef = this.matchDialog.open(MatchDialogComponent, {
+    //   width: '60vw',
+    //   height: 'auto',
+    //   // scrollStrategy: this.scrollStrategy,
+    //   panelClass: 'concert-dialog',
+    //   data: member
+    // });
 
     // dialogRef.afterClosed().subscribe(result => {
     //   // console.log(`Dialog result: ${result}`);
     //   // console.log(result);
     // });
+  }
+
+  closeMatchDialog() : void {
+    this.isMatchDialogVisible = false;
   }
 
 
