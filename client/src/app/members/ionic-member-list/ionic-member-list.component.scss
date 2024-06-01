@@ -41,8 +41,14 @@ app-ionic-member-card {
     height: 100%;
     z-index: 3;
 }
-.user-card-small {
+.user-card-xSmall {
     width: 85%;
+}
+.user-card-small {
+    width: 75%;
+}
+.user-card-med {
+    width: 65%;
 }
 .user-card-large {
     width: 50%;
@@ -60,7 +66,14 @@ app-ionic-member-card {
     flex-direction: column;
     //top: 10%
 }
-.swiper-cont-small {
+.swiper-cont-xSmall {
+    //position: relative; 
+    height: 80%; 
+    //display: flex; 
+    //flex-direction: column;
+    top: 10%
+}
+.swiper-cont-small-med {
     //position: relative; 
     height: 90%; 
     //display: flex; 
@@ -68,13 +81,6 @@ app-ionic-member-card {
     top: 5%
 }
 .swiper-cont-large {
-    //position: relative; 
-    height: 90%; 
-    //display: flex; 
-    //flex-direction: column;
-    top: 5%
-}
-.swiper-cont-xLarge {
     //position: relative; 
     height: 96%; 
     //display: flex; 
@@ -109,6 +115,45 @@ app-ionic-member-card {
     z-index: 4;
     pointer-events: none;
     //animation: enlarge 0.3s linear;
+}
+
+.like {
+    right: 0;
+    margin-right: 1em;
+}
+
+.dislike {
+    left: 0;
+    margin-left: 1em;
+}
+.like-dislike-container {
+    position: absolute;
+    background-color: whitesmoke;
+    border-radius: 50%;
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.like-dislike-xSmall {
+    width: 33%;
+    top: 33%;
+}
+.like-dislike-small {
+    width: 30%;
+    top: 29%;
+}
+.like-dislike-med {
+    width: 28%;
+    top: 24%;
+}
+.like-dislike-large {
+    width: 24%;
+    top: 23%;
+}
+.like-dislike-xLarge {
+    width: 20%;
+    top: 22%;
 }
 // .like-container:after {
 //     content: "";

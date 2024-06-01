@@ -21,7 +21,9 @@
         //color:map-get($primary, A100 ) !important;
         //color:map-get($primary-contrast, 300 ) !important;
         // color:map-get($primary-contrast, 500 ) !important;
-        color:map-get(pal.$mat-light-green, on-surface) !important;
+        
+        //color:map-get(pal.$mat-light-green, on-surface) !important;
+        color: whitesmoke;
     }
 
     .card-title {

@@ -1,31 +1,52 @@
 <mat-card class="user-card" [ngClass]="{
     'user-card-hover': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
-}" *ngIf="member">
+}" *ngIf="member"> 
     <!-- <div> -->
 
         <mat-card-content class="card-content">
             <div class="card-img-wrapper">
                 <img mat-card-image class="card-img" [ngClass]="{
-                    'card-img-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
-                    'card-img-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+                    'card-img-small':  currentBreakpoint === Breakpoints.XSmall,
+                    'card-img-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small
                     }" draggable="false" src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}">
             
-                
+                <mat-action-list class="card-icon-container animate" role="list" [ngClass]="{
+                    'card-icon-container-xSmall':  currentBreakpoint === Breakpoints.XSmall,
+                    'card-icon-container-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small
+                    }">
+                    <button mat-fab (click)="addDislike(member)" class="dislike-button" id="addDislike-{{member.id}}">
+                        <!-- <i class="card-icon fa fa-close"></i> -->
+                        <div id="dislikeImgCont-{{member.id}}" class="card-icon" >
+                            <img src="../../../assets/svg/dislike-2.svg" id="dislikeImg" alt="Dislike">
+                        </div>
+                    </button>
+                    <button mat-fab (click)="addLike(member, $event)" class="like-button" id="addLike-{{member.id}}">
+                            <div id="likeImgCont-{{member.id}}" style="display: flex; justify-content: center;">
+                                <img src="../../../assets/svg/heart-1.svg" style="width: 75%;" class="card-icon" id="likeImg" alt="Heart">
+                            </div>
+                        <!-- <i class="card-icon fa fa-heart"></i> -->
+                    </button>
+                </mat-action-list>
             </div>
-            <mat-action-list class="card-icon-container animate" role="list"
+            <!-- <mat-action-list class="card-icon-container animate" role="list"
                     >
-                <!-- [ngClass]="{
+                <-- [ngClass]="{
                     'member-icons-for-animate': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large,
                     'member-icons-no-animate' : currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall
-                }" -->
+                }" ->
                     <button mat-fab routerLink='/members/{{member.username}}' class="btn btn-primary">
                         <i class="fa fa-user"></i>
                     </button>
                     <button mat-fab (click)="addDislike(member)" class="btn btn-primary" id="addDislike-{{member.id}}">
-                        <i class="fa"></i>
+                        <i class="fa fa-close"></i>
                     </button>
                     <button mat-fab (click)="addLike(member)" class="btn btn-primary" id="addLike-{{member.id}}">
                         <i class="fa fa-heart"></i>
+                    </button>
+                    <button mat-fab (click)="addLike(member)" class="btn btn-primary" id="addLike-{{member.id}}">
+                        <span class="material-icons">
+                            cancel
+                            </span>
                     </button>
                     <button 
                         mat-fab 
@@ -33,10 +54,11 @@
                         [queryParams]='{tab: 3}'
                         class="btn btn-primary">
                     <i class="fa fa-envelope"></i></button>
-                </mat-action-list>
-                <div class="card-footer light-theme">
-                    <mat-card-footer style="padding: 10px;">
-                        <h6 class="text-center mb-1">
+                </mat-action-list> -->
+                
+                <mat-card-footer class="card-footer light-theme" style="padding: 10px;">
+                    <!-- <div class="card-footer light-theme"> -->
+                        <!-- <h2 class="">
                             <span class="user-icon" [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
                                 <i class="fa fa-user me-2"></i>
                             </span>
@@ -44,9 +66,24 @@
                             {{member.knownAs}}, {{member.age}}
                             </span>
                         </h6>
-                        <p class="card-text city-text text-center">{{member.city}}</p>
-                    </mat-card-footer>
-                </div>
+                        <p class="card-text city-text">{{member.city}}</p> -->
+                        <span class="user-icon" [ngClass]="{
+                            'user-icon-xSmall':  currentBreakpoint === Breakpoints.XSmall,
+                            'user-icon-small': currentBreakpoint === Breakpoints.Small,
+                            'user-icon-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium,  
+                            }" [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
+                            <i class="fa fa-user me-2"></i>
+                        </span>
+                        <div class="user-info-container">
+                            <h1>
+                                <span class="user-name">
+                                    {{member.knownAs}}, {{member.age}}
+                                </span>
+                            </h1>
+                            <p class="card-text city-text">{{member.city}}</p>
+                        </div>
+                    <!-- </div> -->
+            </mat-card-footer>
         </mat-card-content>
         
     <!-- </div> -->

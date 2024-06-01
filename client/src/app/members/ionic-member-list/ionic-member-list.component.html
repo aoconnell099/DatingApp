@@ -166,21 +166,29 @@
 </div> -->
 
 <div class="swiper-container" [ngClass]="{
-    'swiper-cont-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
-    'swiper-cont-large': currentBreakpoint === Breakpoints.Medium,
-    'swiper-cont-xLarge': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large 
+    'swiper-cont-xSmall':  currentBreakpoint === Breakpoints.XSmall,
+    'swiper-cont-small-med': currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small,
+    'swiper-cont-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large 
     }" >
-    <div #dislikeCont class="dislike-container">
+    <div #dislikeCont class="like-dislike-container dislike" [ngClass]="{
+        'like-dislike-xSmall':  currentBreakpoint === Breakpoints.XSmall,
+        'like-dislike-small': currentBreakpoint === Breakpoints.Small,
+        'like-dislike-med': currentBreakpoint === Breakpoints.Medium,
+        'like-dislike-large': currentBreakpoint === Breakpoints.Large,
+        'like-dislike-xLarge': currentBreakpoint === Breakpoints.XLarge
+        }" >
         <div id="dislikeImgCont">
             <img src="../../../assets/svg/dislike-2.svg" id="dislikeImg" alt="Dislike">
         </div>
     </div>
     <div id="cardCont" class="card-container">
-        <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match)" (touchstart)="selectMember(match)" 
-            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike"
-            (openMatch)="openMatchDialog(match)" [ngClass]="{
-                'user-card-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall,
-                'user-card-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium
+        <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match, $event)" (touchstart)="selectMember(match, $event)" 
+            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike" [windowSize]="windowWidth"
+            (openMatch)="openMatchDialog(match)" (animateCard)="animateUserCard(memberCard)" [ngClass]="{
+                'user-card-xSmall': currentBreakpoint === Breakpoints.XSmall,
+                'user-card-small': currentBreakpoint === Breakpoints.Small,
+                'user-card-med': currentBreakpoint === Breakpoints.Medium,
+                'user-card-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
                 }">
         </app-ionic-member-card>
         
@@ -192,7 +200,13 @@
         (scrolled)="onScroll()" 
         [infiniteScrollContainer]="cont">Please swipe up to load more matches</div> -->
     
-    <div #likeCont class="like-container">
+    <div #likeCont class="like-dislike-container like" [ngClass]="{
+        'like-dislike-xSmall':  currentBreakpoint === Breakpoints.XSmall,
+        'like-dislike-small': currentBreakpoint === Breakpoints.Small,
+        'like-dislike-med': currentBreakpoint === Breakpoints.Medium,
+        'like-dislike-large': currentBreakpoint === Breakpoints.Large,
+        'like-dislike-xLarge': currentBreakpoint === Breakpoints.XLarge
+        }" >
         <div id="likeImgCont">
             <img src="../../../assets/svg/heart-1.svg" id="likeImg" alt="Heart">
         </div>

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChange, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Host, HostBinding, Input, OnDestroy, OnInit, Output, SimpleChange, ViewChild, ViewChildren } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
@@ -21,6 +21,11 @@ export class IonicMemberCardComponent implements OnInit, OnDestroy {
   @Input() shouldLike?: boolean;
   private eventsSubscription?: Subscription;
   @Output() openMatch: EventEmitter<Member> = new EventEmitter();
+  @Output() animateCard: EventEmitter<IonicMemberCardComponent> = new EventEmitter();
+  @Input() windowSize?: number;
+
+  @HostBinding('style.transform') transform = '';
+  @HostBinding('style.transition') transition = '0.3s ease-out';
 
   
 
@@ -101,12 +106,18 @@ console.log(detail);console.log(this.p);
   //     this.like.emit(member);
   //   }
   // }
-  addLike(member: Member) {
+  addLike(member: Member, event: any) {
     console.log("ion member card add like");
+    console.log(this.windowSize);
+    console.log(event);
+    //console.log(cardElement);
     this.memberService.addLike(member.username).subscribe({
       next: (result) =>  { 
         this.toastr.success('You have liked ' + member.knownAs);
         console.log(result);
+        //this.animateCard.emit(cardElement);
+        if (this.windowSize)
+        this.transform = `translateX(${this.windowSize * 1.5}px) rotate(${this.windowSize / 20}deg)`;
         if (result == true) {
           this.openMatch.emit(member);
         }
@@ -116,7 +127,11 @@ console.log(detail);console.log(this.p);
   addDislike(member: Member) {
     console.log("ion member card add dislike");
     this.memberService.addDislike(member.username).subscribe({
-      next: () => console.log("disliked " + member.knownAs)
+      next: () => {
+        console.log("disliked " + member.knownAs);
+        if (this.windowSize)
+          this.transform = `translateX(${-this.windowSize * 1.5}px) rotate(${-this.windowSize / 20}deg)`;
+        }
     })
   }
 

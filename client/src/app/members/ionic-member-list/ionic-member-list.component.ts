@@ -54,7 +54,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   onResize(event: { target: { innerWidth: number; }; }) {
     this.windowWidth = event.target.innerWidth;
     // this.windowWidth = window.innerWidth;
-    console.log(this.windowWidth);
+    //console.log(this.windowWidth);
   }
   @ViewChild('cardCont') cardCont!: ElementRef<any>;
   @ViewChild('dislikeCont') dislikeCont!: ElementRef<any>;
@@ -195,7 +195,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
           this.dislikeCont.nativeElement.style.transition = 'opacity 0.5s ease-out';
           console.log(detail.deltaX);
           if (detail.deltaX > this.windowWidth / 2.5) {
-            memberCard.nativeElement.style.transform = `translateX(${this.windowWidth * 1.5}px)`;
+            //memberCard.nativeElement.style.transform = `translateX(${this.windowWidth * 1.5}px)`;
             this.animateLikeDislike(this.likeCont);
             this.likeCont.nativeElement.style.opacity = 0; // This runs before the animation completes but looks good so leave for now.
             
@@ -252,7 +252,7 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
             } 
             //memberCard.nativeElement.remove();
           } else if (detail.deltaX < -this.windowWidth / 2.5) {
-            memberCard.nativeElement.style.transform = `translateX(-${this.windowWidth * 1.5}px)`
+            //memberCard.nativeElement.style.transform = `translateX(-${this.windowWidth * 1.5}px)`
             this.animateLikeDislike(this.dislikeCont);
             //this.dislikeCont.nativeElement.style.transform = 'scale(1.2)';
             this.dislikeCont.nativeElement.style.opacity = 0;
@@ -402,12 +402,14 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
     }
   }
 
-  selectMember(member: Member) {
+  selectMember(member: Member, event: any) {
     console.log(member);
+    console.log(event);
     this.selectedMember = member;
   }
 
   animateLikeDislike(container: ElementRef<any>) {
+    console.log("animateLikeDislike");
     const likeAnim: Animation = this.animationCtrl.create()
       .addElement(container.nativeElement)
       .duration(1000)
@@ -422,6 +424,10 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
       ]);
 
     likeAnim.play();
+  }
+
+  animateUserCard(card: IonicMemberCardComponent) {
+    console.log(card);
   }
 
   addLike(member: Member) {
@@ -468,6 +474,9 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
           //  }
            console.log("this.matches\n", this.matches);
            this.matches = response.result;
+           this.matches.forEach((match: any) => {
+            document.getElementById("likeCont-"+ match.id)?.addEventListener('click', () => { console.log("CLICK"); this.animateLikeDislike(this.likeCont) });
+           })
            this.pagination = response.pagination;
            this.remainingCards = this.matches.length;
            console.log(this.remainingCards);

@@ -154,12 +154,71 @@
 
 .card-icon-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+}
+.card-icon-container-xSmall {
+    top: 75%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.card-icon-container-large {
+    top: 80%;
+    padding-top: 0em;
+    padding-bottom: 0em;
+}
+
+.card-icon-container > button {
+    width: 6em;
+    height: 6em;
+    background-color: white;
+}
+
+.dislike-button {
+    margin-left: 0.5em;
+}
+
+.like-button {
+    margin-right: 0.5em;
+}
+
+.card-icon {
+    //font-size: 4em;
 }
 
 .card-icon-container mat-list-item{
     text-align: center;
 }
 .card-footer {
-    border-radius: 10%;
+    // border-radius: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    padding: 5%;
 }
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-icon-xSmall {
+    padding-top: 0.4em;
+}
+.user-icon-small {
+    padding-top: 0.6em;
+}
+.user-icon-large {
+    padding-top: 1em;
+}
+
+.user-name {
+    color: white;
+}
+
+.fa-close {
+    color: #fe0808;
+}
+
