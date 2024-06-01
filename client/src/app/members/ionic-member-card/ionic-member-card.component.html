@@ -1,5 +1,5 @@
 <mat-card class="user-card" [ngClass]="{
-    'user-card-hover': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
+    'user-card-hover': currentBreakpoint === xLargeBreakpoint || currentBreakpoint === largeBreakpoint
 }" *ngIf="member"> 
     <!-- <div> -->
 
@@ -7,12 +7,13 @@
             <div class="card-img-wrapper">
                 <img mat-card-image class="card-img" [ngClass]="{
                     'card-img-small':  currentBreakpoint === Breakpoints.XSmall,
-                    'card-img-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small
+                    'card-img-large': currentBreakpoint === xLargeBreakpoint || currentBreakpoint === largeBreakpoint || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small
                     }" draggable="false" src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}">
             
                 <mat-action-list class="card-icon-container animate" role="list" [ngClass]="{
                     'card-icon-container-xSmall':  currentBreakpoint === Breakpoints.XSmall,
-                    'card-icon-container-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small
+                    'card-icon-container-large': currentBreakpoint === xLargeBreakpoint || currentBreakpoint === largeBreakpoint || currentBreakpoint === Breakpoints.Medium  || currentBreakpoint === Breakpoints.Small,
+                    'card-icon-container-landscape': mobileBreakpoint === landscapeBreakpoint
                     }">
                     <button mat-fab (click)="addDislike(member)" class="dislike-button" id="addDislike-{{member.id}}">
                         <!-- <i class="card-icon fa fa-close"></i> -->
@@ -70,7 +71,7 @@
                         <span class="user-icon" [ngClass]="{
                             'user-icon-xSmall':  currentBreakpoint === Breakpoints.XSmall,
                             'user-icon-small': currentBreakpoint === Breakpoints.Small,
-                            'user-icon-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large || currentBreakpoint === Breakpoints.Medium,  
+                            'user-icon-large': currentBreakpoint === xLargeBreakpoint || currentBreakpoint === largeBreakpoint || currentBreakpoint === Breakpoints.Medium,  
                             }" [class.is-online]="(presenceService.onlineUsers$ | async)?.includes(member.username)">
                             <i class="fa fa-user me-2"></i>
                         </span>

@@ -512,13 +512,13 @@
   
   
   .bg-orbs::before {
-    @include dots(20);
+    @include dots(40);
     animation-duration: 132s;
     animation-delay: -27s;
   }
   
   .bg-orbs::after {
-    @include dots(20);
+    @include dots(40);
     animation-duration: 132s;
     animation-delay: -32s;
   }

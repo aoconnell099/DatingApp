@@ -53,7 +53,8 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   @HostListener('window:resize', ['$event'])
   onResize(event: { target: { innerWidth: number; }; }) {
     this.windowWidth = event.target.innerWidth;
-    // this.windowWidth = window.innerWidth;
+    console.log('onResize event');
+    console.log(event);
     //console.log(this.windowWidth);
   }
   @ViewChild('cardCont') cardCont!: ElementRef<any>;
@@ -81,7 +82,9 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   Breakpoints = Breakpoints;
   currentBreakpoint = '';
   mobileBreakpoint = '';
-  landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 400px)'
+  landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 450px)';
+  largeBreakpoint = '(min-width: 1280px) and (max-width: 1749.98px)';
+  xLargeBreakpoint = '(min-width: 1750px)';
   rowHeightRatio = "1:1.5";
 
   selected = 'lastActive';
@@ -103,9 +106,9 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
 
 
   readonly breakpoint$ = this.breakpointObserver
-  .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape, this.landscapeBreakpoint])
+  .observe([Breakpoints.XLarge, Breakpoints.Large, Breakpoints.Medium, Breakpoints.Small, Breakpoints.XSmall, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape, this.landscapeBreakpoint, this.largeBreakpoint, this.xLargeBreakpoint])
   .pipe(
-    tap(), //value => console.log(value)
+    tap(), //value => console.log(value)  Unnecessary
     distinctUntilChanged()
   );
 
@@ -342,19 +345,20 @@ export class IonicMemberListComponent implements OnInit, AfterViewInit, OnChange
   }
 
   private breakpointChanged() {
-    if(this.breakpointObserver.isMatched(Breakpoints.XLarge)) {
-      this.currentBreakpoint = Breakpoints.XLarge;
-    } else if(this.breakpointObserver.isMatched(Breakpoints.Large)) {
-      this.currentBreakpoint = Breakpoints.Large;
+    if(this.breakpointObserver.isMatched(this.xLargeBreakpoint)) {
+      this.currentBreakpoint = this.xLargeBreakpoint;
+    } else if(this.breakpointObserver.isMatched(this.largeBreakpoint)) {
+      this.currentBreakpoint = this.largeBreakpoint;
     } else if(this.breakpointObserver.isMatched(Breakpoints.Medium)) {
       this.currentBreakpoint = Breakpoints.Medium;
     } else if(this.breakpointObserver.isMatched(Breakpoints.Small)) {
       this.currentBreakpoint = Breakpoints.Small;
     } else if(this.breakpointObserver.isMatched(Breakpoints.XSmall)) {
       this.currentBreakpoint = Breakpoints.XSmall;
-    }  
+    } 
 
     if (this.breakpointObserver.isMatched(this.landscapeBreakpoint)) {
+      //this.currentBreakpoint = this.landscapeBreakpoint;
       this.mobileBreakpoint = this.landscapeBreakpoint;
       console.log('my landscape');
     }

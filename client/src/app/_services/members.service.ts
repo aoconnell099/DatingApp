@@ -120,6 +120,7 @@ export class MembersService {
     return getPaginatedResult<Member[]>(this.baseUrl + 'likes', params, this.http);
   }
 
+
   getMatches(userParams: UserParams) {
     console.log('members service userparams');
     console.log(userParams);

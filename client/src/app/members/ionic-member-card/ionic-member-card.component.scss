@@ -99,7 +99,8 @@
     height: inherit;
 }
 .card-img-small {
-    height: -webkit-fill-available;
+    // height: -webkit-fill-available;
+    height: inherit;
 }
 
 .card-img-wrapper {
@@ -168,6 +169,17 @@
     padding-top: 0em;
     padding-bottom: 0em;
 }
+.card-icon-container-landscape {
+    top: 70% !important;
+    padding-top: 0em !important;
+    padding-bottom: 0em !important;
+}
+
+.card-icon-container-landscape > button {
+    width: 4em !important;
+    height: 4em !important;
+    background-color: white;
+}
 
 .card-icon-container > button {
     width: 6em;
@@ -183,9 +195,9 @@
     margin-right: 0.5em;
 }
 
-.card-icon {
-    //font-size: 4em;
-}
+// .card-icon {
+//     //font-size: 4em;
+// }
 
 .card-icon-container mat-list-item{
     text-align: center;

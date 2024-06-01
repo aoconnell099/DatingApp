@@ -168,7 +168,8 @@
 <div class="swiper-container" [ngClass]="{
     'swiper-cont-xSmall':  currentBreakpoint === Breakpoints.XSmall,
     'swiper-cont-small-med': currentBreakpoint === Breakpoints.Medium || currentBreakpoint === Breakpoints.Small,
-    'swiper-cont-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large 
+    'swiper-cont-large': currentBreakpoint === xLargeBreakpoint || currentBreakpoint === largeBreakpoint, 
+    'swiper-cont-landscape': mobileBreakpoint === landscapeBreakpoint 
     }" >
     <div #dislikeCont class="like-dislike-container dislike" [ngClass]="{
         'like-dislike-xSmall':  currentBreakpoint === Breakpoints.XSmall,
@@ -183,12 +184,14 @@
     </div>
     <div id="cardCont" class="card-container">
         <app-ionic-member-card *ngFor="let match of matches" (mousedown)="selectMember(match, $event)" (touchstart)="selectMember(match, $event)" 
-            #memberCard [currentBreakpoint]="currentBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike" [windowSize]="windowWidth"
+            #memberCard [currentBreakpoint]="currentBreakpoint" [mobileBreakpoint]="mobileBreakpoint" [member]="match" (like)="addLike(match)" [events]="eventsSubject.asObservable()" [shouldLike]="shouldLike" [windowSize]="windowWidth"
             (openMatch)="openMatchDialog(match)" (animateCard)="animateUserCard(memberCard)" [ngClass]="{
                 'user-card-xSmall': currentBreakpoint === Breakpoints.XSmall,
                 'user-card-small': currentBreakpoint === Breakpoints.Small,
                 'user-card-med': currentBreakpoint === Breakpoints.Medium,
-                'user-card-large': currentBreakpoint === Breakpoints.XLarge || currentBreakpoint === Breakpoints.Large
+                'user-card-large': currentBreakpoint === largeBreakpoint,
+                'user-card-xLarge': currentBreakpoint === xLargeBreakpoint,
+                'user-card-landscape': mobileBreakpoint === landscapeBreakpoint 
                 }">
         </app-ionic-member-card>
         

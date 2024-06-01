@@ -15,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 export class IonicMemberCardComponent implements OnInit, OnDestroy {
   @Input() member?: Member;
   @Input() currentBreakpoint?: string;
+  @Input() mobileBreakpoint?: string;
   Breakpoints = Breakpoints;
   @ViewChild('tracker') p?: ElementRef;
   @Output() like: EventEmitter<Member> = new EventEmitter();
@@ -26,6 +27,10 @@ export class IonicMemberCardComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.transform') transform = '';
   @HostBinding('style.transition') transition = '0.3s ease-out';
+
+  landscapeBreakpoint = '(max-width: 959.98px) and (max-height: 450px)';
+  largeBreakpoint = '(min-width: 1280px) and (max-width: 1749.98px)';
+  xLargeBreakpoint = '(min-width: 1750px)';
 
   
 

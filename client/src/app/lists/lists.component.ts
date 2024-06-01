@@ -12,7 +12,7 @@ import { distinctUntilChanged, tap } from 'rxjs';
 })
 export class ListsComponent implements OnInit, OnDestroy {
   members?: Member[]; // Partial makes each property in member optional
-  predicate = 'liked';
+  predicate = 'matches';
   pageNumber = 0;
   pageSize = 6;
   pagination?: Pagination;
@@ -98,7 +98,14 @@ export class ListsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" tab-button", "");
     }
-    if (this.predicate == "liked") {
+    if (this.predicate == "matches") {
+      const tab = document.getElementById("matchesFilter");
+      if (tab) {
+        console.log(tab);
+        tab.className += " tab-button";
+      }
+    }
+    else if (this.predicate == "liked") {
       const tab = document.getElementById("liked");
       if (tab) {
         tab.className += " tab-button";

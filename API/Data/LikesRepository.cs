@@ -34,7 +34,7 @@ namespace API.Data
 
         public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
-            var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var users = _context.Users.AsQueryable();
             var likes = _context.Likes.AsQueryable();
 
             if (likesParams.Predicate == "liked")
@@ -47,6 +47,19 @@ namespace API.Data
             {
                 likes = likes.Where(like => like.LikedUserId == likesParams.UserId);
                 users = likes.Select(like => like.SourceUser);
+            }
+            if (likesParams.Predicate == "matches")
+            {
+                var liked = likes.Where(like => like.SourceUserId == likesParams.UserId);
+                var likedBy = likes.Where(like => like.LikedUserId == likesParams.UserId);
+                users = liked.Join(likedBy,
+                                    l => l.LikedUserId,
+                                    lb => lb.SourceUserId,
+                                    (l, lb) => l.LikedUser);
+                // var users0 = liked.Join(likedBy,
+                //                     l => l.LikedUserId,
+                //                     lb => lb.SourceUserId,
+                //                     (l, lb) => lb.SourceUser);
             }
 
             var likedUsers = users.Select(user => new LikeDto
