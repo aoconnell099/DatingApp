@@ -62,10 +62,23 @@ namespace API.Controllers
 
             var messages = await _unitOfWork.MessageRepository.GetMessagesForUser(messageParams);
 
-            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize, 
+            Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize,  
                 messages.TotalCount, messages.TotalPages);
 
             return messages;
+        }
+        [HttpGet("conversations")]
+        public async Task<ActionResult<IEnumerable<ConversationDto>>> GetConversationsForUser([FromQuery] 
+            MessageParams messageParams)
+        {
+            messageParams.Username = User.GetUsername();
+
+            var messages = await _unitOfWork.MessageRepository.GetConversationsForUser(messageParams);
+
+            // Response.AddPaginationHeader(messages.CurrentPage, messages.PageSize,  
+            //     messages.TotalCount, messages.TotalPages);
+
+            return Ok(messages);
         }
 
         [HttpDelete("{id}")]

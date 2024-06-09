@@ -54,6 +54,7 @@
   @include concert-buttons($theme);
   @include search-form($theme);
   @include search-list($theme);
+  @include messages($theme);
 }
 @include custom-components-theme(light-green.$light-theme);
 //@include custom-components-theme(light-green.$light-theme);
@@ -95,6 +96,10 @@
 
 body {
   overflow: hidden !important;
+}
+
+* {
+  font-family: 'Raleway';
 }
 
 .mat-mdc-menu-content {

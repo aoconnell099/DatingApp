@@ -22,6 +22,7 @@ export class AccountService {
         const user = response;
         if ((user)) {
           this.setCurrentUser(user);
+          console.log("set presence service");
           this.presence.createHubConnection(user);
           
         }

@@ -9,6 +9,7 @@ import { Message } from '../_models/message';
 import { User } from '../_models/user';
 import { BusyService } from './busy.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
+import { Conversation } from '../_models/conversation';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,12 @@ export class MessageService {
     let params = getPaginationHeaders(pageNumber, pageSize);
     params = params.append('Container', container);
     return getPaginatedResult<Message[]>(this.baseUrl + 'messages', params, this.http);
+  }
+  
+  getConversations(pageNumber: number, pageSize: number) {
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    // params = params.append('Container', container);
+    return getPaginatedResult<Conversation[]>(this.baseUrl + 'messages/conversations', params, this.http);
   }
 
   getMessageThread(username: string) {

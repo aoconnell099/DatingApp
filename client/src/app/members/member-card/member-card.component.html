@@ -23,13 +23,13 @@
                     <button mat-fab routerLink='/members/{{member.username}}' class="btn btn-primary">
                         <i class="fa fa-user"></i>
                     </button>
-                    <button mat-fab (click)="addLike(member)" class="btn btn-primary">
+                    <!-- <button mat-fab (click)="addLike(member)" class="btn btn-primary">
                         <i class="fa fa-heart"></i>
-                    </button>
+                    </button> -->
                     <button 
                         mat-fab 
                         routerLink='/members/{{member.username}}' 
-                        [queryParams]='{tab: 3}'
+                        [queryParams]='{tab: "Messages"}'
                         class="btn btn-primary">
                     <i class="fa fa-envelope"></i></button>
             </mat-action-list>

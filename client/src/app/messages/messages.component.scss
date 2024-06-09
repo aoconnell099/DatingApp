@@ -1,3 +1,178 @@
+:host {
+    display: flex;
+    height: 100%
+}
+
+:host > * {
+    font-family: "Raleway";
+}
 .img-circle {
     max-height: 50px;
 }
+.matches-container {
+    display: flex;
+    flex-direction: row;
+}
+.matches-list {
+    display: flex;
+    flex-direction: row;
+    padding: 1em 0;
+    margin: 0 0.5em;
+    overflow-x: auto;
+}
+.match-avatar {
+    border-radius: 50%;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    height: 5em;
+    width: auto;
+}
+.conversations-list {
+    width: 92%;
+}
+.list-item-container {
+    display: flex;
+    justify-content: space-between;
+    // padding-left: 2em;
+    // padding-right: 2em;
+}
+.message-sent-container {
+    display: flex; 
+    align-items: flex-end;
+    overflow: auto;
+}
+.avatar-name-container {
+    overflow: auto;
+}
+
+.avatar-name-container > img {
+    margin-top: 0.5em; 
+    margin-bottom: 0.5em; 
+    //width: 70px; 
+    height:fit-content;
+}
+
+.conversation-avatar {
+    margin: 0.2em !important;
+    //width: 70px; 
+    height:-webkit-fill-available;
+    width: auto;
+}
+
+.conversation-divider {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+}
+
+.page-divider {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border: 1px solid;
+}
+
+.column {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.conversation-header {
+    align-self: flex-start;
+    padding-left: 1.2em;
+    margin-top: 0.2em;
+    overflow: auto;
+}
+
+.dot-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.3em;
+    padding-right: 0.2em;
+}
+
+.matches-conversations {
+    width: 45%;
+    flex: 1 1 auto;
+    transition: all 2s ease-in-out;
+    
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    //flex: 0 1 auto;
+    transition: all 2s ease-in-out;
+    padding: 1em;
+}
+
+.message-header {
+    color: #515151;
+    //flex: 1 1 auto;
+}
+// .message-header > h2 {
+//     //font-weight: 300 !important;
+//     font-family: "Nexa Light";
+// }
+.message-avatar {
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    margin-right: 0.5em;
+}
+.avatar-left {
+    float: left !important;
+}
+
+.message-body {
+    height: 100%;
+    overflow: auto;
+}
+
+.card-footer {
+    margin-top: 0.3em;
+}
+
+.chat-item-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-body {
+    padding: 0.7em;
+    border-radius: 1em;
+    word-break: break-word;
+}
+
+.chat-body > p {
+    margin-bottom: 0;
+    text-wrap: wrap;
+}
+
+.time-ago-container {
+    font-size: 0.6em;
+}
+
+.read {
+    color: rgb(56 180 74);
+}
+
+.unread {
+    color: rgb(223 56 44);
+}
+
+.invisible {
+    opacity: 0;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-right {
+    align-self: flex-end;
+}
+

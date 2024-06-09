@@ -1,26 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../_models/message';
 import { Pagination } from '../_models/paginations';
 import { ConfirmService } from '../_services/confirm.service';
 import { MessageService } from '../_services/message.service';
+import { MembersService } from '../_services/members.service';
+import { Member } from '../_models/member';
+import { Conversation } from '../_models/conversation';
+import { PresenceService } from '../_services/presence.service';
+import { AccountService } from '../_services/account.service';
+import { take } from 'rxjs';
+import { User } from '../_models/user';
+import { NgForm } from '@angular/forms';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.scss']
+  styleUrls: ['./messages.component.scss'],
+  animations: [
+	  trigger('showHide', [
+		state(
+			'visible',
+			style({
+				transform: 'scale(1)',
+				opacity: 1,
+			})
+		),
+		state(
+			'void, hidden',
+			style({
+				transform: 'scale(0.5)',
+			})
+		),
+		transition('* => visible', animate('150ms')),
+		transition('* => void, * => hidden', animate('150ms'))
+	  ]),
+	],
 })
 export class MessagesComponent implements OnInit {
+  @ViewChild('messageForm') messageForm?: NgForm;
+  messageContent = '';
   messages?: Message[]; // Previously = []..changed for delete messages
   pagination?: Pagination;
   container = 'Unread';
-  pageNumber = 1;
-  pageSize = 5;
+  pageNumber = 0;
+  pageSize = 15;
   loading = false;
+  conversations?: Conversation[];
+  matches?: Member[];
+  selectedUser?: string;
+  user?: User;
+  
 
-  constructor(private messageService: MessageService, private confirmService: ConfirmService) { }
+  constructor(public messageService: MessageService, private confirmService: ConfirmService, 
+    private memberService: MembersService, public presence: PresenceService, private accountService: AccountService) { 
+      this.accountService.currentUser$.pipe(take(1)).subscribe({
+        next: user => {
+          if (user) this.user = user;
+        }
+      });
+    }
 
   ngOnInit(): void {
-    this.loadMessages();
+    this.loadMatches();
+    //this.loadMessages();
+    this.loadConversations();
   }
 
   loadMessages() {
@@ -50,13 +94,50 @@ export class MessagesComponent implements OnInit {
     }
     this.messageService.getMessages(this.pageNumber, this.pageSize, this.container).subscribe({
       next: response => {
+        console.log(response);
         if (response.result && response.pagination) {
           this.messages = response.result;
           this.pagination = response.pagination;
           this.loading = false;
+          console.log("messages\n", this.messages);
         }
       }
     });
+  }
+
+  loadConversations() {
+    this.messageService.getConversations(this.pageNumber, this.pageSize).subscribe({
+      next: response => {
+        console.log(response);
+        if (response.result) {
+          console.log("response");
+          this.conversations = response.result;
+          //this.pagination = response.pagination;
+        }
+      }
+    })
+  }
+
+  loadMatches() {
+    this.memberService.getLikes("matches", this.pageNumber, this.pageSize).subscribe({
+      next: response => {
+        if (response.result && response.pagination) {
+          if (this.matches) {
+            this.matches = [...this.matches!, ...response.result];
+          }
+          else {
+            this.matches = response.result;
+          }
+          
+          this.pagination = response.pagination;
+          console.log(this.matches);
+          this.matches = this.matches.sort((a, b) => new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime());
+          console.log(this.matches);
+
+        }
+      },
+      //complete: () => this.toggleLoading()
+    })
   }
 
   deleteMessage(id: number) {
@@ -72,6 +153,40 @@ export class MessagesComponent implements OnInit {
     //   }
     // })
     
+  }
+
+  selectConversation(event: any, conversation: Conversation) {
+    console.log(event);
+    if (this.selectedUser == null) {
+      this.selectedUser = conversation.otherUser;
+      this.messageService.createHubConnection(this.user!, conversation.otherUser);
+    }
+    else {
+      this.messageService.stopHubConnection();
+      this.selectedUser = conversation.otherUser;
+      this.messageService.createHubConnection(this.user!, conversation.otherUser);
+    }
+  }
+  
+  selectMatch(event: any, match: Member) {
+    console.log(event);
+    if (this.selectedUser == null) {
+      this.selectedUser = match.username;
+      this.messageService.createHubConnection(this.user!, match.username);
+    }
+    else {
+      this.messageService.stopHubConnection();
+      this.selectedUser = match.username;
+      this.messageService.createHubConnection(this.user!, match.username);
+    }
+  }
+
+  sendMessage() {
+    if (!this.selectedUser) return;
+    //this.loading = true;
+    this.messageService.sendMessage(this.selectedUser, this.messageContent).then(() => {
+      this.messageForm?.reset();
+    }).finally();//() => this.loading = false
   }
 
   pageChanged(event: any) {

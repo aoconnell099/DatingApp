@@ -127,7 +127,9 @@
 
 .card-icon-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 .card-icon-container mat-list-item{

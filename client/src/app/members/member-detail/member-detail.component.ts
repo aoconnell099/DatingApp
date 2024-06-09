@@ -116,6 +116,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     //this.memberTabs.tabs[tabId].active = true;
     // Select the tab clicked with the matching header name
     if (this.memberTabs) {
+      console.log(this.memberTabs);
       this.memberTabs.tabs.find(x=> x.heading === heading)!.active = true;
     }
   }

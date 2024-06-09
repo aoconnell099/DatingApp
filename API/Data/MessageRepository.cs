@@ -12,6 +12,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using API.Extensions;
+using Microsoft.AspNetCore.Routing.Tree;
 
 namespace API.Data.Migrations
 {
@@ -127,9 +128,58 @@ namespace API.Data.Migrations
             return messages;
         }
 
+        public async Task<IEnumerable<ConversationDto>> GetConversationsForUser(MessageParams messageParams) {
+            //var messages = _context.Messages.AsQueryable();
+            var userMessages = await _context.Messages
+                .Where(u => u.RecipientUsername == messageParams.Username 
+                    && u.RecipientDeleted == false || u.SenderUsername == messageParams.Username
+                    && u.SenderDeleted == false)
+                .Select(m => 
+                    new ConversationDto {
+                        OtherUser = m.SenderUsername == messageParams.Username ? m.RecipientUsername : m.SenderUsername,
+                        OtherUserPhotoUrl = m.SenderUsername == messageParams.Username ? m.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url : m.Sender.Photos.FirstOrDefault(x => x.IsMain).Url,
+                        IsSender = m.SenderUsername == messageParams.Username ? true : false,
+                        Content = m.Content,
+                        MessageSent = m.MessageSent,
+                        DateRead = m.DateRead,
+                    })
+                .OrderByDescending(m => m.MessageSent)
+                .ToListAsync();
+
+            var conversations = userMessages.DistinctBy(m => m.OtherUser);
+
+            return conversations;
+
+        }
+        // public async Task<PagedList<ConversationDto>> GetConversationsForUser(MessageParams messageParams) {
+        //     //var messages = _context.Messages.AsQueryable();
+        //     var userMessages = _context.Messages
+        //         .Where(u => u.RecipientUsername == messageParams.Username 
+        //             && u.RecipientDeleted == false || u.SenderUsername == messageParams.Username
+        //             && u.SenderDeleted == false)
+        //         .Select(m => 
+        //             new ConversationDto {
+        //                 OtherUser = m.SenderUsername == messageParams.Username ? m.RecipientUsername : m.SenderUsername,
+        //                 OtherUserPhotoUrl = m.SenderUsername == messageParams.Username ? m.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url : m.Sender.Photos.FirstOrDefault(x => x.IsMain).Url,
+        //                 IsSender = m.SenderUsername == messageParams.Username ? true : false,
+        //                 Content = m.Content,
+        //                 MessageSent = m.MessageSent,
+        //                 DateRead = m.DateRead,
+        //             })
+        //         .OrderByDescending(m => m.MessageSent).AsEnumerable().DistinctBy(m => m.OtherUser);
+
+        //     var conversations = userMessages.AsQueryable().Select(c => c);
+        //     var conversations2 = userMessages.Select(c => c);
+
+        //     return await PagedList<ConversationDto>.CreateAsync(conversations, messageParams.PageNumber, messageParams.PageSize); 
+            
+
+        // }
+
         public void RemoveConnection(Connection connection)
         {
             _context.Connections.Remove(connection);
-        } 
+        }
+
     }
 }

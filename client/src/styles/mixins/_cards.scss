@@ -152,3 +152,29 @@
 
    
   }
+
+  @mixin messages($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+
+    .unread-dot {
+        background:map-get($accent, 900 ) !important;
+        border-radius: 50%;
+        width: 1.2em;
+        height: 1.2em;
+    }
+
+    .online-border {
+        border: 2px solid map-get($accent, 900)
+    }
+
+    .sender {
+        background-color: map-get($primary, 900);
+    }
+    
+    .recepient {
+        background-color: map-get($accent, 500);
+    }
+   
+  }

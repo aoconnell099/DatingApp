@@ -25,6 +25,7 @@ export class AppComponent implements OnInit{
       .bypassSecurityTrustResourceUrl("../assets/icons/stage-lights-star-1.svg")
 
       );
+      
   }
   
   ngOnInit() {
@@ -35,11 +36,11 @@ export class AppComponent implements OnInit{
     const userString = localStorage.getItem('user');
     if (!userString) return;
     const user: User = JSON.parse(userString);
-    this.accountService.setCurrentUser(user);
-    // if (user) {
-    //   this.accountService.setCurrentUser(user);
-    //   this.presence.createHubConnection(user);
-    // }
+    //this.accountService.setCurrentUser(user);
+    if (user) {
+      this.accountService.setCurrentUser(user);
+      this.presence.createHubConnection(user);
+    }
     
   }
 

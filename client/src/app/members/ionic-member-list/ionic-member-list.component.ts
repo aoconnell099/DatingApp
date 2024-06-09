@@ -44,8 +44,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 				opacity: 0,
 			})
 		),
-		transition('* => visible', animate('2000ms')),
-		transition('* => void, * => hidden', animate('1000ms'))
+		transition('* => visible', animate('250ms')),
+		transition('* => void, * => hidden', animate('250ms'))
 	  ]),
 	],
 })

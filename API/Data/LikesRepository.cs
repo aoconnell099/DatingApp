@@ -61,6 +61,7 @@ namespace API.Data
                 //                     lb => lb.SourceUserId,
                 //                     (l, lb) => lb.SourceUser);
             }
+            
 
             var likedUsers = users.Select(user => new LikeDto
             {
@@ -69,7 +70,8 @@ namespace API.Data
                 Age = user.DateOfBirth.CalculateAge(),
                 PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
                 City = user.City,
-                Id = user.Id
+                Id = user.Id,
+                LastActive = user.LastActive
             });
 
             return await PagedList<LikeDto>.CreateAsync(likedUsers, likesParams.PageNumber, likesParams.PageSize);
