@@ -133,6 +133,23 @@ flex-direction: column;
   
 }
 
+.message-input-container > .mdc-text-field {
+  border-radius: 3em !important;
+ 
+} 
+.message-input-container > .mat-mdc-form-field {
+  border-radius: 3em !important;
+ 
+} 
+.mdc-text-field--filled {
+  //border-radius: 3em !important;
+  border-top-left-radius: 3em !important;
+  border-top-right-radius: 3em !important;
+  border-bottom-left-radius: 3em !important;
+  border-bottom-right-radius: 3em !important;
+}
+
+
 }
 .light {
   --md-sys-color-primary: rgb(133 75 113);

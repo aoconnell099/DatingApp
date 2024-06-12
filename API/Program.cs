@@ -6,6 +6,7 @@ using API.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +54,20 @@ builder.Services.AddDbContext<DataContext>(opt =>
 
 
 builder.Services.AddHttpClient(); // Register the IHttpClientFactory
+var redisConn = "";
+if (builder.Environment.IsDevelopment()) {
 builder.Services.AddSignalR();
+}
+else {
+ //redisConn = builder.Configuration.GetConnectionString("RedisConnection");
+ redisConn = Environment.GetEnvironmentVariable("RedisConnection");
+//  var config = ConfigurationOptions.Parse(redisConn, true);
+// var conn = ConnectionMultiplexer.Connect(config);
+// builder.Services.AddDataProtection().PersistKeysToStackExchangeRedis(conn); 
+ builder.Services.AddSignalR().AddStackExchangeRedis(redisConn);//, options => {
+      //options.Configuration.ChannelPrefix = RedisChannel.Literal("MyApp");
+  //});
+}
 // Probably unnecessary..leave for now
 builder.Services.AddSwaggerGen(c =>
 {   

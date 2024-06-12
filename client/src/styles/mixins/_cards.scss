@@ -176,5 +176,73 @@
     .recepient {
         background-color: map-get($accent, 500);
     }
-   
+
+    
+    // .conversation:hover {
+    //     background-color: map-get($accent, 100);
+    // }
+    // .conversation-selected {
+    //     background-color: map-get($accent, 100);
+    // }
+    .match-avatar-container:hover {
+        .gradient-container {
+            background: radial-gradient(map-get($accent, 500), transparent 78%); 
+            // background: radial-gradient(#ffd2e9, transparent 78%); 
+            filter: brightness(1.1);
+        }
+        // .match-avatar {
+        //     filter: brightness(0.8);
+        // }
+        // background: radial-gradient(ellipse at top, map-get($accent, 800), transparent),
+        //     radial-gradient(ellipse at bottom, map-get($contrast, 500), transparent);
+        // background-image: radial-gradient(cyan 0%, transparent 20%, salmon 40%);
+    }
+    .list-item-container {
+        @include mat.elevation-transition();
+    }
+    .list-item-selected {
+        //background: radial-gradient(map-get($accent, 400), map-get($accent, 100)); 
+
+        // background: radial-gradient(map-get($accent, 400), transparent); 
+        // background: radial-gradient(transparent, map-get($accent, 400) ); 
+        // background: radial-gradient(map-get($accent, 100), map-get($accent, 400) ); 
+        background: radial-gradient(#ffffff, map-get($accent, 300) );
+        @include mat.elevation(1);
+    }
+    .list-item-container:hover {
+        // background: radial-gradient(map-get($accent, 300), map-get($accent, 100)); 
+         
+        // background: radial-gradient(map-get($accent, 300), transparent); 
+        // background: radial-gradient(transparent, map-get($accent, 300) );
+        // background: radial-gradient(map-get($accent, 100), map-get($accent, 300) );
+        background: radial-gradient(#ffffff, map-get($accent, 300) );
+        
+        @include mat.elevation(1);    
+    }
+
+    .match-selected {
+        background: radial-gradient(map-get($accent, 500), transparent 78%); 
+        filter: brightness(1.1);
+    }
+
+    .message-header {
+        background: radial-gradient(map-get($primary, 200), map-get($primary, 700)); 
+    }
+    .send-button {
+        background-color: map-get($contrast, 500) !important;
+        color: map-get(pal.$mat-light-green, surface) !important;
+    }
+    .send-button:disabled {
+        filter: brightness(0.8);
+    }
+    .message-input {
+        caret-color: map-get($contrast, 500 ) !important;
+    }
+    .mdc-line-ripple::before {
+        //border-bottom-color: map-get($contrast, 500 ) !important;
+        border-bottom-color: transparent !important;
+    }
+    .mdc-line-ripple::after {
+        border-bottom-color: map-get($contrast, 500 ) !important;
+    }
   }

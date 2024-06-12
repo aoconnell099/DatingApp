@@ -34,12 +34,14 @@ export class AppComponent implements OnInit{
 
   setCurrentUser() {
     const userString = localStorage.getItem('user');
+    console.log(userString);
     if (!userString) return;
     const user: User = JSON.parse(userString);
+    console.log(user);
     //this.accountService.setCurrentUser(user);
     if (user) {
       this.accountService.setCurrentUser(user);
-      this.presence.createHubConnection(user);
+      // this.presence.createHubConnection(user);
     }
     
   }

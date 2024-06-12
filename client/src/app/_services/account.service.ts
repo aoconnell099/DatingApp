@@ -22,8 +22,8 @@ export class AccountService {
         const user = response;
         if ((user)) {
           this.setCurrentUser(user);
-          console.log("set presence service");
-          this.presence.createHubConnection(user);
+          //console.log("set presence service");
+          //this.presence.createHubConnection(user);
           
         }
       })
@@ -36,7 +36,7 @@ export class AccountService {
       map(user => {
         if (user) {
           this.setCurrentUser(user);
-          this.presence.createHubConnection(user);
+          //this.presence.createHubConnection(user);
         }
       })
     )
@@ -48,6 +48,7 @@ export class AccountService {
     Array.isArray(roles) ? user.roles = roles : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+    this.presence.createHubConnection(user);
   }
 
   logout() {

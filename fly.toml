@@ -20,6 +20,7 @@ kill_timeout = '5s'
   CloudinarySettings__CloudName = 'dx3ad0ljy'
   TicketMasterSettings__ApiKey = 'zG1glBziW7wYh6B2fVfQOV9025ExMtn5'
   TicketMasterSettings__RootUrl = 'https://app.ticketmaster.com/discovery/v2/events.json?'
+  RedisConnection = 'redis://default:a94a4378f1c445dda08a86c1bcc3df08@fly-datingapptempredis.upstash.io:6379'
 
 [[services]]
   protocol = 'tcp'

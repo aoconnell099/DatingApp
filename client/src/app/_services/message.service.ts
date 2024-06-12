@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,8 @@ import { User } from '../_models/user';
 import { BusyService } from './busy.service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 import { Conversation } from '../_models/conversation';
+import { Router } from '@angular/router';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +23,15 @@ export class MessageService {
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
-  constructor(private http: HttpClient, private busyService: BusyService) { }
+  constructor(private http: HttpClient, private busyService: BusyService, private router: Router, private presenceService: PresenceService) { }
 
   createHubConnection(user: User, otherUsername: string) {
     this.busyService.busy();
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'message?user=' + otherUsername, {
-        accessTokenFactory: () => user.token
+        accessTokenFactory: () => user.token,
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets
       })
       .withAutomaticReconnect()
       .build()
@@ -42,8 +46,12 @@ export class MessageService {
 
     this.hubConnection.on('NewMessage', message => {
       this.messageThread$.pipe(take(1)).subscribe(messages => {
-        this.messageThreadSource.next([...messages, message]) // Creates a new array that populates the BehaviorSubject 
+        this.messageThreadSource.next([...messages, message]); // Creates a new array that populates the BehaviorSubject 
                                                               // so you don't mutate state of the messageThreadSource
+        // if (this.router.url == '/messages') {
+          
+          this.presenceService.newMessage.emit({message: message});
+        // }
       })
     })
 

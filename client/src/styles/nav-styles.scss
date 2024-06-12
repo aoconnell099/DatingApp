@@ -130,7 +130,10 @@
     //display: flex !important;
     // display: block;
     position: static !important;
-    height: 92vh !important;
+    //height: 92vh !important;
+    height: calc((var(--vh, 1vh) * 100) - (var(--tb, 1vh) * 100)) !important;
+    //height: -webkit-fill-available;
+    //min-height: -webkit-fill-available;
     justify-content: space-between;
   }
   // .original {

@@ -1,24 +1,38 @@
 <div class="matches-conversations">
+    <h5 class="matches-header">Matches</h5>
+    <div *ngIf="matches?.length === 0" class="no-matches">
+        <p>No matches yet! Start swiping and match with someone!</p>
+    </div>
     <div *ngIf="matches && matches.length > 0" class="matches-container">
+        
         <!-- user cards go here -->
         <mat-list class="matches-list">
-            <div *ngFor="let match of matches" (click)="selectMatch($event, match)">
-                <img matListItemAvatar [class.online-border]="(presence.onlineUsers$ | async)?.includes(match.username)" class="match-avatar" src="{{match.photoUrl || './assets/user.png'}}" alt="">
+            <div *ngFor="let match of matches" (click)="selectMatch($event, match)" class="match-avatar-container">
+                <div class="img-container">
+                    <div class="gradient-container" [class.match-selected]="selectedUser === match.username"></div>
+                    <img matListItemAvatar [class.online-border]="(presence.onlineUsers$ | async)?.includes(match.username)" class="match-avatar" src="{{match.photoUrl || './assets/user.png'}}" alt="">
+                </div>
+                <span matListItemLine style="margin-top: -0.5em">{{match.username | titlecase}}</span>
             </div>
 
         </mat-list>
     </div>
     <mat-divider class="conversation-divider"></mat-divider>
+    <h3 class="conversation-header">Messages</h3>
+    <div *ngIf="conversations?.length === 0" class="no-conversations">
+        <p>No messages yet! Find a match and message them!</p>
+    </div>
     <div *ngIf="conversations && conversations.length > 0" class="column">
-        <h3 class="conversation-header">Messages</h3>
+        
         <mat-list class="conversations-list">
-            <div *ngFor="let conversation of conversations" class="" (click)="selectConversation($event, conversation)"> 
+            <div *ngFor="let conversation of conversations" class="conversation" [class.conversation-selected]="selectedUser === conversation.otherUser" (click)="selectConversation($event, conversation)"> 
             
-                <div class="list-item-container">
+                <div class="list-item-container" [class.list-item-selected]="selectedUser == conversation.otherUser">
                     <div class="avatar-name-container">
-                        <mat-list-item>
-                            <img matListItemAvatar [class.online-border]="(presence.onlineUsers$ | async)?.includes(conversation.otherUser)" class="conversation-avatar" src={{conversation.otherUserPhotoUrl}} alt="">
-                            
+                        <mat-list-item style="padding-right: 0;">
+                            <img matListItemAvatar [ngClass]="{
+                                'online-border': (presence.onlineUsers$ | async)?.includes(conversation.otherUser),
+                                'avatar-small': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.XSmall }" class="conversation-avatar" src={{conversation.otherUserPhotoUrl}} alt="">
                             <h3 style="padding-left: 0.5em;" matListItemTitle>{{conversation.otherUser | titlecase}}</h3>
                             <span style="padding-left: 0.5em;" matListItemLine>{{conversation.isSender == true ? 'You: ' : ''}}{{conversation.content}}</span>
                         </mat-list-item>
@@ -69,20 +83,20 @@
                     <div class="time-ago-container" [class.align-right]="message.senderUsername == user!.username">
                         <span>{{message.messageSent | amFromUtc | amTimeAgo}}</span>
                         <span class="unread" *ngIf="!message.dateRead 
-                            && message.senderUsername !== user?.username">
+                            && message.senderUsername == user?.username">
                             (unread)
                         </span>
                         <span class="read" *ngIf="message.dateRead 
-                            && message.senderUsername !== user?.username">
+                            && message.senderUsername == user?.username">
                             (read {{message.dateRead | amFromUtc | amTimeAgo}})
                         </span>
                     </div>
-                </div>
+                </div> 
             </mat-list>
         </div>
     </div>
-    <div class="card-footer">
-        <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+    <div class="message-footer">
+        <!-- <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
             <div class="input-group">
                 <input 
                 name="messageContent"
@@ -92,10 +106,36 @@
                 class="form-control input-sm" 
                 placeholder="Send a message">
                 <div class="input-group-append">
-                    <button [disabled]="!messageForm.valid || loading" class="btn btn-primary" type="submit">Send
+                    <button mat-raised-button [disabled]="!messageForm.valid || loading" class="send-button" type="submit">Send
                         <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
                     </button>
                 </div>
+            </div>
+        </form> -->
+        <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off" class="message-form">
+            <!-- <div class="message-input-container"> -->
+            <mat-form-field subscriptSizing="dynamic" >
+                <!-- <div class="message-input-container"> -->
+                
+                    <textarea matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                        name="messageContent"
+                        required
+                        [(ngModel)]="messageContent"
+                        type="text" 
+                        class="message-input"
+                        placeholder="Send a message">
+                    </textarea>
+                <!-- </div> -->
+            </mat-form-field>
+            <!-- </div> -->
+            <div class="input-group-append">
+                <button mat-raised-button [disabled]="!messageForm.valid || loading" class="send-button" type="submit">Send
+                    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+                </button>
             </div>
         </form>
     </div>

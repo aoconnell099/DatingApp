@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
+import { Conversation } from '../_models/conversation';
+import { Message } from '../_models/message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PresenceService {
+  @Output() newMessage = new EventEmitter<{conversation?: Conversation, message?: Message}>();
+ 
   hubUrl = environment.hubUrl;
   private hubConnection?: HubConnection;
   private onlineUsersSource = new BehaviorSubject<string[]>([]);
@@ -21,7 +25,9 @@ export class PresenceService {
   createHubConnection(user: User) {
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'presence', {
-        accessTokenFactory: () => user.token
+        accessTokenFactory: () => user.token,
+        skipNegotiation: true,
+        transport: HttpTransportType.WebSockets
       })
       .withAutomaticReconnect()
       .build();
@@ -58,11 +64,24 @@ export class PresenceService {
       this.onlineUsersSource.next(usernames);
     })
 
-    this.hubConnection.on('NewMessageReceived', ({username, knownAs}) => {
+    this.hubConnection.on('NewMessageReceived', ({username, knownAs, content, photoUrl, messageSent}) => {
       console.log("NewMessageReceived");
+
       this.toastr.info(knownAs + ' has sent you a new message!')
         .onTap
         .pipe(take(1)).subscribe(() => this.router.navigateByUrl('/members/' + username + '?tab=3'));
+
+      if (this.router.url == '/messages') {
+        const conversation: Conversation = {
+          otherUser: username,
+          otherUserPhotoUrl: photoUrl,
+          isSender: false,
+          content: content,
+          messageSent: messageSent,
+          dateRead: undefined
+        }
+        this.newMessage.emit({conversation: conversation});
+      }
     })
   }
 

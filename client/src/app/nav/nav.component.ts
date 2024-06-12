@@ -89,6 +89,23 @@ export class NavComponent implements OnInit {
     
     // Apply the theme to the body by updating custom properties for material tokens
     applyTheme(theme, {target: document.body, dark: systemDark});
+
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    let tb = document.getElementById("toolbar")?.clientHeight! * 0.01
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    document.documentElement.style.setProperty('--tb', `${tb}px`);
+    // We listen to the resize event
+    window.addEventListener('resize', () => {
+      // We execute the same script as before
+      let vh = window.innerHeight * 0.01;
+      let tb = document.getElementById("toolbar")?.clientHeight! * 0.01
+      console.log(vh);
+      console.log(tb);
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      document.documentElement.style.setProperty('--tb', `${tb}px`);
+    });
   }
 
   testButton($event: any) {
@@ -155,6 +172,7 @@ export class NavComponent implements OnInit {
       this.mobileBreakpoint = '';
     }
     console.log(this.mobileBreakpoint);
+    
   }
 
   login() {
