@@ -58,7 +58,7 @@
 
 <div [@showHide]="selectedUser ? 'visible' : 'hidden'" *ngIf="selectedUser" class="message-container">
     <div class="message-header">
-        <h2 *ngIf="selectedUser">{{selectedUser | titlecase}}</h2>
+        <h2 routerLink='/members/{{selectedUser}}' style="width: fit-content;" *ngIf="selectedUser">{{selectedUser | titlecase}}</h2>
     </div>
     <div class="message-body"
         #scrollMe

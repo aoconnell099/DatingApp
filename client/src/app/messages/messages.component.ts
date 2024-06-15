@@ -13,6 +13,7 @@ import { User } from '../_models/user';
 import { NgForm } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   //changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,7 +64,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   );
   
   constructor(public messageService: MessageService, private confirmService: ConfirmService, private breakpointObserver: BreakpointObserver,
-    private memberService: MembersService, public presence: PresenceService, private accountService: AccountService) { 
+    private memberService: MembersService, public presence: PresenceService, private accountService: AccountService, private route: ActivatedRoute) { 
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
           if (user) this.user = user;
@@ -85,6 +86,20 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.loadMatches();
     //this.loadMessages();
     this.loadConversations();
+
+    this.route.queryParams.subscribe({
+      next: params => {
+        console.log(params);
+        if (params['user']) {
+          this.memberService.getMember(params['user']).subscribe({
+            next: response => {
+              console.log(response);
+              this.selectMatch('query', response);
+            }
+          })
+        }
+      }
+    })
   }
 
   // ngAfterViewChecked() {

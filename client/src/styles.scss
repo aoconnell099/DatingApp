@@ -55,6 +55,7 @@
   @include search-form($theme);
   @include search-list($theme);
   @include messages($theme);
+  @include member-profile($theme);
 }
 @include custom-components-theme(light-green.$light-theme);
 //@include custom-components-theme(light-green.$light-theme);

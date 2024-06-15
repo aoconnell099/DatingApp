@@ -120,6 +120,10 @@ export class MembersService {
     return getPaginatedResult<Member[]>(this.baseUrl + 'likes', params, this.http);
   }
 
+  checkLiked(likedUserId: number) {
+    return this.http.get(this.baseUrl + 'likes/check-' + likedUserId);
+  }
+
 
   getMatches(userParams: UserParams) {
     console.log('members service userparams');

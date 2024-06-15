@@ -78,7 +78,7 @@ export class NavComponent implements OnInit {
         blend: true,
       },
     ]);
-    
+     
     // Print out the theme as JSON
     console.log("NAV_COMPONENT");
     console.log(JSON.stringify(theme, null, 2));
@@ -93,19 +93,65 @@ export class NavComponent implements OnInit {
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
     let vh = window.innerHeight * 0.01;
     let tb = document.getElementById("toolbar")?.clientHeight! * 0.01
+    let vw = window.innerWidth * 0.01;
+    let ang = Math.atan((vw*1.2)/((vh-tb) * .18)) * (180/Math.PI);
+    let angSmall = Math.atan((vw*2.5)/((vh-tb) * .22)) * (180/Math.PI);
+    let angMed = Math.atan((vw*1.7)/((vh-tb) * .18)) * (180/Math.PI);
+    let grad = document.getElementById("gradient");
+    let gradHeight = grad?.clientHeight! * 0.01;
+    let currentScrollHeight = document.getElementById('prof-outer')?.scrollTop;
+    let op = ((gradHeight * 100) - currentScrollHeight!) / (gradHeight * 100);
+    document.documentElement.style.setProperty('--op', `${op}`);
+    console.log(op);
+    console.log(gradHeight);
+    console.log(tb);
+
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty('--vh', `${vh}px`);
     document.documentElement.style.setProperty('--tb', `${tb}px`);
+    document.documentElement.style.setProperty('--ang', `${ang}deg`);
+    document.documentElement.style.setProperty('--angSmall', `${angSmall}deg`);
+    document.documentElement.style.setProperty('--angMed', `${angMed}deg`);
+    document.documentElement.style.setProperty('--gh', `${gradHeight}px`);
     // We listen to the resize event
     window.addEventListener('resize', () => {
       // We execute the same script as before
       let vh = window.innerHeight * 0.01;
       let tb = document.getElementById("toolbar")?.clientHeight! * 0.01
+      let vw = window.innerWidth * 0.01;
+      //let ang = Math.atan((vw*100)/(((vh*100)-(tb*100)) - (vh*82)));
+      let ang = Math.atan((vw*1.2)/((vh-tb) * .18)) * (180/Math.PI);
+      let angSmall = Math.atan((vw*2.5)/((vh-tb) * .22)) * (180/Math.PI);
+      let angMed = Math.atan((vw*1.7)/((vh-tb) * .18)) * (180/Math.PI);
+      let gradHeight = document.getElementById("gradient")?.clientHeight! * 0.01;
+      let currentScrollHeight = document.getElementById('prof-outer')?.scrollTop;
+      let op = ((gradHeight * 100) - currentScrollHeight!) / (gradHeight * 100);
+    
       console.log(vh);
       console.log(tb);
+      console.log(vw);
+      console.log(ang);
+      console.log(op);
       document.documentElement.style.setProperty('--vh', `${vh}px`);
       document.documentElement.style.setProperty('--tb', `${tb}px`);
+      document.documentElement.style.setProperty('--ang', `${ang}deg`);
+      document.documentElement.style.setProperty('--angSmall', `${angSmall}deg`);
+      document.documentElement.style.setProperty('--angMed', `${angMed}deg`);
+      document.documentElement.style.setProperty('--gh', `${gradHeight}px`);
+      document.documentElement.style.setProperty('--op', `${op}`);
     });
+
+    window.addEventListener('scroll', () => {
+      console.log('scroll');
+      let gradHeight = document.getElementById("gradient")?.clientHeight! * 0.01;
+      let currentScrollHeight = document.getElementById('prof-outer')?.scrollTop;
+      console.log(gradHeight);
+      console.log(currentScrollHeight);
+      let op = ((gradHeight * 100) - currentScrollHeight!) / (gradHeight * 100);
+      console.log(op);
+      document.documentElement.style.setProperty('--op', `${op}`);
+    });
+    
   }
 
   testButton($event: any) {

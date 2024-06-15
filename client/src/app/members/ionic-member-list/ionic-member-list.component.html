@@ -101,8 +101,8 @@
                 <!-- </div> -->
             </div>
             <div class="apply-filters">
-                <button mat-raised-button color="accent" (click)="closeFilter()" type="submit">Apply Filters</button>
-                <button mat-raised-button color="warn" (click)="resetFilters()" class="btn btn-info ms-1">Reset Filters</button> <!-- removed type="submit" -->
+                <button mat-raised-button color="warn" (click)="closeFilter()" type="submit" style="margin-right:0.25em;">Apply Filters</button>
+                <button mat-raised-button (click)="resetFilters()" class="reset-filters" style="margin-left:0.25em;">Reset Filters</button> <!-- removed type="submit" -->
             </div>
             
     
@@ -243,7 +243,7 @@
         </div>
         <div class="match-dialog-buttons">
             <button mat-raised-button routerLink='/members/{{selectedMember?.username}}' color="primary" type="button">View Profile</button>
-            <button mat-raised-button routerLink='/members/{{selectedMember?.username}}' [queryParams]='{tab: 3}' color="primary" type="button">Send Message</button>
+            <button mat-raised-button routerLink='/messages'  [queryParams]="{user: selectedMember?.username}" color="primary" type="button">Send Message</button>
             <button mat-raised-button color="accent" (click)="closeMatchDialog()" type="button">Close</button>
         </div>
     </div>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -13,19 +12,17 @@ export class ConfirmDialogComponent implements OnInit {
   btnCancelText = '';
   result = false;
 
-  constructor(public bsModalRef: BsModalRef) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   confirm() {
     this.result = true;
-    this.bsModalRef.hide();
   }
 
   decline() {
     this.result = false;
-    this.bsModalRef.hide();
   }
 
 }

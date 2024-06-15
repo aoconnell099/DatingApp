@@ -16,4 +16,471 @@
 
 .member-tabset > tab {
     display: block;
+} 
+
+
+.profile-outer {
+    display: flex;
+    height: 100%;
+    height: -webkit-fill-available;
+    overflow: auto;
+    
 }
+
+.image-bio {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    height: -webkit-fill-available;
+    //overflow: scroll;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+
+.profile-image {
+    width: 50%;
+    height: 100%;
+    height: -webkit-fill-available;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+.flex-column > .profile-image {
+    width: 100% !important;
+}
+
+.user-photo {
+    width: 100%;
+    //height: 100%;
+    //height: -webkit-fill-available;
+    height: calc((var(--vh, 1vh) * 100) - (var(--tb, 1vh) * 100)) !important;
+}
+
+.profile-info {
+    width: 50%;
+    // height: 100%;
+    // height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 1.5em 0.5em 1.5em;
+}
+
+.overflow {
+    overflow: auto;
+}
+
+.flex-column > .profile-info {
+    width: 100% !important;
+}
+.name-online {
+    display: flex;
+    flex-direction: row;
+    //justify-content: space-between;
+    width: 100%;
+}
+
+.name-online-small {
+    align-items: center;
+    padding-top: 1.5em;
+    flex-direction: column;
+    margin-bottom: 0.5em;
+    width: fit-content;
+}
+
+.name-online-small > .user-name {
+    font-size: 3em !important;
+    font-weight: 200;
+    margin-bottom: 0 !important;
+}
+.name-online-small > h1 {
+    font-size: 3em !important;
+    font-weight: 200;
+    margin-bottom: 0 !important;
+}
+
+.name-online-small > .profile-name-small {
+    //padding-left: 0.5em;
+    align-content: flex-end;
+    color: whitesmoke;
+}
+
+.profile-name-small 
+
+.user-name-large {
+    //color: whitesmoke ;
+    font-size: 4em !important;
+    font-weight: 300 !important;
+    margin-bottom: 0 !important;
+}
+
+.user-name {
+
+}
+
+.is-user-online {
+
+}
+
+.profile-bio {
+
+}
+
+.profile-bio > p {
+    color: white;
+}
+
+.bio-header {
+    font-size: 2.5em !important;
+    font-weight: 400;
+    width: fit-content;
+}
+
+.location-music-info {
+
+}
+
+.profile-location {
+
+}
+
+.profile-location > h2 {
+    font-size: 2.5em !important;
+    font-weight: 400;
+    width: fit-content;
+}
+
+.profile-location > p {
+    //color: whitesmoke;
+    color: #7892b3;
+}
+
+.profile-genres {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-genres > h2{
+    font-size: 2.5em !important;
+    font-weight: 400;
+    width: fit-content;
+}
+
+.profile-genres > p {
+    color: #7892b3;
+}
+
+.profile-concerts {
+
+}
+
+.profile-concerts > h2 {
+    font-size: 2.5em !important;
+    font-weight: 400;
+    width: fit-content;
+}
+
+.profile-concerts > p {
+    color: #7892b3;
+}
+
+.user-concerts-list {
+
+}
+
+.profile-bio > p {
+    // color: white;
+    //color: #375271;
+    // color: #3f5875;
+    color: #7892b3;
+}
+
+.gradient {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    height: 18%;
+    width: 100%;
+    transform: skewY(calc(90deg - var(--ang, 30deg)));
+    transform-origin: left;
+    opacity: var(--op, 1);
+}
+.gradient-small {
+    height: 22%;
+    transform: skewY(calc(90deg - var(--angSmall, 30deg)));
+}
+.gradient-med {
+    height: 18%;
+    transform: skewY(calc(90deg - var(--angMed, 30deg)));
+}
+.gradient-landscape {
+    height: 22%;
+    transform: skewY(calc(90deg - var(--angMed, 30deg)));
+}
+
+.gradient-icons {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+    height: 18%;
+    width: 100%;
+    padding-left: 1em;
+    background-color: transparent;
+    z-index: 3;
+}
+.gradient-icons-small {
+    height: 22%;
+    opacity: var(--op, 1);
+    margin-bottom: 0.5em;
+    flex-direction: column;
+}
+.gradient-icons-landscape {
+    height: 22%;
+    opacity: var(--op, 1);
+    margin-bottom: 0.5em;
+    flex-direction: row;
+}
+
+.gradient-icons-landscape > .social-icons {
+    width: 45%;
+    margin-bottom: 1.25em;
+}
+
+.like-button-container {
+    position: absolute;
+    bottom: 1em;
+    right: 4em;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+}
+.like-button-container-rel {
+    position: relative;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+    width: 45%;
+    align-self: flex-end;
+    margin: 0.5 1.5em 0em 0;
+    display: flex;
+    justify-content: center;
+}
+.like-button-container-small {
+    right: 1.5em !important;
+    padding: 0.5em 1em !important;
+    bottom: 0.5em !important
+}
+.like-button-container-large {
+    right: 4.5em !important;
+    padding: 0.5em 6.5em !important;
+}
+
+.like-button {
+    
+}
+
+.social-icons {
+    width: 100%;
+    display: flex;
+    
+}
+.social-icons > a {
+    margin: 0 0.25em;
+    
+}
+.social-icons-large {
+    width: 50%;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 1.3em;
+    margin-bottom: 0.75em;
+}
+.social-icons-large > a {
+    width: 3em;
+    height: 3em;
+}
+.social-icons-small {
+    justify-content: center;
+}
+.social-icons-small > a {
+    width: 2em;
+    height: 2em;
+}
+.social-icons a:first-child {
+    margin-left: 0 !important;
+  }
+  
+.social-icons a:last-child {
+    margin-right: 0 !important;
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    position: absolute;
+    align-self: flex-end;
+    margin: 1.5em 1em 0.5em 0;
+}
+
+.butt-container-large {
+    width: 35%;
+    position: relative;
+}
+.butt-container-landscape {
+    width: 15%;
+    position: relative;
+}
+.flex-message {
+    position: relative;
+    align-self: flex-start;
+    margin: 0.5em 0 0.25em 0;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+}
+.message-fab {
+    border-radius: 50%;
+    width: 4em;
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-start;
+    margin: 0.5em 0em -0.25em 0;
+}
+.like-fab {
+    border-radius: 50%;
+    width: 4em;
+    height: 4em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+    margin: -0.25em 0em 0.25em 0;
+}
+.message-icon {
+    margin-right: 0;
+    font-size: 2em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.like-icon {
+    margin-right: 0;
+    font-size: 2em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.flex-like {
+    position: relative;
+    align-self: flex-end;
+    margin: 0.25em 0 0.5em 0;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+}
+.message-button-container {
+    position: absolute;
+    top: 0.5em;
+    right: 6em;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+}
+.message-button-container-rel {
+    position: relative;
+    border-radius: 2em;
+    padding: 0.5em 2.5em;
+    width: 45%;
+    align-self: flex-end;
+    margin: 0 3em 0.5em 0;
+    display: flex;
+    justify-content: center;
+}
+.message-button-container-small {
+    top: 1.3em;
+    right: 3em !important;
+    padding: 0.5em 1em !important;
+}
+.message-button-container-large {
+    
+    right: 6em !important;
+    padding: 0.5em 6.5em !important;
+}
+
+.message-button {
+
+}
+
+// .member-since {
+//     display: flex;
+//     position: absolute;
+//     bottom: -1em;
+//     left: 0;
+//     right: 0;
+//     margin-left: auto;
+//     margin-right: auto;
+//     width: fit-content;
+//     font-size: 0.8em;
+// }
+.member-since {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    align-self: flex-end;
+    width: 100%;
+    font-size: 0.8em;
+    
+}
+.member-since > p {
+    margin-bottom: 0.2em;
+    
+}
+.member-since-small {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    font-size: 0.8em;
+}
+
+.member-since > p {
+    color: whitesmoke ;
+}
+.member-since-small > p {
+    color: whitesmoke ;
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+.rel {
+    position: relative;
+}
+.bottom {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 40%;
+    margin: 0.3em 0;
+    align-self: flex-end;
+}
+
+.marg-r-3 {
+    margin-right: 3em;
+}
+
+.marg-r-neg-1 {
+    margin-right: -0.5em;
+}
+

@@ -245,4 +245,146 @@
     .mdc-line-ripple::after {
         border-bottom-color: map-get($contrast, 500 ) !important;
     }
+
+    .message-header:hover {
+        color: map-get($accent, 500) !important;
+        //flex: 1 1 auto;
+    }
+  }
+
+  @mixin member-profile($theme){
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $contrast: map-get($theme, warn);
+
+    .gradient {
+        border-top-left-radius: 2%;
+        border-top-right-radius: 2%;
+        // background: linear-gradient(135deg, map-get($accent, 900), transparent),
+        //             linear-gradient(336deg, map-get($contrast, 900) 20%, white);
+        
+        background: linear-gradient(135deg, map-get($contrast, 900) 5%, transparent),
+                    linear-gradient(336deg, map-get($accent, 900) 20%, white);
+        
+        // background: radial-gradient(ellipse at top left, map-get($accent, 900) 23%, transparent),
+        // radial-gradient(ellipse at bottom right, map-get($contrast, 900) 23%, map-get($contrast, 500));
+       
+    }
+    .name-online-small {
+        //background: linear-gradient(0deg, black, transparent);
+       // background: linear-gradient(10deg, #ffb6b9 10%, #fae3d9 20%, #bbded6 30%, #8ac6d1 40%, transparent 50%, transparent);
+        //background: linear-gradient(10deg, map-get($accent, 900), map-get($accent, 300) 30%, map-get($primary, 300) 40%, map-get($primary, 900) 50%,   transparent 60%, transparent);
+        //background: linear-gradient(135deg, map-get(pal.$mat-light-green, secondary-var, hex) 0%, map-get(pal.$mat-light-green, secondary-var, lighter) 50%, map-get(pal.$mat-light-green, secondary-var, hex) 100%) !important;
+        // Sunruse
+        //background: linear-gradient(10deg, #FFD700, #FFA500 30%, #FF8C00 40%, #FF4500 50%, transparent 60%);
+        // Ocean Breeze
+        //background: linear-gradient(10deg, #87CEEB, #4682B4 30%, #4169E1 40%, #0000FF 50%, transparent 60%);
+        // Forest Canopy
+        //background: linear-gradient(10deg, #228B22, #008000 30%, #006400 40%, #006400 50%, transparent 60%);
+        // Cotton Candy
+       // background: linear-gradient(10deg, #FFC0CB, #FF69B4 30%, #FF1493 40%, #4169E1 50%, transparent 60%);
+        // Lemon Sorbet
+    //    background: linear-gradient(10deg, #FFFACD, #FFD700 30%, #FFA500 40%, #FF6347 50%, transparent 60%);
+        // Minty Fresh
+    //    background: linear-gradient(10deg, #98FB98, #00FF7F 30%, #00FA9A 40%, #008000 50%, transparent 60%);
+    
+    
+    // Romantic sunset
+    //background: linear-gradient(10deg, #FF6B6B, #FFC3A0 45%, transparent 60%,);
+    //Enchanting Twilight 
+    //background: linear-gradient(10deg, #9B59B6,  #3498DB 45%, transparent 60%);
+// Whimsical Stargazing
+    //background: linear-gradient(10deg, #F39C12, #2980B9 45%, transparent 60%, );
+
+    // Whispering Breeze
+    //background: linear-gradient(10deg, #F0E68C, #87CEEB 45%, transparent 60%);
+    // Moonlit Serenade
+    // background: linear-gradient(10deg, #D8BFD8, #FFD700 45%, transparent 60%);
+    // Starry Night
+    // background: linear-gradient(10deg, #483D8B, #FFA07A 45%, transparent 60%);
+    // background: linear-gradient(10deg, radial-gradient(
+    //     farthest-side at bottom left,
+    //     rgba(255, 0, 255, 0.5), 
+    //     transparent
+    //   ),
+    //   radial-gradient(
+    //     farthest-corner at bottom right,
+    //     rgba(255, 50, 50, 0.5), 
+    //     transparent 400px
+    //   ) 30%, transparent 60%);
+
+}
+
+    .profile-info {
+        // background-color: map-get($contrast, 900 );
+        background-color: #1e293a;
+    }
+
+    .bio-header {
+        background: linear-gradient(135deg, map-get($accent, 900), map-get($accent, 300));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        //color: radial-gradient(map-get($accent, 300), map-get($accent, 900));
+    }
+
+    .profile-location > h2 {
+        background: linear-gradient(135deg, map-get($accent, 900), map-get($accent, 300));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .profile-genres > h2 {
+        background: linear-gradient(135deg, map-get($accent, 900), map-get($accent, 300));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .profile-concerts > h2 {
+        background: linear-gradient(135deg, map-get($accent, 900), map-get($accent, 300));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .profile-name > h1 {
+        background: radial-gradient(ellipse at top left, #04bbc0 23%, transparent),
+                    radial-gradient(ellipse at bottom right, #05cfa6 23%, white);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 3em !important;
+    font-weight: 300 !important;
+    margin-bottom: 0 !important;
+    }
+
+    // .message-button-container {
+    //     //background: linear-gradient(135deg, map-get($primary, 900), map-get($primary, 500));
+    //     //background: linear-gradient(135deg, #04bbc0 , #05cfa6 35%);
+    //     background: radial-gradient(ellipse at top left, #04bbc0 23%, transparent),
+    //                 radial-gradient(ellipse at bottom right, #05cfa6 23%, white);
+        
+    //     // background: linear-gradient(135deg, #04bbc0 5%, transparent),
+    //     //             linear-gradient(336deg, #05cfa6 40%, white);
+    //     //background: linear-gradient(135deg, map-get($contrast, 100), map-get($contrast, 900));
+    // }
+
+    // .like-button-container {
+    //     background: radial-gradient(ellipse at top left, map-get($accent, 900) 13%, transparent),
+    //                 radial-gradient(ellipse at bottom right, map-get($accent, 300) 23%, white);
+    // }
+    .message-button-container-color {
+        //background: linear-gradient(135deg, map-get($primary, 900), map-get($primary, 500));
+        //background: linear-gradient(135deg, #04bbc0 , #05cfa6 35%);
+        background: radial-gradient(ellipse at top left, #04bbc0 23%, transparent),
+                    radial-gradient(ellipse at bottom right, #05cfa6 23%, white);
+        
+        // background: linear-gradient(135deg, #04bbc0 5%, transparent),
+        //             linear-gradient(336deg, #05cfa6 40%, white);
+        //background: linear-gradient(135deg, map-get($contrast, 100), map-get($contrast, 900));
+    }
+
+    .like-button-container-color {
+        background: radial-gradient(ellipse at top left, map-get($accent, 900) 13%, transparent),
+                    radial-gradient(ellipse at bottom right, map-get($accent, 300) 23%, white);
+    }
   }

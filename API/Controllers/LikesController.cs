@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
@@ -93,6 +94,14 @@ namespace API.Controllers
                 users.TotalCount, users.TotalPages);
 
             return Ok(users);
+        }
+        [HttpGet("check-{userId}")]
+        public async Task<ActionResult<bool>> CheckUserLike(int userId)
+        {
+            var sourceUserId = User.GetUserId();
+            var userLike = await _unitOfWork.LikesRepository.GetUserLike(sourceUserId, userId);
+
+            return Ok((userLike != null) ? true : false);
         }
         
         [HttpGet("dislikes")]

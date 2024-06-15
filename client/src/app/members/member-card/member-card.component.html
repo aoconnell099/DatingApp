@@ -28,8 +28,8 @@
                     </button> -->
                     <button 
                         mat-fab 
-                        routerLink='/members/{{member.username}}' 
-                        [queryParams]='{tab: "Messages"}'
+                        routerLink='/messages' 
+                        [queryParams]="{user: member.username}"
                         class="btn btn-primary">
                     <i class="fa fa-envelope"></i></button>
             </mat-action-list>
