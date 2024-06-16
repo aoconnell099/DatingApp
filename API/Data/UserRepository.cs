@@ -34,6 +34,7 @@ namespace API.Data
         public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
         {
             var query = _context.Users
+                .Include(p => p.Photos)
                 .Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .AsQueryable();

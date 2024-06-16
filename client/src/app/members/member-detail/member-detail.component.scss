@@ -48,6 +48,9 @@
     position: relative;
     flex-direction: column;
 }
+.image-bio .profile-image:not(:first-child) {
+    display: none;
+}
 .flex-column > .profile-image {
     width: 100% !important;
 }

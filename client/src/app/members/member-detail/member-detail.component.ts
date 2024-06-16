@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 //import { GalleryComponent } from 'ng-gallery/public-api';
-import { GalleryComponent, GalleryItem, ImageItem } from 'ng-gallery';
+import { Gallery, GalleryComponent, GalleryConfig, GalleryItem, ImageItem } from 'ng-gallery';
 //import { NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
@@ -41,12 +41,14 @@ import { PresenceService } from 'src/app/_services/presence.service';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
-  @ViewChild(GalleryComponent) gallery?: GalleryComponent;
+  //@ViewChild(GalleryComponent) gallery?: GalleryComponent;
   //@Input() member?: Member;
   member: Member = {} as Member;
   // galleryOptions: NgxGalleryOptions[] = [];
   // galleryImages: NgxGalleryImage[] = [];
-  galleryImages: ImageItem[] = [];
+  // galleryImages: ImageItem[] = [];
+  galleryPhotos: GalleryItem[] = [];
+  galleryId = 'lightbox';
   activeTab?: TabDirective;
   messages: Message[] = []; 
   user?: User;
@@ -66,7 +68,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   constructor(public presence: PresenceService, private route: ActivatedRoute, private breakpointObserver: BreakpointObserver,
     private messageService: MessageService, private memberService: MembersService, 
-    private accountService: AccountService, private router: Router, private toastr: ToastrService) { 
+    private accountService: AccountService, private router: Router, private toastr: ToastrService, public gallery: Gallery) { //, public gallery: Gallery
       this.accountService.currentUser$.pipe(take(1)).subscribe({
         next: user => {
           if (user) this.user = user;
@@ -218,9 +220,15 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.galleryImages = this.getImages();
-    this.gallery?.load(this.galleryImages);
-    this.showGallery = this.galleryImages.length == 0 ? false: true;
+    const galleryRef = this.gallery.ref(this.galleryId);
+    this.galleryPhotos = this.getImages();
+    galleryRef?.load(this.galleryPhotos);
+    const config: GalleryConfig = {
+      thumb: false,
+    };
+    galleryRef.setConfig(config);
+    //console.log(this.gallery);
+    //this.showGallery = this.galleryImages.length == 0 ? false: true;
   }
 
   private breakpointChanged() {
@@ -259,7 +267,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   //   return imageUrls;
   // }
 
-    getImages(): ImageItem[] {
+    getImages(): GalleryItem[] {
     if (!this.member) return [];
 
     const imageUrls = [];

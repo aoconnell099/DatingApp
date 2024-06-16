@@ -65,10 +65,16 @@
 
 <div class="profile-outer" id="profOuter">
     <div class="image-bio" id="imageBio"  [ngClass]="{ 'flex-column': currentBreakpoint === Breakpoints.XSmall }">
-        <div class="profile-image">
-            <img src="{{member.photoUrl || './assets/user.png'}}" class="user-photo" alt="{{member.knownAs}}">
+        <!-- <img [src="{{member.photoUrl || './assets/user.png'}}" class="user-photo" alt="{{member.knownAs}}"> -->
+        
+        <div *ngFor="let photo of galleryPhotos; let i = index" [lightbox]="i" [gallery]="galleryId" gallerize class="profile-image">
+            <img [src]="photo.data?.src" class="user-photo" alt="{{member.knownAs}}">
+            
             
         </div>
+        <!-- <div class="profile-image">
+            <gallery gallerize [items]="galleryPhotos" [thumb]="false" class="user-photo"></gallery>
+        </div> -->
         <div class="profile-info" [class.overflow]="currentBreakpoint !== Breakpoints.XSmall"  id="profInfo">
             <div *ngIf="currentBreakpoint !== Breakpoints.XSmall" class="name-online">
                 <div class="profile-name"> <!-- ngIf wide, else plase on top of image-->

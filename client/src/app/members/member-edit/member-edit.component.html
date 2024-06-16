@@ -1,4 +1,4 @@
-<div class="row" *ngIf="member">
+<!-- <div class="row" *ngIf="member">
     <div class="col-4">
         <h1>Your Profile</h1>
     </div>
@@ -59,4 +59,154 @@
             </tab>
         </tabset>
     </div>
+</div> -->
+
+
+
+
+<div class="profile-outer" id="profOuter">
+    <div class="image-bio" id="imageBio"  [ngClass]="{ 'flex-column': currentBreakpoint === Breakpoints.XSmall }">
+        <!-- <img [src="{{member.photoUrl || './assets/user.png'}}" class="user-photo" alt="{{member.knownAs}}"> -->
+        
+        <div *ngFor="let photo of galleryPhotos; let i = index" [lightbox]="i" [gallery]="galleryId" gallerize class="profile-image">
+            <img [src]="photo.data?.src" class="user-photo" alt="{{member.knownAs}}">
+            
+            
+        </div>
+        <!-- <div class="profile-image">
+            <gallery gallerize [items]="galleryPhotos" [thumb]="false" class="user-photo"></gallery>
+        </div> -->
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> You have made changes. Any unsaved changes will be lost.
+        </div>
+        <div class="profile-info" [class.overflow]="currentBreakpoint !== Breakpoints.XSmall"  id="profInfo">
+            <div *ngIf="currentBreakpoint !== Breakpoints.XSmall" class="name-online">
+                <div class="profile-name"> <!-- ngIf wide, else plase on top of image-->
+                    <h1 class="user-name-large">{{member.username | titlecase}}</h1>
+                </div>
+                <!-- Possible occupation or other info -->
+                <!-- <div class="is-user-online" *ngIf="(presence.onlineUsers$ | async)?.includes(member!.username)">
+                    Online <i class="fa fa-user-circle text-success"></i> 
+                </div> -->
+            </div>
+            <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+            <div class="profile-bio rel" style="width: 80%;">
+                <h2 class="bio-header">Bio</h2>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" [(ngModel)]="member.introduction" name="introduction" style="width: 100%;"></textarea>
+                <!-- This will be filled with answers to questions in the new registraation page -->
+            </div>
+            <div class="location-music-info rel">
+                <div class="profile-location">
+                    <h2>Location:</h2>
+                    <input matInput label="City"
+                     [(ngModel)]="member.city" name="city" >
+                    <input matInput label="Country"
+                     [(ngModel)]="member.country" name="country" >
+                    
+                    
+                    
+                </div>
+                <div class="profile-genres">
+                    <!-- Question about liked music genres answer will go here -->
+                     <h2>Genres:</h2>
+                </div>
+                <div class="profile-concerts">
+                    <h2>Concerts:</h2>
+                    <div class="user-concerts-list">
+                        <div> <!-- ngFor using member.concerts -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <!-- Need an ngIf. Place here if large. Place in gradient container if small -->
+            <!-- <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="message-button-container-rel message-button-container-color">
+                <button mat-button routerLink='/messages' [queryParams]="{user: member.username}" class="message-button">Message</button>
+            </div>
+            <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="like-button-container-rel like-button-container-color">
+                <button mat-button [disabled]="isLiked" (click)="addLike(member)" class="like-button">Like</button>
+            </div> -->
+            <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="member-since-small">
+                <p>Member Since {{member?.created | date: 'yyyy'}}</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="gradient" id="gradient" [ngClass]="{ 'gradient-small': currentBreakpoint === Breakpoints.XSmall,
+                                        'gradient-med': currentBreakpoint === Breakpoints.Small || currentBreakpoint === Breakpoints.Medium,
+                                        'gradient-landscape': isLandscape }">
+        
+    </div>
+    <div class="gradient-icons" id="gradient-icons" [ngClass]="{ 'gradient-icons-small': currentBreakpoint === Breakpoints.XSmall,
+                                                                'gradient-icons-landscape': isLandscape,}">
+        <div *ngIf="currentBreakpoint === Breakpoints.XSmall" class="name-online name-online-small">
+            <div class="profile-name-small"> <!-- ngIf wide, else plase on top of image-->
+                <h1 class="user-name" style="font-size: 3em !important; font-weight: 200; margin-bottom: 0.2;">{{member?.username | titlecase}}</h1>
+            </div>
+            <div class="social-icons social-icons-small">
+                <a  mat-mini-fab href="" class=" " target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a  mat-mini-fab href="" class="" target="_blank">
+                    <i class='fab fa-instagram'></i>
+                </a>
+                <a  mat-mini-fab href="" class="" target="_blank">
+                    <i class='fab fa-twitter'></i>
+                </a>
+                <a  mat-mini-fab href="" class="" target="_blank">
+                    <i class='fab fa-snapchat'></i>
+                </a>
+            </div>
+        </div>
+        
+        <div *ngIf="currentBreakpoint !== Breakpoints.XSmall" class="social-icons social-icons-large">
+            <a  mat-mini-fab href="" class=" " target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a  mat-mini-fab href="" class="" target="_blank">
+                <i class='fab fa-instagram'></i>
+            </a>
+            <a  mat-mini-fab href="" class="" target="_blank">
+                <i class='fab fa-twitter'></i>
+            </a>
+            <a  mat-mini-fab href="" class="" target="_blank">
+                <i class='fab fa-snapchat'></i>
+            </a>
+        </div>
+        <!-- <div class="button-container" [ngClass]="{ 'butt-container-large': currentBreakpoint !== Breakpoints.XSmall,
+        'butt-container-landscape': isLandscape }">
+            <div *ngIf="!isLandscape" class="flex-message message-button-container-color" >
+                <button mat-button routerLink='/messages' [queryParams]="{user: member.username}" class="message-button">Message</button>
+            </div>
+            <div *ngIf="isLandscape" class="message-button-container-color message-fab" >
+                <button mat-button routerLink='/messages' [queryParams]="{user: member.username}" class=" ">
+                    <mat-icon class="material-icons material-symbols-outlined color_blue message-icon" >chat</mat-icon>
+                </button>
+            </div>
+            <div *ngIf="!isLandscape" class="flex-like like-button-container-color" >
+                <button mat-button (click)="addLike(member)" [disabled]="isLiked" class="like-button">Like</button> 
+            </div>
+            <div *ngIf="isLandscape" class="like-button-container-color like-fab" >
+                <button mat-button (click)="addLike(member)" [disabled]="isLiked"  class=" ">
+                    <mat-icon class="material-icons color_blue like-icon">
+                        favorite_border</mat-icon>
+                </button>
+            </div>
+        </div> -->
+        
+<!-- [ngClass]="{'member-since-small' : currentBreakpoint === Breakpoints.XSmall,
+                        'member-since' : currentBreakpoint !== Breakpoints.XSmall}" -->
+
+        <div [ngClass]="{'member-since-small' : currentBreakpoint === Breakpoints.XSmall && !isLandscape,
+                'member-since' : currentBreakpoint !== Breakpoints.XSmall || (currentBreakpoint === Breakpoints.XSmall && isLandscape) }">
+            <!-- <strong>Member Since:</strong> -->
+            <p>Member Since {{member?.created | date: 'yyyy'}}</p>
+        </div>
+    </div>
+    
 </div>
